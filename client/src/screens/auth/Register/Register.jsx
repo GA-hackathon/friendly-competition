@@ -16,6 +16,12 @@ function Register() {
     setShowPasswordConfirm((prevState) => !prevState);
   };
 
+  const handleRegister = async (registerData) => {
+    registerData.email = registerData?.email?.toLowerCase;
+    const userData = await registerUser(registerData);
+    dispatch({ type: "SET_USER", currentUser: userData });
+    history.push("/");
+  };
   return (
     <>
       <h1>Register Page</h1>
