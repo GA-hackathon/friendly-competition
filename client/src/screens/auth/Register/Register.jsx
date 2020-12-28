@@ -20,7 +20,7 @@ function Register() {
     registerData.email = registerData?.email?.toLowerCase;
     const userData = await registerUser(registerData);
     dispatch({ type: "SET_USER", currentUser: userData });
-    history.push("/");
+    // history.push("/");
   };
   return (
     <>
