@@ -23,19 +23,28 @@ import ClearIcon from "@material-ui/icons/Clear";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { goBack } from "../../../utils/goBack";
 import ArrowBackOutlinedIcon from "@material-ui/icons/ArrowBackOutlined";
+import PasswordAlerts from "../../../components/Form/PasswordAlerts";
 
 function Register() {
   const [, dispatch] = useStateValue();
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const [emailValidityAlert, setEmailValidityAlert] = useState(false);
-  const [passwordConfirmAlert, setPasswordConfirmAlert] = useState(false);
   const [emailUniquenessAlert, setEmailUniquenessAlert] = useState(false);
-  const [passwordAlert, setPasswordAlert] = useState(false);
+  const [isValidPassword, setValidPassword] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [allUsers, setAllUsers] = useState([]);
-  const history = useHistory();
+  const [passwordLengthValid, setPasswordLengthValid] = useState(false);
+  const [passwordHasNumber, setPasswordHasNumber] = useState(false);
+  const [passwordHasLowerCase, setPasswordHasLowerCase] = useState(false);
+  const [passwordHasUpperCase, setPasswordHasUpperCase] = useState(false);
 
+  const [
+    passwordHasSpecialCharacter,
+    setPasswordHasSpecialCharacter,
+  ] = useState(false);
+
+  const history = useHistory();
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -86,15 +95,8 @@ function Register() {
 
   const handleFormValidity = () => {
     // all these checks are imported from authUtils.js in services folder.
-    checkPasswordValidity(password, setPasswordAlert);
     checkEmailValidity(email, setEmailValidityAlert);
     checkEmailUniqueness(allUsers, email, setEmailUniquenessAlert);
-
-    if (password !== passwordConfirm) {
-      setPasswordConfirmAlert(true);
-    } else {
-      setPasswordConfirmAlert(false);
-    }
   };
 
   const handleChange = (e) => {
@@ -103,6 +105,21 @@ function Register() {
       ...prevState,
       [name]: value,
     }));
+
+    // it takes a while for the setFormData to be updated, so we have this if condition
+    if (name === "password") {
+      // value is password
+
+      // checkpasswordValidity is imported from src/services/authUtils to save space.
+      checkPasswordValidity(
+        value,
+        setPasswordHasLowerCase,
+        setPasswordHasUpperCase,
+        setPasswordLengthValid,
+        setPasswordHasNumber,
+        setPasswordHasSpecialCharacter
+      );
+    }
   };
 
   const handleRegister = async (registerData) => {
@@ -115,23 +132,24 @@ function Register() {
     e.preventDefault();
     handleFormValidity();
     if (
-      !passwordAlert &&
+      !isValidPassword &&
       !emailValidityAlert &&
       !emailUniquenessAlert &&
       password === passwordConfirm &&
-      password &&
+      passwordHasLowerCase &&
+      passwordHasUpperCase &&
+      passwordHasSpecialCharacter &&
+      passwordHasNumber &&
       first_name
     ) {
       handleRegister(formData);
     } else {
       return;
     }
-    // if the password is at least 8 characters at minimum,
-    // and the email is valid and unique, and the password matches password confirm,
+    // if the conditions for the password are true.
+    // and the email is valid and unique.
     // and we have a name and a zipcode, go ahead and register, else: do nothing.
   };
-
-  let passwordPattern = new RegExp(/^((?=.*[0-9])(?=.*[a-zA-Z])).{8,20}$/);
 
   return (
     <Wrapper>
@@ -250,8 +268,6 @@ function Register() {
               <InputLabel htmlFor="password">Password</InputLabel>
               <Input
                 required
-                pattern={passwordPattern}
-                title="Enter a password between 8 and 20 characters, containing at least one letter and one number, one special character, one upper case letter, one lower case letter"
                 type={showPassword ? "text" : "password"}
                 name="password"
                 value={password}
@@ -270,13 +286,7 @@ function Register() {
               />
             </FormControl>
           </div>
-          {passwordAlert && (
-            <>
-              <div className="alert">
-                <p>Password has to be between 8 and 20 characters</p>
-              </div>
-            </>
-          )}
+
           <div className="input-container">
             <FormControl>
               <InputLabel htmlFor="password-confirm">
@@ -301,15 +311,17 @@ function Register() {
               />
             </FormControl>
           </div>
-
-          {passwordConfirmAlert && (
-            <>
-              <div className="alert">
-                <p>Password and password confirmation do not match!</p>
-              </div>
-            </>
-          )}
-
+          <br />
+          {/* separating the password alerts div to a separate file to save space */}
+          <PasswordAlerts
+            password={password}
+            passwordConfirm={passwordConfirm}
+            passwordHasNumber={passwordHasNumber}
+            passwordHasSpecialCharacter={passwordHasSpecialCharacter}
+            passwordHasUpperCase={passwordHasUpperCase}
+            passwordHasLowerCase={passwordHasLowerCase}
+            passwordLengthValid={passwordLengthValid}
+          />
           <input
             type="file"
             id="image-upload"

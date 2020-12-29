@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-let Wrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,13 +50,22 @@ let Wrapper = styled.div`
   .alert {
     color: red;
   }
-
+  .password-alert {
+    /* flex-direction: column;
+    position: relative;
+    position: absolute;
+    top: 30%;
+    width: 400px;
+    font-size: 14px;
+    right: 0;
+    right: 12.5%;
+    top: 40%; */
+  }
   .user-image-container {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-
   .big-user-image {
     height: 100px;
     width: 100px;

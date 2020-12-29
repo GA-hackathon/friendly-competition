@@ -1,41 +1,59 @@
 // for email validation referenced this: https://www.itsolutionstuff.com/post/react-email-validation-exampleexample.html
-import { validEmailPattern as pattern } from "./regexUtils";
+import { validEmailPattern as emailPattern } from "./regexUtils";
+import {
+  atLeastOneNumber,
+  atLeastOneLowerCase,
+  atLeastOneUpperCase,
+  atLeastOneSpecialCharacter,
+} from "./regexUtils";
 
 export const checkEmailValidity = (email, setEmailAlert) => {
   if (typeof email !== undefined) {
-    if (!pattern.test(email)) {
+    if (!emailPattern.test(email)) {
       setEmailAlert(true);
     }
-    if (pattern.test(email)) {
+    if (emailPattern.test(email)) {
       setEmailAlert(false);
     }
   }
 };
 
-// export const checkPasswordValidity = (password, setPasswordAlert) => {
-// passwordPattern referred from here = "https://codepen.io/prampcontent/pen/WgepzQ"
-//{minimum 8, maximum 20}
-//   let passwordPattern = new RegExp(/^(((?=.*[0-9])(?=.*[a-zA-Z])).{8,20}$)/i);
-
-//   if (typeof password !== undefined) {
-//     if (!pattern.test(passwordPattern)) {
-//       return setPasswordAlert(true);
-//     }
-
-//     if (pattern.test(passwordPattern)) {
-//       setPasswordAlert(false);
-//     }
-//   }
-// };
-
-export const checkPasswordValidity = (password, setPasswordAlert) => {
-  if (typeof password !== undefined) {
-    if (password?.length < 8) {
-      setPasswordAlert(true);
-    }
+export const checkPasswordValidity = (
+  value,
+  setPasswordHasLowerCase,
+  setPasswordHasUpperCase,
+  setPasswordLengthValid,
+  setPasswordHasNumber,
+  setPasswordHasSpecialCharacter
+) => {
+  if (value.match(atLeastOneLowerCase)) {
+    setPasswordHasLowerCase(true);
+  } else {
+    setPasswordHasLowerCase(false);
   }
-  if (password?.length >= 8) {
-    setPasswordAlert(false);
+
+  if (value.match(atLeastOneUpperCase)) {
+    setPasswordHasUpperCase(true);
+  } else {
+    setPasswordHasUpperCase(false);
+  }
+
+  if (value.length <= 20 && value.length >= 8) {
+    setPasswordLengthValid(true);
+  } else {
+    setPasswordLengthValid(false);
+  }
+
+  if (value.match(atLeastOneNumber)) {
+    setPasswordHasNumber(true);
+  } else {
+    setPasswordHasNumber(false);
+  }
+
+  if (value.match(atLeastOneSpecialCharacter)) {
+    setPasswordHasSpecialCharacter(true);
+  } else {
+    setPasswordHasSpecialCharacter(false);
   }
 };
 
