@@ -18,7 +18,7 @@ function App() {
       if (!userData) {
         console.log("no user signed in at the moment");
       } else {
-        console.log("signed in!");
+        console.log(` you are signed in!`);
       }
       // lines 18 to 22 will be deleted once we verify that the user auth works
     };

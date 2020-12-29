@@ -36,7 +36,7 @@ function Register() {
     zip_code: "",
     image: "",
   });
-  const { first_name, last_name, email, password, zip_code, image } = formData;
+  // const { first_name, last_name, email, password, zip_code, image } = formData;
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -51,10 +51,7 @@ function Register() {
     const fileReader = new FileReader();
     fileReader.addEventListener("load", () => {
       setFormData({
-        first_name: first_name,
-        last_name: last_name,
-        password: password,
-        zip_code: zip_code,
+        ...formData,
         image: fileReader.result,
       });
     });
@@ -67,31 +64,31 @@ function Register() {
     document.getElementById("image-upload").click();
   };
 
-  const handleImageClear = () => {
-    setFormData({
-      ...formData,
-      image: "",
-    });
-    document.getElementById("image-upload").value = "";
-  };
+  // const handleImageClear = () => {
+  //   setFormData({
+  //     ...formData,
+  //     image: "",
+  //   });
+  //   document.getElementById("image-upload").value = "";
+  // };
 
-  const handleFormValidity = () => {
-    checkPasswordLength(password, setPasswordAlert);
-    checkEmailValidity(email, setEmailValidityAlert);
-    if (allUsers.find((user) => user.email === email)) {
-      setEmailUniquenessAlert(true);
-    } else {
-      setEmailUniquenessAlert(false);
-    }
-    if (password !== passwordConfirm) {
-      return setPasswordConfirmAlert(true);
-    } else {
-      setPasswordConfirmAlert(false);
-    }
-  };
+  // const handleFormValidity = () => {
+  //   checkPasswordLength(password, setPasswordAlert);
+  //   checkEmailValidity(email, setEmailValidityAlert);
+  //   if (allUsers.find((user) => user.email === email)) {
+  //     setEmailUniquenessAlert(true);
+  //   } else {
+  //     setEmailUniquenessAlert(false);
+  //   }
+  //   if (password !== passwordConfirm) {
+  //     return setPasswordConfirmAlert(true);
+  //   } else {
+  //     setPasswordConfirmAlert(false);
+  //   }
+  // };
 
   const handleRegister = async (registerData) => {
-    registerData.email = registerData?.email?.toLowerCase;
+    // registerData.email = registerData?.email?.toLowerCase;
     const userData = await registerUser(registerData);
     dispatch({ type: "SET_USER", currentUser: userData });
     history.push("/");
@@ -107,7 +104,7 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleFormValidity();
+    // handleFormValidity();
     handleRegister(formData);
   };
 
@@ -116,49 +113,91 @@ function Register() {
       <FetchUsers setAllUsers={setAllUsers} />
       <h1>Register Page</h1>
 
-      {image && <img className="avatar-image" src={image} alt={first_name} />}
+      {formData.image && (
+        <img
+          className="avatar-image"
+          src={formData.image}
+          alt={formData.first_name}
+        />
+      )}
 
       <button onClick={handleShowPassword}>Show password</button>
       <button onClick={handleShowPasswordConfirm}>Show password Confirm</button>
-
+      <img
+        width="150px"
+        src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-camera-512.png"
+        alt="camera"
+        onClick={selectImage}
+      />
       <form onSubmit={handleSubmit}>
-        <label>
-          First Name:
-          <Input type="text" name="first_name" />
-        </label>
-        <label>
-          Last name:
-          <Input type="text" name="last_name" />
-        </label>
-        <label>
-          Email:
-          <Input type="email" name="email" />
-        </label>
-        <label>
-          Password:
-          <Input type={showPassword ? "text" : "password"} name="password" />
-        </label>
-        <label>
-          Password confirmation:
+        <FormControl>
+          <InputLabel htmlFor="first_name">First Name:</InputLabel>
+          <Input
+            type="text"
+            value={formData.first_name}
+            name="first_name"
+            onChange={handleChange}
+          />
+        </FormControl>
+
+        <FormControl>
+          <InputLabel htmlFor="last_name">Last name:</InputLabel>
+          <Input
+            type="text"
+            value={formData.last_name}
+            name="last_name"
+            onChange={handleChange}
+          />
+        </FormControl>
+        <FormControl>
+          <InputLabel htmlFor="Email">Email Address:</InputLabel>
+          <Input
+            type="email"
+            value={formData.email}
+            name="email"
+            onChange={handleChange}
+          />
+        </FormControl>
+
+        <FormControl>
+          <InputLabel htmlFor="password">Password:</InputLabel>
+          <Input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+        </FormControl>
+
+        <FormControl>
+          <InputLabel htmlFor="password-confirm">
+            Password confirmation:
+          </InputLabel>
           <Input
             type={showPasswordConfirm ? "text" : "password"}
             name="password-confirm"
+            onChange={(e) => setPasswordConfirm(e.target.value)}
           />
-        </label>
-        <label>
-          Zip code:
-          <Input type="number" name="zip_code" />
-        </label>
+        </FormControl>
 
-        <img
-          width="150px"
-          src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-camera-512.png"
-          alt="camera"
-          onClick={selectImage}
+        <FormControl>
+          <InputLabel htmlFor="zip_code">Zip code:</InputLabel>
+          <Input
+            type="text"
+            value={formData.zip_code}
+            name="zip_code"
+            onChange={handleChange}
+          />
+        </FormControl>
+
+        <input
+          type="file"
+          id="image-upload"
+          style={{ visibility: "hidden" }}
+          onChange={onImageSelected}
         />
-        <input type="submit" value="Submit" />
+        <button type="submit">Register</button>
       </form>
-      <button>Register</button>
     </>
   );
 }
