@@ -1,24 +1,11 @@
-# README
+# Challenge.me
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Challenge.me is a competition based website to help people up skill and connect with others.
 
-Things you may want to cover:
+### ERD Model
 
-* Ruby version
+[ERD Model Link](https://drive.google.com/file/d/1RRBVYVGRTHg_QKhXZZWKkVzDssRaBRi_/view?usp=sharing)
 
-* System dependencies
+![ERD model](https://i.imgur.com/cctOsNU.png)
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- ...
