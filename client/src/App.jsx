@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Home from "./screens/main/Home/Home";
 import Login from "./screens/auth/Login/Login";
 import Register from "./screens/auth/Register/Register";
-import ContestForm from "./screens/main/ContestForm/ContestForm";
+import ContestCreate from "./screens/main/ContestCreate/ContestCreate";
 import { useStateValue } from "./providers/CurrentUserProvider";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
@@ -30,7 +30,7 @@ function App() {
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/create-contest" component={ContestForm} />
+      <Route path="/create-contest" component={ContestCreate} />
       <Route path="/" component={Home} />
     </Switch>
   );
