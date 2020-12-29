@@ -52,6 +52,9 @@ function Register() {
   };
 
   const onImageSelected = (e) => {
+    // the image result is equal to event.target.files of index 0, the reason why I'm doing [0] is because:
+    // a user should only be able to upload 1 image at a time as his profile pic, and not multiple, files is an array.
+
     const img = e.target.files[0];
     const fileReader = new FileReader();
     fileReader.addEventListener("load", () => {
@@ -60,6 +63,7 @@ function Register() {
         image: fileReader.result,
       });
     });
+    // if we have an uploaded image, aka if we have "img", read the image as data url (readAsDataURL is a built in function)
     if (img) {
       fileReader.readAsDataURL(img);
     }
@@ -78,6 +82,7 @@ function Register() {
   };
 
   const handleFormValidity = () => {
+    // all these checks are imported from authUtils.js in services folder.
     checkPasswordLength(password, setPasswordAlert);
     checkEmailValidity(email, setEmailValidityAlert);
     checkEmailUniqueness(allUsers, email, setEmailUniquenessAlert);
@@ -89,12 +94,6 @@ function Register() {
     }
   };
 
-  const handleRegister = async (registerData) => {
-    const userData = await registerUser(registerData);
-    dispatch({ type: "SET_USER", currentUser: userData });
-    history.push("/");
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -103,12 +102,15 @@ function Register() {
     }));
   };
 
+  const handleRegister = async (registerData) => {
+    const userData = await registerUser(registerData);
+    dispatch({ type: "SET_USER", currentUser: userData });
+    history.push("/");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     handleFormValidity();
-    // if the password is at least 6 characters at minimum,
-    // and the email is valid and unique, and the password matches password confirm,
-    // and we have a name and a zipcode, go ahead and register, else: do nothing.
     if (
       !passwordAlert &&
       !emailValidityAlert &&
@@ -121,6 +123,9 @@ function Register() {
     } else {
       return;
     }
+    // if the password is at least 6 characters at minimum,
+    // and the email is valid and unique, and the password matches password confirm,
+    // and we have a name and a zipcode, go ahead and register, else: do nothing.
   };
 
   return (
