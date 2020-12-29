@@ -64,7 +64,6 @@ function Register() {
   const onImageSelected = (e) => {
     // the image result is equal to event.target.files of index 0, the reason why I'm doing [0] is because:
     // a user should only be able to upload 1 image at a time as his profile pic, and not multiple, files is an array.
-
     const img = e.target.files[0];
     const fileReader = new FileReader();
     fileReader.addEventListener("load", () => {
