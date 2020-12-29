@@ -10,6 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { useHistory } from "react-router-dom";
 import { loginUser } from "../../../services/auth";
 import Button from "@material-ui/core/Button";
+import Wrapper from "./styledLogin";
 
 function Login() {
   const [, dispatch] = useStateValue();
@@ -45,7 +46,8 @@ function Login() {
   };
 
   return (
-    <>
+    <Wrapper>
+      <h1>Login</h1>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -84,11 +86,13 @@ function Login() {
             }
           />
         </FormControl>
-        <Button color="primary" variant="contained" type="submit">
-          Login
-        </Button>
+        <div className="button-container">
+          <Button color="primary" variant="contained" type="submit">
+            Login
+          </Button>
+        </div>
       </form>
-    </>
+    </Wrapper>
   );
 }
 

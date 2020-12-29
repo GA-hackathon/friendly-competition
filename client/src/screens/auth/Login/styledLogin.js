@@ -33,7 +33,7 @@ let Wrapper = styled.div`
     width: 100px;
     align-self: center;
     margin-bottom: 5px;
-    border: "1px solid black";
+    border: "1px solid black"};
     border-radius: 50%;
     object-fit: cover;
   }
@@ -43,6 +43,9 @@ let Wrapper = styled.div`
     width: 100px;
     align-self: center;
     margin-bottom: 5px;
+  }
+  .button-container{
+    padding: 20px;
   }
 `;
 
