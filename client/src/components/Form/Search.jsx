@@ -13,7 +13,7 @@ let Div = styled.div`
 `;
 function Search({ search, setSearch }) {
   return (
-    <Div>
+    <>
       <FormControl>
         <Input
           value={search}
@@ -31,7 +31,7 @@ function Search({ search, setSearch }) {
           }
         />
       </FormControl>
-    </Div>
+    </>
   );
 }
 

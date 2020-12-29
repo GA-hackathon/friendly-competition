@@ -5,6 +5,20 @@ div.contest-form{
     align-items: center;
 }
 
+.image-container{
+    display: flex;
+    width: fit-content;
+    align-items: center;
+}
+
+.MuiSvgIcon-root{
+    font-size: 2rem !important;
+}
+
+.image-icon{
+    margin-left: 1rem;
+}
+
 form.input-group{
     display: flex;
     flex-direction: column; 
@@ -13,4 +27,8 @@ form.input-group{
 button.form-btn{
     max-width: 80%;
     margin-top: 1rem;
+}
+
+.input-group label{
+    margin: 1rem;
 }
