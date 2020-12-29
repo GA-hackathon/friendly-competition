@@ -1,6 +1,10 @@
   class User < ApplicationRecord
     has_secure_password
   
+    has_many :votes, dependent: :destroy
+    has_many :submissions, dependent: :destroy
+    has_many :contests, dependent: :destroy
+
     validates :first_name, presence: true, uniqueness: false
     validates :email, presence: true, uniqueness: true
 

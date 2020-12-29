@@ -30,10 +30,7 @@ export const verifyUser = async () => {
       const resp = await api.get("/auth/verify");
       return resp.data;
     } catch (error) {
-      let path = window.location.origin + "/login";
-      if (window.location.origin + "/login" !== path) {
-        window.location.href = window.location.origin + "/login";
-      }
+      throw error;
     }
   }
   return null;
