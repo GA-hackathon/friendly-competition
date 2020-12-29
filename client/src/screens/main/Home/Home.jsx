@@ -51,13 +51,20 @@ function Home() {
     fetchOldestContests();
   }, []);
 
-  const newContestsJSX = newestContests.map((contest) => <ContestCard />);
+  const newContestsJSX = newestContests.map((contest) => (
+    <ContestCard key={contest.id} contest={contest} />
+  ));
+
   return (
     <Layout>
       <Wrapper>
         <div className="row-1">
           {currentUser && <>Welcome {currentUser?.first_name}</>}&nbsp;
           <Search search={search} setSearch={setSearch} />
+        </div>
+        <div className="contests-container">
+          <h1> NEW Contests</h1>
+          <div className="contests">{newContestsJSX}</div>
         </div>
       </Wrapper>
     </Layout>

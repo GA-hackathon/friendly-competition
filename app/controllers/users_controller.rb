@@ -2,15 +2,16 @@
 
 class UsersController < ApplicationController
   before_action :authorize_request, only: [ :update, :destroy]
-  before_action :set_user, only: [:show, :update]
+  before_action :set_user, only: [:show, :get_submissions, :update]
 
   def index
     @users = User.all
     # @submissions = Submission.all
 
-    # for @user in @users do  
-    #   @user.submissions = @submissions.filter {|s| s == @submission }
-    # end
+    for @user in @users do  
+      @user.submissions = @submissions.filter {|s| s == @submission }
+    end
+    
     render json: @users, :include => {:contests => {:include => :submissions}} 
   end
 
@@ -18,6 +19,15 @@ class UsersController < ApplicationController
     render json: @user, :include => {:contests => {:include => :submissions}} 
   end
 
+  def index_submissions
+    @users = User.all
+
+    render json: @users, include: :submissions
+  end
+
+  def get_submissions
+    render json: @user, include: :submissions
+  end
 
   # POST /users
   def create
