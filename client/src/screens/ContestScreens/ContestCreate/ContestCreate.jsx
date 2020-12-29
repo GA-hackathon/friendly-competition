@@ -1,8 +1,12 @@
 import { useState } from "react";
-import Input from "@material-ui/core/Input";
-import Button from "@material-ui/core/Button";
 import "./ContestCreate.css";
 import Layout from "../../../layout/Layout";
+import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@material-ui/icons/Clear";
+import Input from "@material-ui/core/Input";
+import Button from "@material-ui/core/Button";
+import WallpaperIcon from '@material-ui/icons/Wallpaper';;
+
 
 function ContestCreate() {
   const [formData, setFormData] = useState({
@@ -10,7 +14,7 @@ function ContestCreate() {
     description: "",
     date: null,
     zip_code: "",
-    picture: null,
+    picture: "",
   });
 
   const handleSubmit = (e) => {
@@ -18,6 +22,32 @@ function ContestCreate() {
     setFormData({ [e.target.name]: e.target.value });
     console.log(formData);
   };
+
+  const onImageSelected = (e) => {
+    const img = e.target.files[0];
+    const fileReader = new FileReader()
+    fileReader.addEventListener('load', () => {
+      setFormData({
+        ...formData,
+        picture: fileReader.result,
+      })
+    })
+    if (img) {
+      fileReader.readAsDataURL(img);
+    }
+  }
+
+  const selectImage = () => {
+    document.getElementById('image-upload').click()
+  }
+
+  const handleImageClear = () => {
+    setFormData({
+      ...formData,
+      picture: ""
+    })
+    document.getElementById('image-upload').value = "";
+  }
 
   return (
     <Layout>
@@ -45,9 +75,23 @@ function ContestCreate() {
             Zip code:
             <Input type="text" name="zip_code" />
           </label>
-          <label>
-            Picture:
-            <Input type="text" name="picture" />
+          <label className='image-container'>Contest picture:
+          {formData.picture ? (<img className='contest-image' src={formData.picture} alt='contest picture' />) : (<WallpaperIcon className='image-icon' />)}
+          {formData.picture && (
+            <IconButton
+            onMouseDown={(e) => e.preventDefault()}
+            className="icon-button clear"
+            onClick={handleImageClear}
+          >
+            <ClearIcon className="big-camera-icon" />
+          </IconButton>
+          )}
+          <input
+            type="file"
+            id="image-upload"
+            style={{ visibility: "hidden" }}
+            onChange={onImageSelected}
+          />
           </label>
           <Button variant="contained" className="form-btn" type="submit">
             Get Started
