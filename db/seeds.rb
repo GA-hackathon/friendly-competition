@@ -26,8 +26,8 @@ puts "#{User.count} users created"
 puts "#{Contest.count} contests created"
 
 @submission1 = Submission.create!(name: "Tequila Sunrise Cocktail", content: Faker::Lorem.sentence(word_count: 30), file: "https://www.thespruceeats.com/thmb/8w9Zmdiva5L23O_HJhjgYC-jKEU=/1365x1365/smart/filters:no_upscale()/tequila-sunrise-recipe-760754-19_preview-5b02f856119fa80037651942.jpeg", user: @admin, contest: @contest1)
-@submission2 = Submission.create!(name: "Rainbow Paradise Cocktail", rules: Faker::Lorem.sentence(word_count: 15), ending_time: DateTime.strptime("1/12/2021 17:00", "%m/%d/%Y %H:%M"), user: @daniel, contest: @contest1)
-@submission3 = Submission.create!(name: "Rainbow Paradise Cocktail", rules: Faker::Lorem.sentence(word_count: 15), ending_time: DateTime.strptime("1/12/2021 17:00", "%m/%d/%Y %H:%M"), user: @daniel, contest: @contest2)
+@submission2 = Submission.create!(name: "Tequila Sunrise Cocktail 2", content: Faker::Lorem.sentence(word_count: 30), file: "https://www.thespruceeats.com/thmb/8w9Zmdiva5L23O_HJhjgYC-jKEU=/1365x1365/smart/filters:no_upscale()/tequila-sunrise-recipe-760754-19_preview-5b02f856119fa80037651942.jpeg", user: @admin, contest: @contest1)
+@submission3 = Submission.create!(name: "Tequila Sunrise Cocktail 3", content: Faker::Lorem.sentence(word_count: 30), file: "https://www.thespruceeats.com/thmb/8w9Zmdiva5L23O_HJhjgYC-jKEU=/1365x1365/smart/filters:no_upscale()/tequila-sunrise-recipe-760754-19_preview-5b02f856119fa80037651942.jpeg", user: @admin, contest: @contest1)
 
 puts "#{Submission.count} submissions created"
 
