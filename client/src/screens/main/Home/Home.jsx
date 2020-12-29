@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { useStateValue } from "../../providers/CurrentUserProvider";
-import { removeToken } from "../../services/auth";
+import { useStateValue } from "../../../providers/CurrentUserProvider";
+import { removeToken } from "../../../services/auth";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
-import Search from "../../components/Form/Search";
+import Search from "../../../components/Form/Search";
 import Wrapper from "./styledHome";
 
 function Home() {
@@ -22,6 +22,15 @@ function Home() {
     <Wrapper>
       <div className="row-1">
         {currentUser && <>Welcome {currentUser?.first_name}</>}&nbsp;
+        {currentUser?.image && (
+          <>
+            <img
+              src={currentUser?.image}
+              alt={currentUser?.first_name}
+              className="user-avatar-header"
+            />
+          </>
+        )}
         <Search search={search} setSearch={setSearch} />
       </div>
       <div>

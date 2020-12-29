@@ -1,6 +1,6 @@
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
-import Home from "./screens/main/Home";
+import Home from "./screens/main/Home/Home";
 import Login from "./screens/auth/Login/Login";
 import Register from "./screens/auth/Register/Register";
 import { useStateValue } from "./providers/CurrentUserProvider";

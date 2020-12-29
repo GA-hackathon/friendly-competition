@@ -31,7 +31,6 @@ function Register() {
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const [emailValidityAlert, setEmailValidityAlert] = useState(false);
   const [emailUniquenessAlert, setEmailUniquenessAlert] = useState(false);
-  const [isValidPassword, setValidPassword] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [allUsers, setAllUsers] = useState([]);
   const [passwordLengthValid, setPasswordLengthValid] = useState(false);
@@ -50,10 +49,9 @@ function Register() {
     last_name: "",
     email: "",
     password: "",
-    zip_code: "",
     image: "",
   });
-  const { first_name, last_name, email, password, zip_code, image } = formData;
+  const { first_name, last_name, email, password, image } = formData;
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -132,7 +130,6 @@ function Register() {
     e.preventDefault();
     handleFormValidity();
     if (
-      !isValidPassword &&
       !emailValidityAlert &&
       !emailUniquenessAlert &&
       password === passwordConfirm &&
@@ -148,7 +145,7 @@ function Register() {
     }
     // if the conditions for the password are true.
     // and the email is valid and unique.
-    // and we have a name and a zipcode, go ahead and register, else: do nothing.
+    // and we have a name, go ahead and register, else: do nothing.
   };
 
   return (
@@ -249,19 +246,6 @@ function Register() {
               </div>
             </>
           )}
-
-          <div className="input-container">
-            <FormControl>
-              <InputLabel htmlFor="zip_code">Zip code</InputLabel>
-              <Input
-                required
-                type="text"
-                value={zip_code}
-                name="zip_code"
-                onChange={handleChange}
-              />
-            </FormControl>
-          </div>
 
           <div className="input-container">
             <FormControl>
