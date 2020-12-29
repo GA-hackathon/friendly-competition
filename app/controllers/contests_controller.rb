@@ -52,6 +52,6 @@ class ContestsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def contest_params
-      params.require(:contest).permit(:category, :name, :rules)
+      params.require(:contest).permit(:category, :name, :rules, :ending_time)
     end
 end
