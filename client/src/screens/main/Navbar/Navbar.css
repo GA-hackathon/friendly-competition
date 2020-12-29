@@ -22,17 +22,21 @@ li a {
     display: block;
 }
 
+.navbar-img{
+    list-style-type: none;
+    display: inline;
+    float: right;
+    padding: 0;
+    margin: 0.5rem 1rem 0 0;
+}
+
 li.img{
     background: #EEE7E7;
     border-radius: 50%;
-    display: inline;
-    float: right;
-    width: 5rem;
-    height: 5rem;
-    margin: 0.5rem 0.5rem 0 0;
+    width: 4rem;
+    height: 4rem;
 }
 
 li.text{
-    display: inline;
-    float: right;
+    text-align: center;
 }
