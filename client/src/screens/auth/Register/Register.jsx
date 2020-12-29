@@ -15,6 +15,7 @@ import {
   checkPasswordLength,
   checkEmailValidity,
 } from "../../../utils/authUtils.js";
+import Wrapper from "./styledRegister";
 
 function Register() {
   const [{ currentUser }, dispatch] = useStateValue();
@@ -72,20 +73,20 @@ function Register() {
   //   document.getElementById("image-upload").value = "";
   // };
 
-  // const handleFormValidity = () => {
-  //   checkPasswordLength(password, setPasswordAlert);
-  //   checkEmailValidity(email, setEmailValidityAlert);
-  //   if (allUsers.find((user) => user.email === email)) {
-  //     setEmailUniquenessAlert(true);
-  //   } else {
-  //     setEmailUniquenessAlert(false);
-  //   }
-  //   if (password !== passwordConfirm) {
-  //     return setPasswordConfirmAlert(true);
-  //   } else {
-  //     setPasswordConfirmAlert(false);
-  //   }
-  // };
+  const handleFormValidity = () => {
+    checkPasswordLength(password, setPasswordAlert);
+    checkEmailValidity(email, setEmailValidityAlert);
+    if (allUsers.find((user) => user.email === email)) {
+      return setEmailUniquenessAlert(true);
+    } else {
+      setEmailUniquenessAlert(false);
+    }
+    if (password !== passwordConfirm) {
+      return setPasswordConfirmAlert(true);
+    } else {
+      setPasswordConfirmAlert(false);
+    }
+  };
 
   const handleRegister = async (registerData) => {
     const userData = await registerUser(registerData);
@@ -103,19 +104,17 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // handleFormValidity();
+    handleFormValidity();
     handleRegister(formData);
   };
 
   return (
-    <>
+    <Wrapper>
       <FetchUsers setAllUsers={setAllUsers} />
       <h1>Register Page</h1>
 
       {image && <img className="avatar-image" src={image} alt={first_name} />}
 
-      <button onClick={handleShowPassword}>Show password</button>
-      <button onClick={handleShowPasswordConfirm}>Show password Confirm</button>
       <img
         width="150px"
         src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-camera-512.png"
@@ -123,65 +122,107 @@ function Register() {
         onClick={selectImage}
       />
       <form onSubmit={handleSubmit}>
-        <FormControl>
-          <InputLabel htmlFor="first_name">First Name:</InputLabel>
-          <Input
-            type="text"
-            value={first_name}
-            name="first_name"
-            onChange={handleChange}
-          />
-        </FormControl>
+        <div className="input-container">
+          <FormControl>
+            <InputLabel htmlFor="first_name">First Name</InputLabel>
 
-        <FormControl>
-          <InputLabel htmlFor="last_name">Last name:</InputLabel>
-          <Input
-            type="text"
-            value={last_name}
-            name="last_name"
-            onChange={handleChange}
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="Email">Email Address:</InputLabel>
-          <Input
-            type="email"
-            value={email}
-            name="email"
-            onChange={handleChange}
-          />
-        </FormControl>
+            <Input
+              type="text"
+              value={first_name}
+              name="first_name"
+              onChange={handleChange}
+            />
+          </FormControl>
+        </div>
 
-        <FormControl>
-          <InputLabel htmlFor="password">Password:</InputLabel>
-          <Input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={password}
-            onChange={handleChange}
-          />
-        </FormControl>
+        <div className="input-container">
+          <FormControl>
+            <InputLabel htmlFor="last_name">Last Name</InputLabel>
+            <Input
+              type="text"
+              value={last_name}
+              name="last_name"
+              onChange={handleChange}
+            />
+          </FormControl>
+        </div>
 
-        <FormControl>
-          <InputLabel htmlFor="password-confirm">
-            Password confirmation:
-          </InputLabel>
-          <Input
-            type={showPasswordConfirm ? "text" : "password"}
-            name="password-confirm"
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-          />
-        </FormControl>
+        <div className="input-container">
+          <FormControl>
+            <InputLabel htmlFor="Email">Email Address</InputLabel>
+            <Input
+              type="email"
+              value={email}
+              name="email"
+              onChange={handleChange}
+            />
+          </FormControl>
+        </div>
+        <div className="input-container">
+          <FormControl>
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <Input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={password}
+              onChange={handleChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleShowPassword}
+                    onMouseDown={(e) => e.preventDefault()}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+        </div>
 
-        <FormControl>
-          <InputLabel htmlFor="zip_code">Zip code:</InputLabel>
-          <Input
-            type="text"
-            value={zip_code}
-            name="zip_code"
-            onChange={handleChange}
-          />
-        </FormControl>
+        <div className="input-container">
+          <FormControl>
+            <InputLabel htmlFor="password-confirm">Confirm Password</InputLabel>
+            <Input
+              type={showPasswordConfirm ? "text" : "password"}
+              name="password-confirm"
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleShowPasswordConfirm}
+                    onMouseDown={(e) => e.preventDefault()}
+                  >
+                    {showPasswordConfirm ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+        </div>
+
+        {passwordConfirmAlert && (
+          <>
+            <div className="alert">
+              <p>Password and password confirmation do not match!</p>
+            </div>
+            <br />
+          </>
+        )}
+
+        <div className="input-container">
+          <FormControl>
+            <InputLabel htmlFor="zip_code">Zip code:</InputLabel>
+            <Input
+              type="text"
+              value={zip_code}
+              name="zip_code"
+              onChange={handleChange}
+            />
+          </FormControl>
+        </div>
 
         <input
           type="file"
@@ -191,7 +232,7 @@ function Register() {
         />
         <button type="submit">Register</button>
       </form>
-    </>
+    </Wrapper>
   );
 }
 
