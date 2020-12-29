@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
     if @user.save
       @token = encode({id: @user.id})
-       render json: {
+      render json: {
         user: @user.attributes.except("password_digest"),
         token: @token
         }, status: :created
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:email, :first_name, :last_name, :zip_code, :password)
+      params.require(:user).permit(:email, :first_name, :last_name, :image, :password)
     end
 
 end

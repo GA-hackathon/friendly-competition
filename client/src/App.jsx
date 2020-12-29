@@ -1,9 +1,9 @@
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
-import Intro from "./screens/main/Intro";
+import Home from "./screens/main/Home/Home";
 import Login from "./screens/auth/Login/Login";
 import Register from "./screens/auth/Register/Register";
-import ContestForm from './screens/main/ContestForm/ContestForm';
+import ContestForm from "./screens/main/ContestForm/ContestForm";
 import { useStateValue } from "./providers/CurrentUserProvider";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
@@ -19,7 +19,7 @@ function App() {
       if (!userData) {
         console.log("no user signed in at the moment");
       } else {
-        console.log("signed in!");
+        console.log(` you are signed in!`);
       }
       // lines 18 to 22 will be deleted once we verify that the user auth works
     };
@@ -30,8 +30,8 @@ function App() {
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route exact path="/" component={Intro} />
-      <Route path='/create-contest' component={ContestForm} />
+      <Route path="/create-contest" component={ContestForm} />
+      <Route path="/" component={Home} />
     </Switch>
   );
 }
