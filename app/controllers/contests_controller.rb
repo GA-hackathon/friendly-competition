@@ -1,21 +1,23 @@
 class ContestsController < ApplicationController
-  before_action :set_contest, only: [:show, :update, :destroy]
-
+  before_action :set_contest, only: [:show]
+  before_action :authorize_request, only: [ :create, :update, :destroy] 
+  before_action :set_user_contest, only: [ :update, :destroy]
   # GET /contests
   def index
-    @contests = Contest.all
+    @contests = Contest.newest_first
 
-    render json: @contests
+    render json: @contests, include: :user
   end
 
   # GET /contests/1
   def show
-    render json: @contest
+    render json: @contest, include: :user
   end
 
   # POST /contests
   def create
     @contest = Contest.new(contest_params)
+    @contest.user = @current_user
 
     if @contest.save
       render json: @contest, status: :created, location: @contest
@@ -27,7 +29,7 @@ class ContestsController < ApplicationController
   # PATCH/PUT /contests/1
   def update
     if @contest.update(contest_params)
-      render json: @contest
+      render json: @contest, include: :user
     else
       render json: @contest.errors, status: :unprocessable_entity
     end
@@ -42,6 +44,10 @@ class ContestsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_contest
       @contest = Contest.find(params[:id])
+    end
+    
+    def set_user_contest
+      @contest = @current_user.contests.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
