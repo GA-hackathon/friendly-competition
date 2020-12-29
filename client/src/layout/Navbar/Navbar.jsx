@@ -32,19 +32,17 @@ function Navbar() {
           </li>
         </ul>
         <div className="user-column">
-          {/* <li className="img"></li> */}
-          {/* <li className="text">User</li> */}
-          {!currentUser ? (
-            <AccountCircleIcon className="icon" />
-          ) : (
-            <Link to={`/users/${currentUser?.id}`}>
+          <Link className="profile-link" to={`/users/${currentUser?.id}`}>
+            {!currentUser?.image ? (
+              <AccountCircleIcon className="icon" />
+            ) : (
               <img
                 className="user-image"
                 src={currentUser?.image}
                 alt={currentUser?.name}
               />
-            </Link>
-          )}
+            )}
+          </Link>
           <div className="name">{currentUser?.first_name}</div>
           <div className="buttons">
             {currentUser && (

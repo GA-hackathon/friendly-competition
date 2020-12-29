@@ -9,10 +9,14 @@ import Wrapper from "./styledUserDetail";
 import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import IconButton from "@material-ui/core/IconButton";
+import { getAllSubmissions } from "../../../services/submissions";
+// import { getAllUsers } from "../../../services/users";
 
 export default function UserDetail({ getOneUser }) {
   const [user, setUser] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  // const [allSubmissions, setAllSubmissions] = useState([]);
+  // const [allUsers, setAllUsers] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -24,6 +28,14 @@ export default function UserDetail({ getOneUser }) {
     getData();
   }, [getOneUser, id]);
 
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     const userData = await getAllUsers();
+  //     setAllUsers(allUsers);
+  //   };
+  //   fetchUsers();
+  // }, [allUsers]);
+
   const contestsJSX = user?.contests?.map((contest) => (
     <Link
       key={contest.id}
@@ -34,15 +46,35 @@ export default function UserDetail({ getOneUser }) {
     </Link>
   ));
 
-  const submissionsJSX = user?.submissions?.map((submission) => (
-    <Link
-      key={submission.id}
-      className="contests-link"
-      to={`./../entries/${submission.id}`}
-    >
-      {submission?.name}
-    </Link>
-  ));
+  // useEffect(() => {
+  //   const fetchSubmissions = async () => {
+  //     const submissionData = await getAllSubmissions();
+  //     setAllSubmissions(
+  //       submissionData?.filter((submission) => submission.user_id === user?.id)
+  //     );
+  //   };
+  //   fetchSubmissions();
+  // }, [user?.id]);
+
+  // const foundSubmissions = () => {
+  //   allSubmissions?.find((user) => user?.submission());
+  // };
+
+  // const foundSubmissions = () =>
+  //   allSubmissions?.find(
+  //     (submission) =>
+  //       submission?.user_id === user?.id && user?.id === submission?.user_id
+  //   );
+
+  // const submissionsJSX = foundSubmissions().map((submission) => (
+  //   <Link
+  //     key={submission.id}
+  //     className="contests-link"
+  //     to={`./submissions/${submission.id}`}
+  //   >
+  //     {submission?.name}
+  //   </Link>
+  // ));
 
   if (!loaded) {
     return <FunOrangeLoading />;
@@ -73,7 +105,7 @@ export default function UserDetail({ getOneUser }) {
           <div className="check-contests">{checkContests(user)}</div>
           <div className="contests-container">{contestsJSX}</div>
           {/* <div className="check-contests">{checkSubmissions(user)}</div> */}
-          <div className="contests-container">{submissionsJSX}</div>
+          {/* <div className="contests-container">{submissionsJSX}</div> */}
         </div>
         <br />
         <br />

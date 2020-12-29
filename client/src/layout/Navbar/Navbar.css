@@ -41,10 +41,10 @@ li.text {
   text-align: center;
 }
 .user-image {
-  width: 70px;
-  height: 70px;
-  max-width: 70px;
-  max-height: 70px;
+  width: 50px;
+  height: 50px;
+  max-width: 50px;
+  max-height: 50px;
   border: 1px solid black;
   border-radius: 50%;
   object-fit: cover;
@@ -54,12 +54,11 @@ li.text {
   flex-flow: column nowrap;
   align-items: center;
 }
-.MuiSvgIcon-root  {
-
+.MuiSvgIcon-root.icon {
+  font-size: 50px;
 }
 
-.icon {
-  font-size: 70px;
-  max-width: 150px;
-  max-height: 150px;
+.profile-link {
+  text-decoration: none;
+  color: black;
 }

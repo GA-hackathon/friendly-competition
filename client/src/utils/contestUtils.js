@@ -15,3 +15,12 @@ export const checkContests = (user) => {
 //   }
 //   return <h1>{user?.contests?.submissions?.length}&nbsp;Entries:</h1>;
 // };
+
+// export const checkSubmissions = (user) => {
+//   if (user?.submissions?.length === 0) {
+//     return <h1>{user?.name}&nbsp;has no entries</h1>;
+//   } else if (user?.submissions.length === 1) {
+//     return <h1>{user?.submissions?.length}&nbsp;Entry:</h1>;
+//   }
+//   return <h1>{user?.submissions?.length}&nbsp;Entries:</h1>;
+// };
