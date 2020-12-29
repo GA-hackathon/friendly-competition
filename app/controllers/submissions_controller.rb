@@ -5,6 +5,7 @@ class SubmissionsController < ApplicationController
 
   # GET /submissions
   def index
+    @votes = Vote.all
     @submissions = Submission.newest_first
 
     for @submission in @submissions do  
@@ -16,7 +17,7 @@ class SubmissionsController < ApplicationController
 
   # GET /submissions/1
   def show
-    render json: @submission
+    render json: @submission, :include => {:user => {:include => :votes}} 
   end
 
   # POST /submissions
