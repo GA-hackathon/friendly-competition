@@ -14,6 +14,7 @@ import FetchUsers from "../../../components/Helpers/FetchAllUsers";
 import {
   checkPasswordLength,
   checkEmailValidity,
+  checkEmailUniqueness,
 } from "../../../utils/authUtils.js";
 import Wrapper from "./styledRegister";
 
@@ -76,11 +77,8 @@ function Register() {
   const handleFormValidity = () => {
     checkPasswordLength(password, setPasswordAlert);
     checkEmailValidity(email, setEmailValidityAlert);
-    if (allUsers.find((user) => user.email === email)) {
-      return setEmailUniquenessAlert(true);
-    } else {
-      setEmailUniquenessAlert(false);
-    }
+    checkEmailUniqueness(allUsers, email, setEmailUniquenessAlert);
+
     if (password !== passwordConfirm) {
       return setPasswordConfirmAlert(true);
     } else {
@@ -158,6 +156,22 @@ function Register() {
             />
           </FormControl>
         </div>
+        {emailValidityAlert && (
+          <>
+            <div className="alert">
+              <p>Please enter a valid email address</p>
+            </div>
+            <br />
+          </>
+        )}
+        {emailUniquenessAlert && (
+          <>
+            <div className="alert">
+              <p>This email address already exists!</p>
+            </div>
+            <br />
+          </>
+        )}
         <div className="input-container">
           <FormControl>
             <InputLabel htmlFor="password">Password</InputLabel>
