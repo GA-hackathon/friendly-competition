@@ -36,8 +36,12 @@ function ContestForm() {
                   <Input type='text' name='description' />
               </label>
               <label>
-                  Dates:
-                  <Input type='date' name='date' />
+                  Start Date:
+                  <Input type='date' name='start_date' />
+              </label>
+              <label>
+                  End Date:
+                  <Input type='date' name='end_date' />
               </label>
               <label>
                   Zip code:
