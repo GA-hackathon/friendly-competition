@@ -15,6 +15,7 @@ function Login() {
   const [, dispatch] = useStateValue();
   const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
+
   const handleLogin = async (loginData) => {
     loginData.email = loginData?.email?.toLowerCase();
     const userData = await loginUser(loginData);

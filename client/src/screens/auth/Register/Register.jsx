@@ -36,7 +36,7 @@ function Register() {
     zip_code: "",
     image: "",
   });
-  // const { first_name, last_name, email, password, zip_code, image } = formData;
+  const { first_name, last_name, email, password, zip_code, image } = formData;
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -88,7 +88,6 @@ function Register() {
   // };
 
   const handleRegister = async (registerData) => {
-    // registerData.email = registerData?.email?.toLowerCase;
     const userData = await registerUser(registerData);
     dispatch({ type: "SET_USER", currentUser: userData });
     history.push("/");
@@ -113,13 +112,7 @@ function Register() {
       <FetchUsers setAllUsers={setAllUsers} />
       <h1>Register Page</h1>
 
-      {formData.image && (
-        <img
-          className="avatar-image"
-          src={formData.image}
-          alt={formData.first_name}
-        />
-      )}
+      {image && <img className="avatar-image" src={image} alt={first_name} />}
 
       <button onClick={handleShowPassword}>Show password</button>
       <button onClick={handleShowPasswordConfirm}>Show password Confirm</button>
@@ -134,7 +127,7 @@ function Register() {
           <InputLabel htmlFor="first_name">First Name:</InputLabel>
           <Input
             type="text"
-            value={formData.first_name}
+            value={first_name}
             name="first_name"
             onChange={handleChange}
           />
@@ -144,7 +137,7 @@ function Register() {
           <InputLabel htmlFor="last_name">Last name:</InputLabel>
           <Input
             type="text"
-            value={formData.last_name}
+            value={last_name}
             name="last_name"
             onChange={handleChange}
           />
@@ -153,7 +146,7 @@ function Register() {
           <InputLabel htmlFor="Email">Email Address:</InputLabel>
           <Input
             type="email"
-            value={formData.email}
+            value={email}
             name="email"
             onChange={handleChange}
           />
@@ -164,7 +157,7 @@ function Register() {
           <Input
             type={showPassword ? "text" : "password"}
             name="password"
-            value={formData.password}
+            value={password}
             onChange={handleChange}
           />
         </FormControl>
@@ -184,7 +177,7 @@ function Register() {
           <InputLabel htmlFor="zip_code">Zip code:</InputLabel>
           <Input
             type="text"
-            value={formData.zip_code}
+            value={zip_code}
             name="zip_code"
             onChange={handleChange}
           />
