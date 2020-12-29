@@ -13,6 +13,7 @@ import {
   getNewestContests,
   getOldestContests,
 } from "../../../services/contests";
+import ContestCard from "../../../components/ContestComponents/ContestCard";
 
 function Home() {
   const [{ currentUser }] = useStateValue();
@@ -50,6 +51,7 @@ function Home() {
     fetchOldestContests();
   }, []);
 
+  const newContestsJSX = newestContests.map((contest) => <ContestCard />);
   return (
     <Layout>
       <Wrapper>
