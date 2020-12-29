@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import Navbar from './Navbar/Navbar.jsx';
 
 function Intro() {
   return (
     <div>
-      HIII
+      <Navbar />
       <Link to="/login">Login</Link>
       <Link to="/register">Sign up!</Link>
     </div>
