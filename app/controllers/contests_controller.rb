@@ -6,12 +6,13 @@ class ContestsController < ApplicationController
   def index
     @contests = Contest.newest_first
 
-    render json: @contests, include: :user
+    render json: @contests, :include => {:user => {:include => :submissions}} 
   end
 
   # GET /contests/1
   def show
-    render json: @contest, include: :user
+    render json: @contest, :include => {:user => {:include => :submissions}} 
+
   end
 
   # POST /contests
@@ -52,6 +53,6 @@ class ContestsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def contest_params
-      params.require(:contest).permit(:category, :name, :rules, :ending_time)
+      params.require(:contest).permit(:category, :name, :rules, :ending_time, :picture)
     end
 end

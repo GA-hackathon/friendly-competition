@@ -1,0 +1,88 @@
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useParams } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { DarkModeContext } from "../../../components/Context/DarkModeContext";
+import { checkContests, checkSubmissions } from "../../../utils/contestUtils";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { goBack } from "../../../utils/goBack";
+import Wrapper from "./styledUserDetail";
+import LinearProgressLoading from "../../../components/Loading/LinearProgressLoading";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import IconButton from "@material-ui/core/IconButton";
+
+export default function UserDetail({ getOneUser }) {
+  const [user, setUser] = useState(null);
+  const [darkMode] = useContext(DarkModeContext);
+  const [loaded, setLoaded] = useState(false);
+  const { id } = useParams();
+
+  useEffect(() => {
+    const getData = async () => {
+      const getUser = await getOneUser(id);
+      setUser(getUser);
+      setLoaded(true);
+    };
+    getData();
+  }, [getOneUser, id]);
+
+  const contestsJSX = user?.contests?.map((contest) => (
+    <Link
+      key={contest.id}
+      className="contests-link"
+      to={`./../contests/${contest.id}`}
+    >
+      {contest?.name}
+    </Link>
+  ));
+
+  const submissionsJSX = user?.submissions?.map((submission) => (
+    <Link
+      key={submission.id}
+      className="contests-link"
+      to={`./../entries/${submission.id}`}
+    >
+      {submission?.name}
+    </Link>
+  ));
+
+  if (!loaded) {
+    return <LinearProgressLoading darkMode={darkMode} />;
+  }
+
+  return (
+    <Wrapper darkMode={darkMode}>
+      <div className="content-container">
+        <div className="title-container">
+          <div className="arrow-container">
+            <IconButton className="arrow-icon" onClick={goBack}>
+              <ArrowBackIcon className="arrow-icon" />
+            </IconButton>
+          </div>
+          <Typography className="title">
+            {!user?.image && <AccountCircleIcon className="user-icon" />}
+            {user?.name}
+          </Typography>
+          {user?.image && (
+            <img className="user-image" src={user?.image} alt={user?.name} />
+          )}
+        </div>
+        <hr className="top-hr" />
+        <div className="inner-column">
+          <div className="check-contests">{checkContests(user)}</div>
+          <div className="contests-container">{contestsJSX}</div>
+          <div className="check-contests">{checkSubmissions(user)}</div>
+          <div className="contests-container">{submissionsJSX}</div>
+        </div>
+        <br />
+        <br />
+        <hr className="bottom-hr" />
+        <div className="buttons">
+          <Button variant="contained" color="secondary" onClick={goBack}>
+            Go Back
+          </Button>
+        </div>
+      </div>
+    </Wrapper>
+  );
+}
