@@ -8,6 +8,7 @@ import { useStateValue } from "./providers/CurrentUserProvider";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { verifyUser } from "./services/auth";
+import UsersContainer from "./containers/UsersContainer";
 
 function App() {
   const [, dispatch] = useStateValue();
@@ -27,12 +28,15 @@ function App() {
   }, [history, dispatch]);
 
   return (
-    <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
-      <Route path="/create-contest" component={ContestCreate} />
-      <Route path="/" component={Home} />
-    </Switch>
+    <>
+      <UsersContainer />
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/create-contest" component={ContestCreate} />
+        <Route exact path="/" component={Home} />
+      </Switch>
+    </>
   );
 }
 

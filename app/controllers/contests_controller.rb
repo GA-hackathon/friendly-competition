@@ -1,7 +1,7 @@
 class ContestsController < ApplicationController
   before_action :set_contest, only: [:show]
-  before_action :authorize_request, only: [ :create, :update, :destroy] 
-  before_action :set_user_contest, only: [ :update, :destroy]
+  before_action :authorize_request, only: [:create, :update, :destroy] 
+  before_action :set_user_contest, only: [:update, :destroy]
   # GET /contests
   def index
     @contests = Contest.newest_first
@@ -12,7 +12,6 @@ class ContestsController < ApplicationController
   # GET /contests/1
   def show
     render json: @contest, :include => {:user => {:include => :submissions}} 
-
   end
 
   # POST /contests

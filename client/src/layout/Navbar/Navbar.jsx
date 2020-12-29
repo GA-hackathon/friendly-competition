@@ -1,4 +1,3 @@
-import React, { Fragment, useState } from "react";
 import "./Navbar.css";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
@@ -38,11 +37,13 @@ function Navbar() {
           {!currentUser ? (
             <AccountCircleIcon className="icon" />
           ) : (
-            <img
-              className="user-image"
-              src={currentUser?.image}
-              alt={currentUser?.name}
-            />
+            <Link to={`/users/${currentUser?.id}`}>
+              <img
+                className="user-image"
+                src={currentUser?.image}
+                alt={currentUser?.name}
+              />
+            </Link>
           )}
           <div className="name">{currentUser?.first_name}</div>
           <div className="buttons">

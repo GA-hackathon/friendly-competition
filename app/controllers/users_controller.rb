@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
 
-    render json: @user_params, :include => {:contests => {:include => :submissions}} 
+    render json: @users, :include => {:contests => {:include => :submissions}} 
   end
 
   def show

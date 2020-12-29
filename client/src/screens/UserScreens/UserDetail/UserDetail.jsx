@@ -1,19 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { DarkModeContext } from "../../../components/Context/DarkModeContext";
 import { checkContests, checkSubmissions } from "../../../utils/contestUtils";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { goBack } from "../../../utils/goBack";
 import Wrapper from "./styledUserDetail";
-import LinearProgressLoading from "../../../components/Loading/LinearProgressLoading";
+import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import IconButton from "@material-ui/core/IconButton";
 
 export default function UserDetail({ getOneUser }) {
   const [user, setUser] = useState(null);
-  const [darkMode] = useContext(DarkModeContext);
   const [loaded, setLoaded] = useState(false);
   const { id } = useParams();
 
@@ -47,11 +45,14 @@ export default function UserDetail({ getOneUser }) {
   ));
 
   if (!loaded) {
-    return <LinearProgressLoading darkMode={darkMode} />;
+    return <FunOrangeLoading />;
   }
 
+  // https://stackoverflow.com/questions/49528336/how-to-make-space-between-strings-using-concat-method-in-javascript/49528547
+  let fullName = user?.first_name?.concat(" ", user?.last_name);
+
   return (
-    <Wrapper darkMode={darkMode}>
+    <Wrapper>
       <div className="content-container">
         <div className="title-container">
           <div className="arrow-container">
@@ -61,7 +62,7 @@ export default function UserDetail({ getOneUser }) {
           </div>
           <Typography className="title">
             {!user?.image && <AccountCircleIcon className="user-icon" />}
-            {user?.name}
+            {fullName}
           </Typography>
           {user?.image && (
             <img className="user-image" src={user?.image} alt={user?.name} />
@@ -71,7 +72,7 @@ export default function UserDetail({ getOneUser }) {
         <div className="inner-column">
           <div className="check-contests">{checkContests(user)}</div>
           <div className="contests-container">{contestsJSX}</div>
-          <div className="check-contests">{checkSubmissions(user)}</div>
+          {/* <div className="check-contests">{checkSubmissions(user)}</div> */}
           <div className="contests-container">{submissionsJSX}</div>
         </div>
         <br />

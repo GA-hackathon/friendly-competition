@@ -7,7 +7,7 @@ class VotesController < ApplicationController
   def index
     @votes = Vote.all
 
-    render json: @votes
+    render json: @votes    
   end
 
   # GET /votes/1
