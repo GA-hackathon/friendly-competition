@@ -21,6 +21,30 @@ let Wrapper = styled.div`
   .alert {
     color: red;
   }
+
+  .user-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .big-user-image {
+    height: 100px;
+    width: 100px;
+    align-self: center;
+    margin-bottom: 5px;
+    border: ${({ darkMode }) =>
+      darkMode === "dark" ? "1px solid white" : "1px solid black"};
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .big-icon {
+    height: 100px;
+    width: 100px;
+    align-self: center;
+    margin-bottom: 5px;
+  }
 `;
 
 export default Wrapper;

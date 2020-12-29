@@ -84,7 +84,9 @@ function Login() {
             }
           />
         </FormControl>
-        <Button type="submit">Login</Button>
+        <Button color="primary" variant="contained" type="submit">
+          Login
+        </Button>
       </form>
     </>
   );

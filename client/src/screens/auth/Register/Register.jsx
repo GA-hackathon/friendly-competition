@@ -17,9 +17,12 @@ import {
   checkEmailUniqueness,
 } from "../../../utils/authUtils.js";
 import Wrapper from "./styledRegister";
+import CameraIcon from "@material-ui/icons/CameraAlt";
+import ClearIcon from "@material-ui/icons/Clear";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 function Register() {
-  const [{ currentUser }, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const [emailValidityAlert, setEmailValidityAlert] = useState(false);
@@ -66,13 +69,13 @@ function Register() {
     document.getElementById("image-upload").click();
   };
 
-  // const handleImageClear = () => {
-  //   setFormData({
-  //     ...formData,
-  //     image: "",
-  //   });
-  //   document.getElementById("image-upload").value = "";
-  // };
+  const handleImageClear = () => {
+    setFormData({
+      ...formData,
+      image: "",
+    });
+    document.getElementById("image-upload").value = "";
+  };
 
   const handleFormValidity = () => {
     checkPasswordLength(password, setPasswordAlert);
@@ -80,7 +83,7 @@ function Register() {
     checkEmailUniqueness(allUsers, email, setEmailUniquenessAlert);
 
     if (password !== passwordConfirm) {
-      return setPasswordConfirmAlert(true);
+      setPasswordConfirmAlert(true);
     } else {
       setPasswordConfirmAlert(false);
     }
@@ -103,7 +106,21 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleFormValidity();
-    handleRegister(formData);
+    // if the password is at least 6 characters at minimum,
+    // and the email is valid and unique, and the password matches password confirm,
+    // and we have a name and a zipcode, go ahead and register, else: do nothing.
+    if (
+      !passwordAlert &&
+      !emailValidityAlert &&
+      !emailUniquenessAlert &&
+      password === passwordConfirm &&
+      password &&
+      first_name
+    ) {
+      handleRegister(formData);
+    } else {
+      return;
+    }
   };
 
   return (
@@ -111,20 +128,41 @@ function Register() {
       <FetchUsers setAllUsers={setAllUsers} />
       <h1>Register Page</h1>
 
-      {image && <img className="avatar-image" src={image} alt={first_name} />}
+      <div className="user-image-container">
+        {image ? (
+          <img className="big-user-image" src={image} alt={first_name} />
+        ) : (
+          <AccountCircleIcon className="big-icon" />
+        )}
+        <footer className="picture-buttons">
+          {/* if we have an uploaded image show the image clear icon */}
+          {image && (
+            <IconButton
+              onMouseDown={(e) => e.preventDefault()}
+              className="icon-button clear"
+              onClick={handleImageClear}
+            >
+              <ClearIcon className="big-camera-icon" />
+            </IconButton>
+          )}
 
-      <img
-        width="150px"
-        src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-camera-512.png"
-        alt="camera"
-        onClick={selectImage}
-      />
+          <IconButton
+            onMouseDown={(e) => e.preventDefault()}
+            className="icon-button"
+            onClick={selectImage}
+          >
+            <CameraIcon className="big-camera-icon" />
+          </IconButton>
+        </footer>
+      </div>
+
       <form onSubmit={handleSubmit}>
         <div className="input-container">
           <FormControl>
             <InputLabel htmlFor="first_name">First Name</InputLabel>
 
             <Input
+              required
               type="text"
               value={first_name}
               name="first_name"
@@ -149,6 +187,7 @@ function Register() {
           <FormControl>
             <InputLabel htmlFor="Email">Email Address</InputLabel>
             <Input
+              required
               type="email"
               value={email}
               name="email"
@@ -161,7 +200,6 @@ function Register() {
             <div className="alert">
               <p>Please enter a valid email address</p>
             </div>
-            <br />
           </>
         )}
         {emailUniquenessAlert && (
@@ -169,13 +207,13 @@ function Register() {
             <div className="alert">
               <p>This email address already exists!</p>
             </div>
-            <br />
           </>
         )}
         <div className="input-container">
           <FormControl>
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input
+              required
               type={showPassword ? "text" : "password"}
               name="password"
               value={password}
@@ -194,11 +232,18 @@ function Register() {
             />
           </FormControl>
         </div>
-
+        {passwordAlert && (
+          <>
+            <div className="alert">
+              <p>Password has to be 6 characters at minimum</p>
+            </div>
+          </>
+        )}
         <div className="input-container">
           <FormControl>
             <InputLabel htmlFor="password-confirm">Confirm Password</InputLabel>
             <Input
+              required
               type={showPasswordConfirm ? "text" : "password"}
               name="password-confirm"
               onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -222,7 +267,6 @@ function Register() {
             <div className="alert">
               <p>Password and password confirmation do not match!</p>
             </div>
-            <br />
           </>
         )}
 
@@ -230,6 +274,7 @@ function Register() {
           <FormControl>
             <InputLabel htmlFor="zip_code">Zip code:</InputLabel>
             <Input
+              required
               type="text"
               value={zip_code}
               name="zip_code"
@@ -244,7 +289,9 @@ function Register() {
           style={{ visibility: "hidden" }}
           onChange={onImageSelected}
         />
-        <button type="submit">Register</button>
+        <Button color="primary" variant="contained" type="submit">
+          Register
+        </Button>
       </form>
     </Wrapper>
   );
