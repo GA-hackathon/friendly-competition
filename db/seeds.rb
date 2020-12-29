@@ -22,6 +22,11 @@ puts "#{User.count} users created"
 
 @contest1 = Contest.create!(name: "best cocktail", category: "cocktails", rules: Faker::Lorem.sentence(word_count: 10), ending_time: DateTime.strptime("10/20/1999 17:00", "%m/%d/%Y %H:%M"), picture: "https://static.vinepair.com/wp-content/uploads/2017/11/50-best-cocktails-inside.jpg" ,user: @admin)
 @contest2 = Contest.create!(name: "Bye", category: "nope", rules: Faker::Lorem.sentence(word_count: 15), ending_time: DateTime.strptime("1/12/2021 17:00", "%m/%d/%Y %H:%M"), picture: "https://i.insider.com/5c2f4534ad9571412a2cb0c3?width=1067&format=jpeg", user: @daniel)
+@contest3 = Contest.create!(name: "best cocktail", category: "cocktails", rules: Faker::Lorem.sentence(word_count: 10), ending_time: DateTime.strptime("10/20/1999 17:00", "%m/%d/%Y %H:%M"), picture: "https://static.vinepair.com/wp-content/uploads/2017/11/50-best-cocktails-inside.jpg" ,user: @admin)
+@contest4 = Contest.create!(name: "best cocktail", category: "cocktails", rules: Faker::Lorem.sentence(word_count: 10), ending_time: DateTime.strptime("10/20/1999 17:00", "%m/%d/%Y %H:%M"), picture: "https://static.vinepair.com/wp-content/uploads/2017/11/50-best-cocktails-inside.jpg" ,user: @admin)
+@contest5 = Contest.create!(name: "best cocktail", category: "cocktails", rules: Faker::Lorem.sentence(word_count: 10), ending_time: DateTime.strptime("10/20/1999 17:00", "%m/%d/%Y %H:%M"), picture: "https://static.vinepair.com/wp-content/uploads/2017/11/50-best-cocktails-inside.jpg" ,user: @admin)
+@contest6 = Contest.create!(name: "best cocktail", category: "cocktails", rules: Faker::Lorem.sentence(word_count: 10), ending_time: DateTime.strptime("10/20/1999 17:00", "%m/%d/%Y %H:%M"), picture: "https://static.vinepair.com/wp-content/uploads/2017/11/50-best-cocktails-inside.jpg" ,user: @admin)
+@contest7 = Contest.create!(name: "Bye", category: "nope", rules: Faker::Lorem.sentence(word_count: 15), ending_time: DateTime.strptime("1/12/2021 17:00", "%m/%d/%Y %H:%M"), picture: "https://i.insider.com/5c2f4534ad9571412a2cb0c3?width=1067&format=jpeg", user: @daniel)
 
 puts "#{Contest.count} contests created"
 

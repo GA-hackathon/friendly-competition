@@ -10,16 +10,15 @@ import {
   postContest,
   putContest,
   getOneContest,
-  getNewestContests,
   getOldestContests,
 } from "../../../services/contests";
-import ContestCard from "../../../components/ContestComponents/ContestCard";
+import ContestCard from "../../../components/ContestComponents/ContestCard/ContestCard";
+import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
 
 function Home() {
   const [{ currentUser }] = useStateValue();
   const [search, setSearch] = useState("");
   const [allContests, setAllContests] = useState([]);
-  const [newestContests, setNewestContests] = useState([]);
   const [oldestContests, setOldestContests] = useState([]);
 
   const [loaded, setLoaded] = useState(false);
@@ -34,24 +33,19 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    const fetchNewestContests = async () => {
-      const newContestData = await getNewestContests();
-      setNewestContests(newContestData);
-      setLoaded(true);
-    };
-    fetchNewestContests();
-  }, []);
-
-  useEffect(() => {
     const fetchOldestContests = async () => {
       const oldContestData = await getOldestContests();
       setOldestContests(oldContestData);
-      setLoaded(true);
     };
     fetchOldestContests();
   }, []);
 
-  const newContestsJSX = newestContests.map((contest) => (
+  //  only get the newest 6 contests
+  const newContestsJSX = allContests
+    .slice(0, 6)
+    .map((contest) => <ContestCard key={contest.id} contest={contest} />);
+
+  const oldContestsJSX = oldestContests.map((contest) => (
     <ContestCard key={contest.id} contest={contest} />
   ));
 
@@ -62,10 +56,17 @@ function Home() {
           {currentUser && <>Welcome {currentUser?.first_name}</>}&nbsp;
           <Search search={search} setSearch={setSearch} />
         </div>
-        <div className="contests-container">
-          <h1> NEW Contests</h1>
-          <div className="contests">{newContestsJSX}</div>
-        </div>
+        {!loaded ? (
+          <FunOrangeLoading />
+        ) : (
+          <div className="all-contests">
+            <div className="contest-container oldest">{oldContestsJSX}</div>
+            <div className="contests-container newest">
+              <h1> NEW Contests</h1>
+              <div className="contests">{newContestsJSX}</div>
+            </div>
+          </div>
+        )}
       </Wrapper>
     </Layout>
   );

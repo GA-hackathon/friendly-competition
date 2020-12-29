@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :likes
-  get '/contests/oldest', to: 'contests#last_2'
-  get '/contests/newest', to: 'contests#first_2'
+  get '/contests/oldest', to: 'contests#last'
+  get '/contests/newest', to: 'contests#first'
   resources :contests
   resources :submissions
   get '/users/submissions', to: 'users#index_submissions'
