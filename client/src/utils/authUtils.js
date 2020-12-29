@@ -1,3 +1,4 @@
+// for email validation referenced this: https://www.itsolutionstuff.com/post/react-email-validation-exampleexample.html
 import { validEmailPattern as pattern } from "./regexUtils";
 
 export const checkEmailValidity = (email, setEmailAlert) => {
@@ -11,13 +12,29 @@ export const checkEmailValidity = (email, setEmailAlert) => {
   }
 };
 
-export const checkPasswordLength = (password, setPasswordAlert) => {
+// export const checkPasswordValidity = (password, setPasswordAlert) => {
+// passwordPattern referred from here = "https://codepen.io/prampcontent/pen/WgepzQ"
+//{minimum 8, maximum 20}
+//   let passwordPattern = new RegExp(/^(((?=.*[0-9])(?=.*[a-zA-Z])).{8,20}$)/i);
+
+//   if (typeof password !== undefined) {
+//     if (!pattern.test(passwordPattern)) {
+//       return setPasswordAlert(true);
+//     }
+
+//     if (pattern.test(passwordPattern)) {
+//       setPasswordAlert(false);
+//     }
+//   }
+// };
+
+export const checkPasswordValidity = (password, setPasswordAlert) => {
   if (typeof password !== undefined) {
-    if (password?.length < 6) {
+    if (password?.length < 8) {
       setPasswordAlert(true);
     }
   }
-  if (password?.length >= 6) {
+  if (password?.length >= 8) {
     setPasswordAlert(false);
   }
 };

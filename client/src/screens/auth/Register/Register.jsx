@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { useHistory } from "react-router-dom";
 import FetchUsers from "../../../components/Helpers/FetchAllUsers";
 import {
-  checkPasswordLength,
+  checkPasswordValidity,
   checkEmailValidity,
   checkEmailUniqueness,
 } from "../../../utils/authUtils.js";
@@ -83,7 +83,7 @@ function Register() {
 
   const handleFormValidity = () => {
     // all these checks are imported from authUtils.js in services folder.
-    checkPasswordLength(password, setPasswordAlert);
+    checkPasswordValidity(password, setPasswordAlert);
     checkEmailValidity(email, setEmailValidityAlert);
     checkEmailUniqueness(allUsers, email, setEmailUniquenessAlert);
 
@@ -123,10 +123,13 @@ function Register() {
     } else {
       return;
     }
-    // if the password is at least 6 characters at minimum,
+    // if the password is at least 8 characters at minimum,
     // and the email is valid and unique, and the password matches password confirm,
     // and we have a name and a zipcode, go ahead and register, else: do nothing.
   };
+  // this doesn't work atm, don't be intimidated, lol.
+
+  let passwordPattern = new RegExp(/^((?=.*[0-9])(?=.*[a-zA-Z])).{8,20}$/);
 
   return (
     <Wrapper>
@@ -214,11 +217,27 @@ function Register() {
             </div>
           </>
         )}
+
+        <div className="input-container">
+          <FormControl>
+            <InputLabel htmlFor="zip_code">Zip code:</InputLabel>
+            <Input
+              required
+              type="text"
+              value={zip_code}
+              name="zip_code"
+              onChange={handleChange}
+            />
+          </FormControl>
+        </div>
+
         <div className="input-container">
           <FormControl>
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input
               required
+              pattern={passwordPattern}
+              title="Enter a password between 8 and 20 characters, containing at least one letter and one number, one special character, one upper case letter, one lower case letter"
               type={showPassword ? "text" : "password"}
               name="password"
               value={password}
@@ -240,7 +259,7 @@ function Register() {
         {passwordAlert && (
           <>
             <div className="alert">
-              <p>Password has to be 6 characters at minimum</p>
+              <p>Password has to be between 8 and 20 characters</p>
             </div>
           </>
         )}
@@ -275,19 +294,6 @@ function Register() {
           </>
         )}
 
-        <div className="input-container">
-          <FormControl>
-            <InputLabel htmlFor="zip_code">Zip code:</InputLabel>
-            <Input
-              required
-              type="text"
-              value={zip_code}
-              name="zip_code"
-              onChange={handleChange}
-            />
-          </FormControl>
-        </div>
-
         <input
           type="file"
           id="image-upload"
@@ -295,7 +301,7 @@ function Register() {
           onChange={onImageSelected}
         />
         <Button color="primary" variant="contained" type="submit">
-          Register
+          Get Started
         </Button>
       </form>
     </Wrapper>

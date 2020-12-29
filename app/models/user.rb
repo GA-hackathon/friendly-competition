@@ -8,7 +8,9 @@
 
     validates :zip_code, presence: true, uniqueness: false
     validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
-    validates :password, length: { minimum: 6 }
+
+  # UX Team said to make the password minimum 8 characters, and maximum 20.
+    validates :password, length: { minimum: 8, maximum: 20 }
 
     # saves email field to lowercase once registering so when logging in it's case insensitive for the email
     before_save { email.downcase! }
