@@ -1,6 +1,6 @@
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
-import Intro from "./screens/main/Intro";
+import Home from "./screens/main/Home";
 import Login from "./screens/auth/Login/Login";
 import Register from "./screens/auth/Register/Register";
 import { useStateValue } from "./providers/CurrentUserProvider";
@@ -29,7 +29,7 @@ function App() {
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/" component={Intro} />
+      <Route path="/" component={Home} />
     </Switch>
   );
 }

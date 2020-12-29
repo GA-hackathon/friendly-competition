@@ -10,7 +10,12 @@ let Wrapper = styled.div`
     left: 0;
     position: absolute;
     top: 0;
-    padding: 20px;
+    padding: 10px;
+  }
+
+  .arrow-icon {
+    font-size: clamp(30px, 10vw, 60px);
+    padding: 1px;
   }
 
   .inner-column {
@@ -67,9 +72,6 @@ let Wrapper = styled.div`
     width: 100px;
     align-self: center;
     margin-bottom: 5px;
-  }
-  .arrow-icon {
-    color: black;
   }
 `;
 

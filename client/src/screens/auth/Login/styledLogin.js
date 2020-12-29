@@ -37,6 +37,15 @@ let Wrapper = styled.div`
     align-items: center;
   }
 
+  .inner-column {
+    padding: 20px;
+    display: block;
+    width: 98%;
+    max-width: 1100px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
   .big-user-image {
     height: 100px;
     width: 100px;
@@ -61,7 +70,12 @@ let Wrapper = styled.div`
     left: 0;
     position: absolute;
     top: 0;
-    padding: 20px;
+    padding: 10px;
+  }
+
+  .arrow-icon {
+    font-size: clamp(30px, 10vw, 60px);
+    padding: 1px;
   }
 
 `;

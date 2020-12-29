@@ -3,7 +3,7 @@ import { useStateValue } from "../../providers/CurrentUserProvider";
 import { removeToken } from "../../services/auth";
 import { useHistory } from "react-router-dom";
 
-function Intro() {
+function Home() {
   const [{ currentUser }, dispatch] = useStateValue();
 
   const history = useHistory();
@@ -16,7 +16,7 @@ function Intro() {
 
   return (
     <div>
-      HIII
+      <div>{currentUser && <>Welcome {currentUser?.first_name}</>}</div>
       {currentUser && <button onClick={handleLogout}>Log Out</button>}
       <Link to="/login">Login</Link>
       <Link to="/register">Sign up!</Link>
@@ -24,4 +24,4 @@ function Intro() {
   );
 }
 
-export default Intro;
+export default Home;
