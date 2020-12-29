@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { verifyUser } from "./services/auth";
 import UsersContainer from "./containers/UsersContainer";
+import ContestsContainer from "./containers/ContestsContainer";
 
 function App() {
   const [, dispatch] = useStateValue();

@@ -9,6 +9,18 @@ class ContestsController < ApplicationController
     render json: @contests, :include => {:user => {:include => :submissions}} 
   end
 
+  def last_2
+    @contests = Contest.last(2)
+
+    render json: @contests, :include => {:user => {:include => :submissions}} 
+  end
+
+  def first_2
+    @contests = Contest.first(2)
+
+    render json: @contests, :include => {:user => {:include => :submissions}} 
+  end
+
   # GET /contests/1
   def show
     render json: @contest, :include => {:user => {:include => :submissions}} 
