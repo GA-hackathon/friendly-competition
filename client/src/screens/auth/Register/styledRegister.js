@@ -6,6 +6,30 @@ let Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
+  .arrow-container {
+    left: 0;
+    position: absolute;
+    top: 0;
+    padding: 20px;
+  }
+
+  .inner-column {
+    padding: 20px;
+    display: block;
+    width: 98%;
+    max-width: 1100px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .title-container {
+    text-align: center;
+    h1 {
+      font-size: 2rem;
+      font-size: clamp(1.5rem, 5.5vw, 2rem);
+    }
+  }
+
   .MuiFormControl-root {
     width: 250px;
     max-width: 250px;
@@ -43,6 +67,9 @@ let Wrapper = styled.div`
     width: 100px;
     align-self: center;
     margin-bottom: 5px;
+  }
+  .arrow-icon {
+    color: black;
   }
 `;
 

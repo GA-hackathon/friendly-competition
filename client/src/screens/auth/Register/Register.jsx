@@ -18,8 +18,11 @@ import {
 } from "../../../utils/authUtils.js";
 import Wrapper from "./styledRegister";
 import CameraIcon from "@material-ui/icons/CameraAlt";
+import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import ClearIcon from "@material-ui/icons/Clear";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { goBack } from "../../../utils/goBack";
+import ArrowBackOutlinedIcon from "@material-ui/icons/ArrowBackOutlined";
 
 function Register() {
   const [, dispatch] = useStateValue();
@@ -127,183 +130,197 @@ function Register() {
     // and the email is valid and unique, and the password matches password confirm,
     // and we have a name and a zipcode, go ahead and register, else: do nothing.
   };
-  // this doesn't work atm, don't be intimidated, lol.
 
   let passwordPattern = new RegExp(/^((?=.*[0-9])(?=.*[a-zA-Z])).{8,20}$/);
 
   return (
     <Wrapper>
       <FetchUsers setAllUsers={setAllUsers} />
-      <h1>Register Page</h1>
-
-      <div className="user-image-container">
-        {image ? (
-          <img className="big-user-image" src={image} alt={first_name} />
-        ) : (
-          <AccountCircleIcon className="big-icon" />
-        )}
-        <footer className="picture-buttons">
-          {/* if we have an uploaded image show the image clear icon */}
-          {image && (
-            <IconButton
-              onMouseDown={(e) => e.preventDefault()}
-              className="icon-button clear"
-              onClick={handleImageClear}
-            >
-              <ClearIcon className="big-camera-icon" />
-            </IconButton>
-          )}
-
-          <IconButton
-            onMouseDown={(e) => e.preventDefault()}
-            className="icon-button"
-            onClick={selectImage}
-          >
-            <CameraIcon className="big-camera-icon" />
-          </IconButton>
-        </footer>
+      <div className="arrow-container">
+        <IconButton className="arrow-icon" onClick={goBack}>
+          <ArrowBackOutlinedIcon className="arrow-icon" />
+        </IconButton>
       </div>
 
-      <form onSubmit={handleSubmit}>
-        <div className="input-container">
-          <FormControl>
-            <InputLabel htmlFor="first_name">First Name</InputLabel>
+      <div className="inner-column">
+        <div className="title-container">
+          <h1>Register</h1>
+        </div>
+        <div className="user-image-container">
+          {image ? (
+            <img className="big-user-image" src={image} alt={first_name} />
+          ) : (
+            <AccountCircleIcon className="big-icon" />
+          )}
+          <footer className="picture-buttons">
+            {/* if we have an uploaded image show the image clear icon */}
+            {image && (
+              <IconButton
+                onMouseDown={(e) => e.preventDefault()}
+                className="icon-button clear"
+                onClick={handleImageClear}
+              >
+                <ClearIcon className="big-camera-icon" />
+              </IconButton>
+            )}
 
-            <Input
-              required
-              type="text"
-              value={first_name}
-              name="first_name"
-              onChange={handleChange}
-            />
-          </FormControl>
+            <IconButton
+              onMouseDown={(e) => e.preventDefault()}
+              className="icon-button"
+              onClick={selectImage}
+            >
+              {image ? (
+                <CameraIcon className="big-camera-icon" />
+              ) : (
+                <AddAPhotoIcon className="big-camera-icon" />
+              )}
+            </IconButton>
+          </footer>
         </div>
 
-        <div className="input-container">
-          <FormControl>
-            <InputLabel htmlFor="last_name">Last Name</InputLabel>
-            <Input
-              type="text"
-              value={last_name}
-              name="last_name"
-              onChange={handleChange}
-            />
-          </FormControl>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="input-container">
+            <FormControl>
+              <InputLabel htmlFor="first_name">First Name</InputLabel>
 
-        <div className="input-container">
-          <FormControl>
-            <InputLabel htmlFor="Email">Email Address</InputLabel>
-            <Input
-              required
-              type="email"
-              value={email}
-              name="email"
-              onChange={handleChange}
-            />
-          </FormControl>
-        </div>
-        {emailValidityAlert && (
-          <>
-            <div className="alert">
-              <p>Please enter a valid email address</p>
-            </div>
-          </>
-        )}
-        {emailUniquenessAlert && (
-          <>
-            <div className="alert">
-              <p>This email address already exists!</p>
-            </div>
-          </>
-        )}
+              <Input
+                required
+                type="text"
+                value={first_name}
+                name="first_name"
+                onChange={handleChange}
+              />
+            </FormControl>
+          </div>
 
-        <div className="input-container">
-          <FormControl>
-            <InputLabel htmlFor="zip_code">Zip code:</InputLabel>
-            <Input
-              required
-              type="text"
-              value={zip_code}
-              name="zip_code"
-              onChange={handleChange}
-            />
-          </FormControl>
-        </div>
+          <div className="input-container">
+            <FormControl>
+              <InputLabel htmlFor="last_name">Last Name</InputLabel>
+              <Input
+                type="text"
+                value={last_name}
+                name="last_name"
+                onChange={handleChange}
+              />
+            </FormControl>
+          </div>
 
-        <div className="input-container">
-          <FormControl>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input
-              required
-              pattern={passwordPattern}
-              title="Enter a password between 8 and 20 characters, containing at least one letter and one number, one special character, one upper case letter, one lower case letter"
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={password}
-              onChange={handleChange}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleShowPassword}
-                    onMouseDown={(e) => e.preventDefault()}
-                  >
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-        </div>
-        {passwordAlert && (
-          <>
-            <div className="alert">
-              <p>Password has to be between 8 and 20 characters</p>
-            </div>
-          </>
-        )}
-        <div className="input-container">
-          <FormControl>
-            <InputLabel htmlFor="password-confirm">Confirm Password</InputLabel>
-            <Input
-              required
-              type={showPasswordConfirm ? "text" : "password"}
-              name="password-confirm"
-              onChange={(e) => setPasswordConfirm(e.target.value)}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleShowPasswordConfirm}
-                    onMouseDown={(e) => e.preventDefault()}
-                  >
-                    {showPasswordConfirm ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-        </div>
+          <div className="input-container">
+            <FormControl>
+              <InputLabel htmlFor="Email">Email Address</InputLabel>
+              <Input
+                required
+                type="email"
+                value={email}
+                name="email"
+                onChange={handleChange}
+              />
+            </FormControl>
+          </div>
+          {emailValidityAlert && (
+            <>
+              <div className="alert">
+                <p>Please enter a valid email address</p>
+              </div>
+            </>
+          )}
+          {emailUniquenessAlert && (
+            <>
+              <div className="alert">
+                <p>This email address already exists!</p>
+              </div>
+            </>
+          )}
 
-        {passwordConfirmAlert && (
-          <>
-            <div className="alert">
-              <p>Password and password confirmation do not match!</p>
-            </div>
-          </>
-        )}
+          <div className="input-container">
+            <FormControl>
+              <InputLabel htmlFor="zip_code">Zip code</InputLabel>
+              <Input
+                required
+                type="text"
+                value={zip_code}
+                name="zip_code"
+                onChange={handleChange}
+              />
+            </FormControl>
+          </div>
 
-        <input
-          type="file"
-          id="image-upload"
-          style={{ visibility: "hidden" }}
-          onChange={onImageSelected}
-        />
-        <Button color="primary" variant="contained" type="submit">
-          Get Started
-        </Button>
-      </form>
+          <div className="input-container">
+            <FormControl>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input
+                required
+                pattern={passwordPattern}
+                title="Enter a password between 8 and 20 characters, containing at least one letter and one number, one special character, one upper case letter, one lower case letter"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                onChange={handleChange}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowPassword}
+                      onMouseDown={(e) => e.preventDefault()}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </div>
+          {passwordAlert && (
+            <>
+              <div className="alert">
+                <p>Password has to be between 8 and 20 characters</p>
+              </div>
+            </>
+          )}
+          <div className="input-container">
+            <FormControl>
+              <InputLabel htmlFor="password-confirm">
+                Confirm Password
+              </InputLabel>
+              <Input
+                required
+                type={showPasswordConfirm ? "text" : "password"}
+                name="password-confirm"
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowPasswordConfirm}
+                      onMouseDown={(e) => e.preventDefault()}
+                    >
+                      {showPasswordConfirm ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </div>
+
+          {passwordConfirmAlert && (
+            <>
+              <div className="alert">
+                <p>Password and password confirmation do not match!</p>
+              </div>
+            </>
+          )}
+
+          <input
+            type="file"
+            id="image-upload"
+            style={{ visibility: "hidden" }}
+            onChange={onImageSelected}
+          />
+          <Button color="primary" variant="contained" type="submit">
+            Get Started
+          </Button>
+        </form>
+      </div>
     </Wrapper>
   );
 }

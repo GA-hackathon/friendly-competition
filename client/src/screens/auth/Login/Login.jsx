@@ -11,6 +11,8 @@ import { useHistory } from "react-router-dom";
 import { loginUser } from "../../../services/auth";
 import Button from "@material-ui/core/Button";
 import Wrapper from "./styledLogin";
+import { goBack } from "../../../utils/goBack";
+import ArrowBackOutlinedIcon from "@material-ui/icons/ArrowBackOutlined";
 
 function Login() {
   const [, dispatch] = useStateValue();
@@ -47,51 +49,61 @@ function Login() {
 
   return (
     <Wrapper>
-      <h1>Login</h1>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleLogin(formData);
-        }}
-      >
-        <FormControl>
-          <InputLabel htmlFor="email">Email Address</InputLabel>
-          <Input
-            id="email"
-            type="text"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="password">Password</InputLabel>
+      <div className="arrow-container">
+        <IconButton className="arrow-icon" onClick={goBack}>
+          <ArrowBackOutlinedIcon className="arrow-icon" />
+        </IconButton>
+      </div>
 
-          <Input
-            name="password"
-            id="password"
-            type={showPassword ? "text" : "password"}
-            value={formData.password}
-            onChange={handleChange}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <div className="button-container">
-          <Button color="primary" variant="contained" type="submit">
-            Login
-          </Button>
+      <div className="inner-column">
+        <div className="title-container">
+          <h1>Login</h1>
         </div>
-      </form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin(formData);
+          }}
+        >
+          <FormControl>
+            <InputLabel htmlFor="email">Email Address</InputLabel>
+            <Input
+              id="email"
+              type="text"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </FormControl>
+          <FormControl>
+            <InputLabel htmlFor="password">Password</InputLabel>
+
+            <Input
+              name="password"
+              id="password"
+              type={showPassword ? "text" : "password"}
+              value={formData.password}
+              onChange={handleChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+          <div className="button-container">
+            <Button color="primary" variant="contained" type="submit">
+              Login
+            </Button>
+          </div>
+        </form>
+      </div>
     </Wrapper>
   );
 }
