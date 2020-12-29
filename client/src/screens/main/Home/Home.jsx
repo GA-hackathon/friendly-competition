@@ -1,45 +1,63 @@
 import { Link } from "react-router-dom";
 import { useStateValue } from "../../../providers/CurrentUserProvider";
-import { removeToken } from "../../../services/auth";
-import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Search from "../../../components/Form/Search";
 import Wrapper from "./styledHome";
-import Layout from '../../../layout/Layout'
-function Home() {
-  const [{ currentUser }, dispatch] = useStateValue();
-  const [search, setSearch] = useState("");
+import Layout from "../../../layout/Layout";
+import {
+  destroyContest,
+  getAllContests,
+  postContest,
+  putContest,
+  getOneContest,
+  getNewestContests,
+  getOldestContests,
+} from "../../../services/contests";
 
-  const history = useHistory();
-  const handleLogout = () => {
-    dispatch({ type: "REMOVE_USER" });
-    localStorage.removeItem("authToken");
-    removeToken();
-    history.push("/");
-  };
+function Home() {
+  const [{ currentUser }] = useStateValue();
+  const [search, setSearch] = useState("");
+  const [allContests, setAllContests] = useState([]);
+  const [newestContests, setNewestContests] = useState([]);
+  const [oldestContests, setOldestContests] = useState([]);
+
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetchContests = async () => {
+      const contestData = await getAllContests();
+      setAllContests(contestData);
+      setLoaded(true);
+    };
+    fetchContests();
+  }, []);
+
+  useEffect(() => {
+    const fetchNewestContests = async () => {
+      const newContestData = await getNewestContests();
+      setNewestContests(newContestData);
+      setLoaded(true);
+    };
+    fetchNewestContests();
+  }, []);
+
+  useEffect(() => {
+    const fetchOldestContests = async () => {
+      const oldContestData = await getOldestContests();
+      setOldestContests(oldContestData);
+      setLoaded(true);
+    };
+    fetchOldestContests();
+  }, []);
 
   return (
-      <Layout>
-    <Wrapper>
-      <div className="row-1">
-        {currentUser && <>Welcome {currentUser?.first_name}</>}&nbsp;
-        {currentUser?.image && (
-          <>
-            <img
-              src={currentUser?.image}
-              alt={currentUser?.first_name}
-              className="user-avatar-header"
-            />
-          </>
-        )}
-        <Search search={search} setSearch={setSearch} />
-      </div>
-      <div>
-        {currentUser && <button onClick={handleLogout}>Log Out</button>}
-        <Link to="/login">Login</Link>
-        <Link to="/register">Sign up!</Link>
-      </div>
-    </Wrapper>
+    <Layout>
+      <Wrapper>
+        <div className="row-1">
+          {currentUser && <>Welcome {currentUser?.first_name}</>}&nbsp;
+          <Search search={search} setSearch={setSearch} />
+        </div>
+      </Wrapper>
     </Layout>
   );
 }
