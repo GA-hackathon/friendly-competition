@@ -50,7 +50,7 @@ function SubmissionCreate({ currentUser, setAllSubmissions, contest, isSubmitted
       user_id: currentUser.id,
       contest_id: contest.id,
     });
-    setAllSubmissions((prevState) => [...prevState, newSubmission]);
+    setAllSubmissions((prevState) => [newSubmission, ...prevState]);
     setCreated({ newSubmission });
   };
 
