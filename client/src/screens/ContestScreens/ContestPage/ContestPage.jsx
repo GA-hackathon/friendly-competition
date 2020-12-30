@@ -142,44 +142,41 @@ function ContestPage() {
 
   return (
     <Layout>
-      <header>
-        <div className="submission-name">{contest.name}</div>
-      </header>
-      <main>
-        <section className="timer-container">
-          <>
-            {!contestEnded ?
+      <section className='contest-info'>
+        <div className="timer-container">
+        <h4 className="submission-name">{contest?.name}</h4>
+        {!contestEnded ?
               <h5>Contest Ends In:</h5> : <><h5>Contest Ended</h5></>}
-            <CountdownTimer contest={contest} setContestEnded={setContestEnded} />
-            <h5>Contest Rules</h5>
-            <div>{contest?.rules}</div>
-            <h5>Try</h5>
-            <span></span>
-            <p>Join the Discussion</p></>
-        </section>
+          <CountdownTimer contest={contest} />
+          <h5>Contest Rules</h5>
+          <div>{contest?.rules}</div>
+          <h5>Try</h5>
+          <div className='contest-pic'>{contest.picture && <img src={contest?.picture} />}</div>
+        </div>
 
         <div className="create-submission">
           Contest Created by: {!contestUser?.user?.image ? <AccountCircleIcon className="icon-submission" /> : <img className="user-image" src={contestUser?.user?.image} alt={contestUser?.user?.name} />}
-          <p>{toTitleCase(usersName)}</p>
-          {!contestEnded ? <section>
-            <h5>Ready to Enter?</h5>
+          <p style={{ marginTop: '0'}}>{toTitleCase(usersName)}</p>
+          {!contestEnded ? <section className='submission-form'>
+            <h5 style={{ textAlign: 'center'}}>Ready to Enter?</h5>
             <SubmissionCreate isSubmited={isSubmitted} setAllSubmissions={setActiveSubmissions} contest={contest} currentUser={currentUser} />
           </section> : <div>
 
               <div>WINNER: Entry: {winnerSubmission?.name}  User: {winnerSubmission?.user.first_name} {winnerSubmission?.votes ? <>, votes: {winnerSubmission?.votes}</> : <></>}</div>
             </div>}
         </div>
-        <hr style={{ margin: "0rem 2rem" }} />
+      </section>
+      <h5 style={{ margin: "2rem 2rem"}}>Join the Discussion</h5>
+      <hr style={{ margin: "0rem 2rem" }} />
         <ContestChat />
         <section>
           <div className="submission-name">View Contest Entries</div>
-          <div>{activeSubmissions.map((submission) => {
+          <div className='contest-entries'>{activeSubmissions.map((submission) => {
             return <React.Fragment key={submission.id}>
               <SubmissionCard submission={submission} contest={contest} currentUser={currentUser} />
             </React.Fragment>
           })}</div>
         </section>
-      </main>
     </Layout>
   );
 }

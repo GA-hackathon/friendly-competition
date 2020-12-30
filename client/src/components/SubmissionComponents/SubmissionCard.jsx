@@ -1,4 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button'
 import { getAllVotes, destroyVote, postVote } from "../../services/votes";
 
@@ -49,17 +56,53 @@ function SubmissionCard({ submission, currentUser }) {
     }
   };
 
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      maxWidth: 345,
+      margin: '1rem',
+    },
+    media: {
+      height: 0,
+      paddingTop: '56.25%', // 16:9
+    },
+    expand: {
+      transform: 'rotate(0deg)',
+      marginLeft: 'auto',
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+      }),
+    },
+    expandOpen: {
+      transform: 'rotate(180deg)',
+    },
+    avatar: {
+      backgroundColor: red[500],
+    },
+  }));
+  
+  const classes = useStyles();
 
   return (
-    <div>
-      <h1>{submission.name}</h1>
-      <p>{submission.content}</p>
-      {submission?.file && <img src={submission?.file} alt={submission.name} />}
-      <p>{allVotes.length === 1 ? <>{allVotes.length} vote</> : allVotes.length === 0 ? <>no votes</> : <>{allVotes.length} votes</>}</p>
-      {!voted ? <Button style={{ display: submission.user_id === currentUser.id && "none" }} disabled={voteDisabled} onClick={handleVote}>Vote For Me</Button> : <><Button onClick={handleUnvote}>Unvote</Button> </>}
-      {submission.user_id === currentUser.id && <Button variant="contained" disabled={submission.user_id === currentUser.id} color="secondary">Can't vote for own entry</Button>}
-    </div>
-  )
+      <Card className={classes.root}>
+        <CardHeader
+          title={submission.name}
+        />
+        {submission?.file && <CardMedia 
+          className={classes.media}
+          image={submission?.file}
+          title={submission.name}
+        />}
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {submission.content}
+          </Typography>
+          <p>{allVotes.length === 1 ? <>{allVotes.length} vote</> : allVotes.length === 0 ? <>no votes</> : <>{allVotes.length} votes</>}</p>
+        {!voted ? <Button style={{ display: submission.user_id === currentUser.id && "none" }} disabled={voteDisabled} onClick={handleVote}>Vote For Me</Button> : <><Button onClick={handleUnvote}>Unvote</Button> </>}
+        {submission.user_id === currentUser.id && <Button variant="contained" disabled={submission.user_id === currentUser.id} color="secondary">Can't vote for own entry</Button>}
+        </CardContent>
+      </Card>
+    );
 }
 
 export default SubmissionCard
+
