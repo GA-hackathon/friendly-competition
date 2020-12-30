@@ -3,6 +3,7 @@ body{
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif; 
+    font-size: 1.2rem;
 }
 
 .timer{
@@ -16,7 +17,8 @@ body{
     padding: 0rem 2rem;
 }
 
-.timer-container h5{
+.timer-container h5, 
+.create-submission h5 {
   font-size: 1.5rem;
   font-weight: 500;
   margin: 1rem 0;
@@ -25,13 +27,17 @@ body{
 .timer-container{
     float: left;
     width: 50%;
-    margin: 1rem 2rem;
+    margin: 0 2rem;
 }
 
 main::after{
     content: '';
     display: table;
     clear: both;
+}
+
+main{
+    margin: 2rem;
 }
 
 header{
@@ -42,10 +48,36 @@ header{
 }
 
 .submission-name{
-   font-size: 2rem;
+font-size: 2rem;
 }
 
 .search{
     display: flex;
     align-items: center;
+}
+
+.MuiSvgIcon-root.icon-submission{
+    vertical-align: middle;
+    font-size: 5rem !important;
+}
+
+.submissions-form{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.add-circle-icon{
+    background: #e8e8e8;
+    width: 15rem;
+    height: 5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MuiButton-contained.enter-contest-btn{
+    background: rgba(0, 0, 0, 0.78);
+    color: white;
 }
