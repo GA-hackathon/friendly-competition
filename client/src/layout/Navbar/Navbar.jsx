@@ -23,7 +23,7 @@ function Navbar() {
       <nav className="navbar">
         <ul className="links">
           <li className="nav-block">
-            <Link to="/"><img style={{  width: '4rem', height: '3rem'}} src={logo}/></Link>
+            <Link className='logo' to="/"><img style={{  width: '4rem', height: '3rem'}} src={logo}/></Link>
           </li>
           <li className="nav-block">
             <Link to="/">Available Contest</Link>
@@ -35,7 +35,8 @@ function Navbar() {
         <div className="user-column">
           <Link className="profile-link" to={`/users/${currentUser?.id}`}>
             {!currentUser?.image ? (
-              <AccountCircleIcon className="icon" />
+              // <AccountCircleIcon className="icon" />
+              ''
             ) : (
               <img
                 className="user-image"
@@ -45,7 +46,7 @@ function Navbar() {
             )}
           </Link>
           <div className="name">{currentUser?.first_name}</div>
-          <div className="buttons">
+          <div className="auth-buttons">
             {currentUser && (
               <Button
                 color="secondary"
@@ -57,7 +58,6 @@ function Navbar() {
             )}
             {!currentUser && (
               <Button
-                color="primary"
                 variant="contained"
                 component={Link}
                 to="/login"
@@ -67,7 +67,6 @@ function Navbar() {
             )}
             {!currentUser && (
               <Button
-                color="primary"
                 variant="contained"
                 component={Link}
                 to="/register"

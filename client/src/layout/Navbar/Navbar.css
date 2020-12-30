@@ -4,21 +4,30 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
 }
 
 li.nav-block {
-  background: #edd2d2;
-  width: 10rem;
-  height: 4rem;
-  margin: 1rem 0 1.5rem 0.7rem;
-  display: inline;
+  background:#36B7FF;
+  width: 12rem;
+  height: 6rem;
+  margin: 0.5rem 0 1rem 1rem;
   float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul.links{
+  padding: 0;
 }
 
 li a {
   text-decoration: none;
-  padding-top: 1rem;
   display: block;
+  text-align: center;
+  color: black;
 }
 
 .navbar-img {
@@ -50,9 +59,9 @@ li.text {
 }
 .user-column {
   display: flex;
-  flex-flow: column nowrap;
   align-items: center;
 }
+
 .MuiSvgIcon-root.icon {
   font-size: 50px;
 }
@@ -60,4 +69,15 @@ li.text {
 .profile-link {
   text-decoration: none;
   color: black;
+}
+
+.logo{
+  padding: .5rem;
+}
+
+.auth-buttons a{
+  margin-right: 1rem;
+  background: white;
+  border: 1px solid black;
+  cursor: pointer;
 }
