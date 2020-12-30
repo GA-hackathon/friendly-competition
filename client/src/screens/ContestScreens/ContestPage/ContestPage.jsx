@@ -62,7 +62,6 @@ function ContestPage() {
           ending_time: new Date().toISOString()
 
         }, contest, "ending_time") > 0;
-      console.log('contestEnded', contestEnded)
       if (contestEnded) {
         const fetchVotes = async () => {
           // all the votes in the app
@@ -84,14 +83,12 @@ function ContestPage() {
           voteData.filter(v => activeSubmissions.map(ac => ac.id).includes(v?.submission_id)).map(vote => {
             if (submissionVotes.has(vote?.submission_id)) {
               let existingCount = submissionVotes.get(vote.submission_id);
-              console.log(vote?.submission_id, existingCount);
               submissionVotes.set(vote.submission_id, existingCount + 1);
             } else {
               submissionVotes.set(vote.submission_id, 1);
             }
           });
           // find the highest voted submission
-          console.log(submissionVotes.entries())
           // This handles the edge case where there are entries but there are no votes for the entires
           if (submissionVotes.size === 0) {
             // just pick the first submission

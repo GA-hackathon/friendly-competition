@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import './CountdownTimer.css'
 
 function CountdownTimer({ contest, setContestEnded }) {
@@ -40,20 +40,14 @@ function CountdownTimer({ contest, setContestEnded }) {
       clearInterval(interval);
     }
   })
-  console.log("times", timerDays && timerHours && timerMinutes && timerSeconds)
-  // const [timerDays, setTimerDays] = useState('00');
-  // const [timerHours, setTimerHours] = useState('00');
-  // const [timerMinutes, setTimerMinutes] = useState('00');
-  // const [timerSeconds, setTimerSeconds] = useState('00');
+
   useEffect(() => {
     if (
       timerDays == "00" && timerHours == "00" && timerMinutes == "00" && timerSeconds == "00") {
       clearInterval(interval);
       setContestEnded(true)
-      console.log("contest has ended! :)")
     }
   }, [])
-  console.log('rendering countdowntimer')
   return (
     <Fragment>
       <div className='timer'>
