@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../../layout/Layout";
 
@@ -28,8 +28,14 @@ let StyledError = styled.div`
 function Error() {
   let location = useLocation();
   const listRegex = /daniel michael|kristina timkova|cristina sahoo|pheonix ehmann|kara conway/;
-
   const result = location.pathname.toLowerCase().trim().match(listRegex);
+
+  // user experience, /contests or /submissions not existing doesn't make sense
+  const whiteList = /contests|submissions/;
+  if (location.pathname.replace("/", "").toLowerCase().match(whiteList)) {
+    return <Redirect to="/" />;
+  }
+
   return (
     // <Layout>
     <StyledError>
