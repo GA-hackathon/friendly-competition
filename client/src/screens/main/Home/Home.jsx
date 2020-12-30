@@ -10,7 +10,6 @@ import {
   postContest,
   putContest,
   getOneContest,
-  getOldestContests,
 } from "../../../services/contests";
 import ContestCard from "../../../components/ContestComponents/ContestCard/ContestCard";
 import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
@@ -20,9 +19,21 @@ function Home() {
   const [{ currentUser }] = useStateValue();
   const [search, setSearch] = useState("");
   const [allContests, setAllContests] = useState([]);
-  const [oldestContests, setOldestContests] = useState([]);
 
   const [loaded, setLoaded] = useState(false);
+
+  const compareDates = (contest1, contest2, property) => {
+    let time1 = new Date(contest1[property]).getTime();
+    let time2 = new Date(contest2[property]).getTime();
+
+    if (time1 < time2) {
+      return -1;
+    } else if (time1 > time2) {
+      return 1;
+    } else {
+      return 0;
+    }
+  };
 
   useEffect(() => {
     const fetchContests = async () => {
@@ -33,36 +44,31 @@ function Home() {
     fetchContests();
   }, []);
 
-  // using rails api to get the oldest 6, but to be honest, you can just use the slice method...
-  useEffect(() => {
-    const fetchOldestContests = async () => {
-      const oldContestData = await getOldestContests();
-      setOldestContests(oldContestData);
-    };
-    fetchOldestContests();
-  }, []);
-
   //  only get the newest 6 contests
   const newContestsJSX = allContests
     .slice(0, 6)
     .map((contest) => <ContestCard key={contest.id} contest={contest} />);
 
+  console.log(
+    "e",
+    allContests.slice(allContests?.length - 6, allContests.length)
+  );
+  console.log("all", allContests);
   // only get the 6 ending soon
-  const oldContestsJSX = allContests.map((contest) => (
-    <ContestCard key={contest.id} contest={contest} />
-  ));
-
-  // const oldContestsJSX = allContests
-  //   .slice(1)
-  //   .slice(-6)
-  //   .map((contest) => <ContestCard key={contest.id} contest={contest} />);
-
-  //   var array = [1, 55, 77, 88, 76, 59];
-  // var array_last_five;
-  // array_last_five = array.slice(-5);
-  // if (array.length < 6) {
-  //      array_last_five.shift();
-  // }
+  const oldContestsJSX = allContests
+    .sort((contest1, contest2) =>
+      compareDates(contest1, contest2, "ending_time")
+    )
+    .filter(
+      (contest) =>
+        compareDates(
+          { ending_time: new Date().toISOString() },
+          contest,
+          "ending_time"
+        ) < 1
+    )
+    .slice(0, 6)
+    .map((contest) => <ContestCard key={contest.id} contest={contest} />);
 
   return (
     <Layout>
@@ -70,7 +76,6 @@ function Home() {
       <Wrapper>
         <div className="row-1">
           {currentUser && <>Welcome {currentUser?.first_name}</>}&nbsp;
-          {/* <Search search={search} setSearch={setSearch} /> */}
         </div>
         {!loaded ? (
           <FunOrangeLoading />
