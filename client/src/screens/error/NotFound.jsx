@@ -27,7 +27,7 @@ let StyledError = styled.div`
 
 function Error() {
   let location = useLocation();
-  const listRegex = /daniel michael|kristina timkova|cristina sahoo|pheonix ehmann|kara conway/;
+  const listRegex = /daniel michael|kristina timkova|cristina sahoo|pheonix ehmann|karen alarcon/;
   const result = location.pathname.toLowerCase().trim().match(listRegex);
 
   const whiteList = /contests|submissions/;
@@ -41,7 +41,7 @@ function Error() {
           <p>Sorry,&nbsp;{location.pathname.replace("/", "")} doesn't exist!</p>
         ) : (
           <p>
-            {location.pathname.replace("/", "")} exists! unfortunately, it's not
+            {location.pathname.replace("/", "")} exists! but unfortunately, it's not
             a page here
           </p>
         )}
