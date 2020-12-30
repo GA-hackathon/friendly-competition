@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./ContestCreate.css";
-import Layout from "../../../layout/Layout";
+import Navbar from "../../../layout/Navbar/Navbar";
 import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
 import Input from "@material-ui/core/Input";
@@ -63,23 +63,24 @@ function ContestCreate() {
   };
 
   return (
-    <Layout>
+    <>
+    <Navbar />
       <div className="contest-form">
-        ` <h3>Creating your own contest</h3>`{" "}
+        <h3>Creating your own contest</h3>
         <h5>Tell us a little bit about what you'd like in the contest</h5>
         <form className="input-group" onSubmit={handleSubmit}>
           <label>
             Contest Name:
-            <Input onChange={handleChange} type="text" name="name" />
+            <Input fullWidth={true} onChange={handleChange} type="text" name="name" />
           </label>
           <label>
             Rules:
-            <Input onChange={handleChange} type="text" name="rules" />
+            <Input fullWidth={true} onChange={handleChange} type="text" name="rules" />
           </label>
 
           <label>
             Ending Date:
-            <Input
+            <Input fullWidth={true}
               onChange={handleChange}
               type="datetime-local"
               name="ending_time"
@@ -87,10 +88,10 @@ function ContestCreate() {
           </label>
           <label>
             Zip code:
-            <Input onChange={handleChange} type="text" name="zip_code" />
+            <Input fullWidth={true} onChange={handleChange} type="text" name="zip_code" />
           </label>
           <label className="image-container">
-            Contest picture:
+            Upload picture:
             {formData.picture ? (
               <img
                 className="contest-image"
@@ -98,7 +99,7 @@ function ContestCreate() {
                 alt={formData.name}
               />
             ) : (
-              <WallpaperIcon onClick={selectImage} className="image-icon" />
+              <WallpaperIcon fontSize='large' onClick={selectImage} className="image-icon" />
             )}
             {formData.picture && (
               <IconButton
@@ -117,12 +118,12 @@ function ContestCreate() {
             />
 
           </label>
-          <Button variant="contained" className="form-btn" type="submit">
+          <Button variant="contained" style={{ background: '#00DB94'}} className="form-btn" type="submit">
             Get Started
           </Button>
         </form>
       </div>
-    </Layout>
+    </>
   );
 }
 
