@@ -51,6 +51,21 @@ li.img {
 li.text {
   text-align: center;
 }
+
+.user-info{
+  text-align: center;
+  margin-right: 1rem;
+}
+
+.user-info .name{
+  font-size: 0.8rem;
+}
+
+.user-info .account-circle-icon{
+  width: 4rem;
+  height: 4rem;
+}
+
 .user-image {
   width: 50px;
   height: 50px;
@@ -63,6 +78,7 @@ li.text {
 .user-column {
   display: flex;
   align-items: center;
+  margin-right: 1rem;
 }
 
 .MuiSvgIcon-root.icon {

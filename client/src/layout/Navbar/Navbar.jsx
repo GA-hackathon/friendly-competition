@@ -5,6 +5,7 @@ import { removeToken } from "../../services/auth";
 import Button from "@material-ui/core/Button";
 import logo from './logo.png';
 import Nav from './styledNavbar'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 function Navbar() {
   const [{ currentUser }, dispatch] = useStateValue();
@@ -21,7 +22,6 @@ function Navbar() {
 
   return (
     <Nav className="navbar">
-      <div>
         <ul className="links">
           <li className="nav-block">
             <Link className='logo' to="/"><img style={{ width: '4rem', height: '3rem' }} src={logo} /></Link>
@@ -34,18 +34,19 @@ function Navbar() {
           </li>
         </ul>
         <div className="user-column">
-          <Link className="profile-link" to={`/users/${currentUser?.id}`}>
+          <div className='user-info'>
+            {currentUser && <Link className="profile-link" to={`/users/${currentUser?.id}`}>
             {!currentUser?.image ? (
-              ''
-            ) : (
-                <img
-                  className="user-image"
-                  src={currentUser?.image}
-                  alt={currentUser?.name}
-                />
+              <AccountCircleIcon className='account-circle-icon' />
+            ) : (<img
+              className="user-image"
+              src={currentUser.image}
+              alt={currentUser?.name}
+            />
               )}
-          </Link>
-          <div className="name">{currentUser?.first_name}</div>
+              <div className="name">{currentUser?.first_name}</div>
+          </Link>}
+          </div>
           <div className="auth-buttons">
             {currentUser && (
               <Button
@@ -76,7 +77,6 @@ function Navbar() {
             )}
           </div>
         </div>
-      </div>
     </Nav>
   );
 }
