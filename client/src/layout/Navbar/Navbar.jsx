@@ -20,16 +20,16 @@ function Navbar() {
   let location = useLocation()
 
   return (
-    <Nav className="navbar">
+    <Nav location={location} className="navbar">
       <div>
         <ul className="links">
-          <li className="nav-block">
-            <Link className='logo' to="/"><img style={{ width: '4rem', height: '3rem' }} src={logo} /></Link>
+          <li className="nav-block home">
+            <Link className='logo' to="/"><img style={{ width: '4rem', height: '3rem' }} src={logo} alt="logo" /></Link>
           </li>
-          <li className="nav-block">
+          <li className="nav-block create">
             <Link to="/create-contest">Create Contest</Link>
           </li>
-          <li className="nav-block">
+          <li className="nav-block about">
             <Link to="/">About</Link>
           </li>
         </ul>

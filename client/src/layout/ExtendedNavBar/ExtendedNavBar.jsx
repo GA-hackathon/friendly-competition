@@ -33,7 +33,7 @@ let Div = styled.div`
 
 function ExtendedNavBar({ allContests, allSubmissions }) {
   const [search, setSearch] = useState("");
-  const [{ currentUser }, dispatch] = useStateValue()
+  const [{ currentUser }] = useStateValue()
 
   let location = useLocation()
 

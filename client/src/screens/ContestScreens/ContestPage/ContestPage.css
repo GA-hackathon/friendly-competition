@@ -58,6 +58,15 @@ font-size: 2rem;
     align-items: center;
 }
 
+.user-image{
+  object-fit: cover;
+  max-width: 100px;
+  max-height: 100px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
 .MuiButton-contained.enter-contest-btn{
     background: rgba(0, 0, 0, 0.78);
     color: white;
