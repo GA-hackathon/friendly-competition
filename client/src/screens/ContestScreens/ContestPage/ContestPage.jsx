@@ -14,12 +14,24 @@ import CountdownTimer from "../../../components/ContestComponents/CountdownTimer
 import ContestChat from "../../../components/ContestComponents/ContestChat/ContestChat";
 import "./ContestPage.css";
 import SubmissionCreate from "../../../components/Form/SubmissionCreate/SubmissionCreate";
+import { getAllSubmissions } from "../../../services/submissions";
 
 function ContestPage() {
   const [{ currentUser }] = useStateValue();
   const [contest, setContest] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  const [allSubmissions, setAllSubmissions] = useState([])
   const { id } = useParams();
+
+
+useEffect(() => {
+    const fetchSubmissions = async () => {
+      const submissionData = await getAllSubmissions();
+      setAllSubmissions(submissionData?.filter((submission) => submission?.contest_id === contest?.id));
+    };
+    fetchSubmissions();
+  }, [contest?.id]);
+
 
   useEffect(() => {
     const getData = async () => {
@@ -79,7 +91,7 @@ function ContestPage() {
                 </label>
                 <Button className='enter-contest-btn' type='submit' variant="contained">Enter Contest</Button>
                 </form>  */}
-            <SubmissionCreate />
+            <SubmissionCreate contest={contest} currentUser={currentUser} />
           </section>
         </div>
         <hr style={{ margin: "0rem 2rem" }} />

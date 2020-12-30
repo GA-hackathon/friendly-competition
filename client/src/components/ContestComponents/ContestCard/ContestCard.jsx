@@ -8,47 +8,62 @@ import Button from "@material-ui/core/Button";
 
 let Container = styled.div`
   display: block;
-  picture {
-    display: block;
-  }
+  position: relative;
 
-  a {
+  picture {
+    margin-left: auto;
+    margin-right: auto;
     display: block;
+    /* width: 100%; */
+    border-radius: 16px;
+    overflow: hidden;
+    width: 300px;
+    min-width: 300px;
+    height: 300px;
+    position: relative;
+    transform: scale(1);
+    transition: 250ms ease-in-out;
+    &:hover {
+      transform: scale(1.06);
+      transition: 250ms ease-in-out;
+    }
   }
 
   picture img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
+    /* max-width: 250px; */
+    /* max-height: 250px; */
+    margin-top: 10px;
     margin: 0 auto;
-    object-fit: cover;
-    border-radius: 6px;
-    cursor: pointer;
   }
 
-  .contest-card.thumbnail {
+  /* .contest-card.thumbnail {
     width: 250px;
     height: 250px;
     max-width: 250px;
     max-height: 250px;
     margin-top: 10px;
-    margin: 0 auto;
-    transform: scale(1.1);
+    margin: 0 auto; */
+  /* transform: scale(1.1);
     transition: 3s;
     &:hover {
       transform: scale(1);
       transition: 0.2s;
-    }
-  }
+    } */
+  /* } */
 
   .contest-card.name {
     font-size: 1.3rem;
     margin-top: 10px;
   }
+
   .contest-card.date {
     font-size: 1.3rem;
     margin-top: 10px;
   }
+
   footer {
     display: flex;
     justify-content: center;
@@ -56,43 +71,65 @@ let Container = styled.div`
     align-items: center;
     margin-bottom: 20px;
   }
-  /* .vector {
-    left: 69.37%;
-    right: 7.91%;
-    top: 0%;
-    bottom: 72.83%;
 
-    background: #080808;
-    border: 1px solid #000000;
-  } */
+  .text.entries {
+    font-family: "roboto", sans-serif;
+    fill: #fff;
+    transform: translate(28px, 74px);
+    font-size: 1.3rem;
+    font-weight: 900;
+  }
+
+  .text.length {
+    font-family: "roboto", sans-serif;
+    fill: #fff;
+    transform: translate(48px, 40px);
+    font-size: 1.8rem;
+    font-weight: 900;
+  }
+
+  svg {
+    /* position: absolute;
+    top: 16px;
+    left: 3px;
+    /* transform: scale(1.1); */
+    /* transition: 3s;
+    &:hover {
+      transform: scale(1);
+      transition: 0.2s;
+    } */
+    position: absolute;
+  }
 `;
+
 function ContestCard({ contest }) {
   let currentTime = new Date();
 
   return (
     <Container>
-      {contest?.submissions.length >= 1 && (
-        <svg
-          width="117"
-          height="171"
-          viewBox="0 0 117 171"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1 170V1H116V170L59.869 131.298L1 170Z"
-            fill="#080808"
-            stroke="black"
-          />
-          <p>
-            {contest?.submissions?.length}
-            <br /> Entries
-          </p>
-        </svg>
-      )}
-
-      <Link to={`contests/${contest.id}`}>
+      <Link className="link-container" to={`contests/${contest.id}`}>
         <picture>
+          {contest?.submissions.length >= 1 && (
+            <svg
+              width="117"
+              height="171"
+              viewBox="0 0 117 171"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 170V1H116V170L59.869 131.298L1 170Z"
+                fill="#080808"
+                stroke="black"
+              />
+              {/*   <text x="20" y="35" class="small">My</text>
+               */}
+              <text className="text length">
+                {contest?.submissions?.length}
+              </text>
+              <text className="text entries">Entries</text>
+            </svg>
+          )}
           <img
             className="contest-card thumbnail"
             src={contest.picture}

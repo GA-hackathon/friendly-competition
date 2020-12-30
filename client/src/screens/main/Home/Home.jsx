@@ -17,7 +17,6 @@ import ScrollToTopOnMount from "../../../components/Helpers/ScrollToTopOnMount";
 
 function Home() {
   const [{ currentUser }] = useStateValue();
-  const [search, setSearch] = useState("");
   const [allContests, setAllContests] = useState([]);
 
   const [loaded, setLoaded] = useState(false);
@@ -38,57 +37,61 @@ function Home() {
   useEffect(() => {
     const fetchContests = async () => {
       const contestData = await getAllContests();
-      setAllContests(contestData);
+      setAllContests(
+        contestData
+          .filter(
+            (contest) =>
+              compareDates(
+                { ending_time: new Date().toISOString() },
+                contest,
+                "ending_time"
+              ) < 1
+          )
+          // only show 6 contests
+          .slice(0, 6)
+      );
+
       setLoaded(true);
     };
     fetchContests();
   }, []);
 
-  //  only get the newest 6 contests
-  const newContestsJSX = allContests
-    .slice(0, 6)
-    .map((contest) => <ContestCard key={contest.id} contest={contest} />);
+  //only get the newest 6 contests,
+  // if the ending time has passed, don't show them.
+  const newContestsJSX = allContests.map((contest) => (
+    <ContestCard key={contest.id} contest={contest} />
+  ));
 
-  console.log(
-    "e",
-    allContests.slice(allContests?.length - 6, allContests.length)
-  );
-  console.log("all", allContests);
   // only get the 6 ending soon
   const oldContestsJSX = allContests
+    // it's sorting in ascending order
+    //  so the dates which are ending soon will be shown first
     .sort((contest1, contest2) =>
       compareDates(contest1, contest2, "ending_time")
     )
-    .filter(
-      (contest) =>
-        compareDates(
-          { ending_time: new Date().toISOString() },
-          contest,
-          "ending_time"
-        ) < 1
-    )
-    .slice(0, 6)
     .map((contest) => <ContestCard key={contest.id} contest={contest} />);
 
   return (
-    <Layout>
+    <>
       <ScrollToTopOnMount />
-      <Wrapper>
-        <div className="row-1">
-          {currentUser && <>Welcome {currentUser?.first_name}</>}&nbsp;
-        </div>
-        {!loaded ? (
-          <FunOrangeLoading />
-        ) : (
-          <div className="all-contests inner-column">
-            <h1 className="attention6"> Contests Ending Soon</h1>
-            <div className="contest-list oldest">{oldContestsJSX}</div>
-            <h1 className="attention"> NEW Contests</h1>
-            <div className="contest-list newest">{newContestsJSX}</div>
+      <Layout>
+        <Wrapper>
+          <div className="row-1">
+            {currentUser && <>Welcome {currentUser?.first_name}</>}&nbsp;
           </div>
-        )}
-      </Wrapper>
-    </Layout>
+          {!loaded ? (
+            <FunOrangeLoading />
+          ) : (
+            <div className="all-contests inner-column">
+              <h1 className="attention6"> Contests Ending Soon</h1>
+              <div className="contest-list oldest">{oldContestsJSX}</div>
+              <h1 className="attention"> NEW Contests</h1>
+              <div className="contest-list newest">{newContestsJSX}</div>
+            </div>
+          )}
+        </Wrapper>
+      </Layout>
+    </>
   );
 }
 
