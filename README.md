@@ -1,5 +1,7 @@
 # Challenge.me
 
+live deploy: https://challenge-me.netlify.app/
+
 Challenge.me is a competition based website to help people up skill and connect with others.
 
 ### ERD Model
