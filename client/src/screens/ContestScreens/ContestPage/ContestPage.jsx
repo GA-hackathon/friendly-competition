@@ -35,9 +35,9 @@ function ContestPage() {
 
   console.log(allSubmissions)
 
-  const SUBMISSIONS = allSubmissions.map((submission) => {
+  const ENTRIES = allSubmissions.map((submission) => {
     <React.Fragment key={submission.id}>
-      <SubmissionCard submission={submission} />
+      <SubmissionCard submission={submission} contest={contest} currentUser={currentUser} />
     </React.Fragment>
   })
 
@@ -110,9 +110,9 @@ function ContestPage() {
         </div>
         <hr style={{ margin: "0rem 2rem" }} />
         <ContestChat />
-        {SUBMISSIONS}
         <section>
           <div className="submission-name">View Contest Entries</div>
+          <div>{ENTRIES}</div>
         </section>
       </main>
     </Layout>
