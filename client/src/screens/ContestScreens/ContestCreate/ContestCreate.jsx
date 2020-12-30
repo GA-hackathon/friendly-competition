@@ -24,7 +24,7 @@ function ContestCreate() {
     fileReader.addEventListener("load", () => {
       setFormData({
         ...formData,
-        picture: fileReader.result,
+        image: fileReader.result,
       });
     });
     if (img) {
@@ -71,24 +71,27 @@ function ContestCreate() {
         <form className="input-group" onSubmit={handleSubmit}>
           <label>
             Contest Name:
-            <Input fullWidth={true} onChange={handleChange} type="text" name="name" />
+            <Input required
+              fullWidth={true} onChange={handleChange} type="text" name="name" />
           </label>
           <label>
             Rules:
-            <Input fullWidth={true} onChange={handleChange} type="text" name="rules" />
+            <Input required
+              fullWidth={true} onChange={handleChange} type="text" name="rules" />
           </label>
 
           <label>
             Ending Date:
             <Input fullWidth={true}
               onChange={handleChange}
+              required
               type="datetime-local"
               name="ending_time"
             />
           </label>
           <label>
             Zip code:
-            <Input fullWidth={true} onChange={handleChange} type="text" name="zip_code" />
+            <Input fullWidth={true} type="text" name="zip_code" />
           </label>
           <label className="image-container">
             Upload picture:
@@ -113,6 +116,7 @@ function ContestCreate() {
             <input
               type="file"
               id="image-upload"
+              required
               style={{ visibility: "hidden" }}
               onChange={onImageSelected}
             />

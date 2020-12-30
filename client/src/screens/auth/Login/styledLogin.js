@@ -38,13 +38,13 @@ let Wrapper = styled.div`
     align-items: center;
   }
 
-  .inner-column {
-    padding: 20px;
-    display: block;
-    width: 98%;
-    max-width: 1100px;
-    margin-right: auto;
-    margin-left: auto;
+  .inner-column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    width: 60%;
+    margin: auto;
   }
 
   .big-user-image {

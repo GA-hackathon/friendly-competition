@@ -1,0 +1,22 @@
+.inner-column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    width: 60%;
+    margin: auto;
+}
+
+form.login-form{
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+.button-container{
+    text-align: center;
+}
+
+.button-container .MuiButton-contained {
+    background: #00DB94;
+}

@@ -21,6 +21,7 @@ let Div = styled.div`
     padding: 10px;
     margin-left: 50px;
  }
+  height: 5rem;
 
   .search-container {
     display: flex;
