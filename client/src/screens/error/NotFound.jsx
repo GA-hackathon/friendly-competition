@@ -1,7 +1,6 @@
 import React from "react";
-import { NavLink, useLocation, Redirect } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import Layout from "../../layout/Layout";
 
 let StyledError = styled.div`
   display: flex;
@@ -30,7 +29,6 @@ function Error() {
   const listRegex = /daniel michael|kristina timkova|cristina sahoo|pheonix ehmann|kara conway/;
   const result = location.pathname.toLowerCase().trim().match(listRegex);
 
-  const whiteList = /contests|submissions/;
  
 
   return (
