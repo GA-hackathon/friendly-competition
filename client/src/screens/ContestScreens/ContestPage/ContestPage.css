@@ -1,35 +1,20 @@
-.timer-container h5, 
-.create-submission h5 {
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin: 1rem 0;
-}
-
-.timer-container{
-    float: left;
-    width: 50%;
-    margin: 0 2rem;
-}
-
-main::after{
-    content: '';
-    display: table;
-    clear: both;
-}
-
-main{
-    margin: 2rem;
+section.contest-info{
+    display: flex;
+    
 }
 
 header{
     background: #E5E5E5; 
     display: flex;
     justify-content: space-between;
-    padding: 2rem 1rem;
+    padding: 0 1rem;
 }
 
 .submission-name{
-font-size: 2rem;
+    font-size: 2rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
 }
 
 .search{
@@ -70,4 +55,37 @@ font-size: 2rem;
 .MuiButton-contained.enter-contest-btn{
     background: rgba(0, 0, 0, 0.78);
     color: white;
+}
+
+.timer-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 1rem;
+    width: 50%;
+    margin: 1rem;
+}
+
+.create-submission{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 50%;
+    margin: 1rem;
+}
+
+.contest-pic img{
+    width: 100%;
+    border-radius: 10px;
+}
+
+.contest-pic{
+    margin: auto;
+    width: 40%;
+}
+
+.contest-entries{
+    display: flex;
+    margin: 1rem;
 }

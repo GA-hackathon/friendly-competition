@@ -35,7 +35,7 @@ function Navbar() {
         </ul>
         <div className="user-column">
           <div className='user-info'>
-            {currentUser && <Link className="profile-link" to={`/users/${currentUser?.id}`}>
+            {currentUser && (<Link className="profile-link" to={`/users/${currentUser?.id}`}>
             {!currentUser?.image ? (
               <AccountCircleIcon className='account-circle-icon' />
             ) : (<img
@@ -45,17 +45,18 @@ function Navbar() {
             />
               )}
               <div className="name">{currentUser?.first_name}</div>
-          </Link>}
+          </Link>
+          )}
           </div>
           <div className="auth-buttons">
             {currentUser && (
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={handleLogout}
-              >
-                Log Out
-              </Button>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={handleLogout}
+            >
+            Log Out
+            </Button>
             )}
             {!currentUser && (
               <Button
