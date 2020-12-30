@@ -15,13 +15,11 @@ import ContestChat from "../../../components/ContestComponents/ContestChat/Conte
 import "./ContestPage.css";
 import SubmissionCreate from "../../../components/Form/SubmissionCreate/SubmissionCreate";
 import { getAllSubmissions } from "../../../services/submissions";
-import { getAllVotes, destroyVote, postVote } from "../../../services/votes";
+import { getAllVotes } from "../../../services/votes";
 import SubmissionCard from "../../../components/SubmissionComponents/SubmissionCard";
 import { toTitleCase } from "../../../utils/toTitleCase";
 
 function ContestPage() {
-  const [allVotes, setAllVotes] = useState([]);
-  const [voted, setVoted] = useState(false);
   const [{ currentUser }] = useStateValue();
   const [contest, setContest] = useState(null);
   const [contestUser, setContestUser] = useState(null);
@@ -124,7 +122,6 @@ function ContestPage() {
     contestUser?.user?.last_name?.charAt(0).concat(".")
   );
 
-
   // if a submission/entry is associated to the current user, do not allow him to resend another one.
   useEffect(() => {
     const entryFound = activeSubmissions?.find(
@@ -166,7 +163,7 @@ function ContestPage() {
                 .sort((sub1, sub2) => sub2.votes - sub1.votes).map(sub =>
                   (<div>{sub.name} {sub.user.name} {sub.votes}</div>))
               } */}
-              <div>{winnerSubmission?.name} {winnerSubmission?.user.name} {winnerSubmission?.votes}</div>
+              <div>WINNER: Entry: {winnerSubmission?.name}  User: {winnerSubmission?.user.first_name}, {winnerSubmission?.votes} votes</div>
             </div>}
         </div>
         <hr style={{ margin: "0rem 2rem" }} />
