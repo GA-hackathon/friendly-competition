@@ -10,7 +10,7 @@ import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOr
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import IconButton from "@material-ui/core/IconButton";
 import { getAllSubmissions } from "../../../services/submissions";
-// import { getAllUsers } from "../../../services/users";
+import { getAllUsers } from "../../../services/users";
 
 export default function UserDetail({ getOneUser }) {
   const [user, setUser] = useState(null);

@@ -1,28 +1,39 @@
 class ContestsController < ApplicationController
-  before_action :set_contest, only: [:show]
+  before_action :set_contest, only: [:show, :show_with_user]
   before_action :authorize_request, only: [:create, :update, :destroy] 
   before_action :set_user_contest, only: [:update, :destroy]
   # GET /contests
   def index
     @contests = Contest.newest_first
 
+    render json: @contests, :include => {:submissions => {:include => :user}} 
+
+  end
+
+  def index_with_users
+    @contests = Contest.all
+
     render json: @contests, :include => {:user => {:include => :submissions}} 
   end
 
-  def last_2
-    @contests = Contest.last(2)
+  def last
+    @contests = Contest.last(6)
 
     render json: @contests, :include => {:user => {:include => :submissions}} 
   end
 
-  def first_2
-    @contests = Contest.first(2)
+  def first
+    @contests = Contest.first(6)
 
     render json: @contests, :include => {:user => {:include => :submissions}} 
   end
 
   # GET /contests/1
   def show
+    render json: @contest, :include => {:submissions => {:include => :user}} 
+  end
+  
+  def show_with_user
     render json: @contest, :include => {:user => {:include => :submissions}} 
   end
 

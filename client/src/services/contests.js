@@ -5,6 +5,11 @@ export const getAllContests = async () => {
   return resp.data;
 };
 
+export const getAllContestsWithUsers = async () => {
+  const resp = await api.get("/contests/users");
+  return resp.data;
+};
+
 export const getNewestContests = async () => {
   const resp = await api.get("/contests/newest");
   return resp.data;
@@ -16,6 +21,11 @@ export const getOldestContests = async () => {
 };
 
 export const getOneContest = async (id) => {
+  const resp = await api.get(`/contests/${id}`);
+  return resp.data;
+};
+
+export const getOneContestWithUser = async (id) => {
   const resp = await api.get(`/contests/${id}`);
   return resp.data;
 };
