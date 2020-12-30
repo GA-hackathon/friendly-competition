@@ -105,7 +105,7 @@ function SubmissionCreate({ setSubmitted, currentUser, setAllSubmissions, contes
           />
         </div>
         <Button variant="contained" onClick={selectFile}>Upload File</Button>
-        <Button variant="contained" disabled={!currentUser} type="submit">{currentUser ? <>Submit</> : <>Please Log-In</>}</Button>
+        <Button variant="contained" disabled={!currentUser} type="submit">{currentUser ? <>Enter Contest</> : <>Please Log-In</>}</Button>
       </form>
       <input
         type="file"

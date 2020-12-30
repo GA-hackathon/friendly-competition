@@ -20,17 +20,19 @@ function Navbar() {
   return (
     <>
       <nav className="navbar">
-        <ul className="links">
-          <li className="nav-block">
-            <Link to="/">Home</Link>
-          </li>
-          <li className="nav-block">
-            <Link to="/create-contest">Create Contest</Link>
-          </li>
-          <li className="nav-block">
-            <Link to="/">My Contests</Link>
-          </li>
-        </ul>
+        <div>
+          <ul className="links">
+            <li className="nav-block">
+              <Link to="/">Home</Link>
+            </li>
+            <li className="nav-block">
+              <Link to="/create-contest">Create Contest</Link>
+            </li>
+            <li className="nav-block">
+              <Link to="/">My Contests</Link>
+            </li>
+          </ul>
+        </div>
         <div className="user-column">
           <Link className="profile-link" to={`/users/${currentUser?.id}`}>
             {!currentUser?.image ? (

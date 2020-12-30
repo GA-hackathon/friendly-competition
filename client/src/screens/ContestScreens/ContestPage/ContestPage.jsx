@@ -97,26 +97,6 @@ function ContestPage() {
           <p>{toTitleCase(usersName)}</p>
           <section>
             <h5>Ready to Enter?</h5>
-            {/* <form className="submissions-form"> */}
-            {/* <label>Entry Name<br/>
-                <TextField variant='filled' type='text' name='submission_name'/>
-                </label>
-                <label>Write Entry<br/>
-                <TextField multiline rows={4} variant='filled' type='textarea'name='content'/>
-                </label>
-                <label>Upload Entry
-                <input
-                type="file"
-                id="image-upload"
-                style={{ visibility: "hidden", fontSize: "0" }}
-                // onChange={onImageSelected}
-                />
-                <div className='add-circle-icon'>
-                <AddCircle style={{ fontSize: 30 }}></AddCircle>
-                </div>
-                </label>
-                <Button className='enter-contest-btn' type='submit' variant="contained">Enter Contest</Button>
-                </form>  */}
             <SubmissionCreate setAllSubmissions={setAllSubmissions} contest={contest} currentUser={currentUser} />
           </section>
         </div>

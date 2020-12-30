@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-  display: fles;
+  display: flex;
   justify-content: space-between;
 }
 
@@ -56,6 +56,7 @@ li.text {
   flex-flow: column nowrap;
   align-items: center;
   margin-right: 50px;
+  padding: 20px;
 }
 .MuiSvgIcon-root.icon {
   font-size: 50px;
