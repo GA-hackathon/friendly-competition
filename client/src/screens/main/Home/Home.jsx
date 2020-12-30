@@ -48,7 +48,7 @@ function Home() {
     .map((contest) => <ContestCard key={contest.id} contest={contest} />);
 
   // only get the 6 ending soon
-  const oldContestsJSX = oldestContests.map((contest) => (
+  const oldContestsJSX = allContests.map((contest) => (
     <ContestCard key={contest.id} contest={contest} />
   ));
 
