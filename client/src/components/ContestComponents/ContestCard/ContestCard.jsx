@@ -14,7 +14,6 @@ let Container = styled.div`
     margin-left: auto;
     margin-right: auto;
     display: block;
-    /* width: 100%; */
     border-radius: 16px;
     overflow: hidden;
     width: 300px;
@@ -33,26 +32,10 @@ let Container = styled.div`
     display: block;
     width: 100%;
     height: 100%;
-    /* max-width: 250px; */
-    /* max-height: 250px; */
     margin-top: 10px;
     margin: 0 auto;
   }
 
-  /* .contest-card.thumbnail {
-    width: 250px;
-    height: 250px;
-    max-width: 250px;
-    max-height: 250px;
-    margin-top: 10px;
-    margin: 0 auto; */
-  /* transform: scale(1.1);
-    transition: 3s;
-    &:hover {
-      transform: scale(1);
-      transition: 0.2s;
-    } */
-  /* } */
 
   .contest-card.name {
     font-size: 1.3rem;
@@ -89,15 +72,6 @@ let Container = styled.div`
   }
 
   svg {
-    /* position: absolute;
-    top: 16px;
-    left: 3px;
-    /* transform: scale(1.1); */
-    /* transition: 3s;
-    &:hover {
-      transform: scale(1);
-      transition: 0.2s;
-    } */
     position: absolute;
   }
 `;

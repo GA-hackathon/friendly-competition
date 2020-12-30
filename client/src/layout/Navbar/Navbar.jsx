@@ -1,4 +1,3 @@
-import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../../providers/CurrentUserProvider";
 import { useHistory, useLocation } from "react-router-dom";

@@ -16,7 +16,7 @@ function ContestCreate() {
   const [formData, setFormData] = useState({
     name: "",
     rules: "",
-    ending_time: null,
+    ending_time: "",
     picture: "",
   });
   const { name, rules, ending_time, picture } = formData
@@ -49,7 +49,12 @@ function ContestCreate() {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+    // to make sure it gets selected time
+    if (name === "ending_time" && value) {
+      let date = new Date(value);
+      value = date.toISOString();
+    }
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,

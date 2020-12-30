@@ -10,26 +10,26 @@ function SubmissionCard({ submission, contest, currentUser }) {
   useEffect(() => {
     const fetchVotes = async () => {
       const voteData = await getAllVotes();
-      setAllVotes(voteData?.filter((vote) => vote?.contest_id === contest?.id));
+      setAllVotes(voteData?.filter((vote) => vote?.submission_id === submission?.id));
       setVoteDisabled(false);
     };
     fetchVotes();
-  }, [contest?.id]);
+  }, [submission?.id]);
 
   useEffect(() => {
     const voteFound = allVotes?.find(
       (vote) =>
-        vote?.contest_id === contest?.id && currentUser?.id === vote?.user_id
+        vote?.submission_id === submission?.id && currentUser?.id === vote?.user_id
     );
     voteFound ? setVoted(true) : setVoted(false);
-  }, [allVotes, currentUser?.id, contest?.id]);
+  }, [allVotes, currentUser?.id, submission?.id]);
 
   const handleVote = async () => {
     if (!voteDisabled) {
       setVoted(true);
       const newVote = await postVote({
         user_id: currentUser.id,
-        contest_id: contest.id,
+        submission_id: submission.id,
       });
       setAllVotes((prevState) => [...prevState, newVote]);
     }
@@ -40,7 +40,7 @@ function SubmissionCard({ submission, contest, currentUser }) {
       setVoted(false);
       const voteToDelete = allVotes?.find(
         (vote) =>
-          vote?.contest_id === contest?.id && currentUser?.id === vote?.user_id
+          vote?.submission_id === submission?.id && currentUser?.id === vote?.user_id
       );
       await destroyVote(voteToDelete.id);
       setAllVotes((prevState) =>
@@ -53,9 +53,9 @@ function SubmissionCard({ submission, contest, currentUser }) {
     <div>
       <h1>{submission.name}</h1>
       <p>{submission.content}</p>
-      <img src={submission?.file} alt={submission.name} />
-
-      {!voteDisabled && (!voted ? <Button onClick={handleVote}>Vote For Me</Button> : <></>)}}
+      {submission?.file && <img src={submission?.file} alt={submission.name} />}
+      <p>{allVotes.length === 1 ? <>{allVotes.length} vote</> : allVotes.length === 0 ? <>no votes</> : <>{allVotes.length} votes</>}</p>
+      {!voted ? <Button disabled={voteDisabled} onClick={handleVote}>Vote For Me</Button> : <><Button onClick={handleUnvote}>Unvote</Button> </>}
     </div>
   )
 }
