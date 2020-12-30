@@ -85,10 +85,7 @@ function ContestCreate() {
               name="ending_time"
             />
           </label>
-          <label>
-            Zip code:
-            <Input onChange={handleChange} type="text" name="zip_code" />
-          </label>
+
           <label className="image-container">
             Contest picture:
             {formData.picture ? (
@@ -98,8 +95,8 @@ function ContestCreate() {
                 alt={formData.name}
               />
             ) : (
-              <WallpaperIcon onClick={selectImage} className="image-icon" />
-            )}
+                <WallpaperIcon onClick={selectImage} className="image-icon" />
+              )}
             {formData.picture && (
               <IconButton
                 onMouseDown={(e) => e.preventDefault()}

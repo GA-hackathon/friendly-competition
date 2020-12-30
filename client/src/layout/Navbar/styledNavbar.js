@@ -1,4 +1,7 @@
-.navbar {
+import styled from 'styled-components'
+
+let Nav = styled.nav`
+
   list-style-type: none;
   background: #c4c4c4;
   margin: 0;
@@ -6,7 +9,7 @@
   overflow: hidden;
   display: flex;
   justify-content: space-between;
-}
+
 
 li.nav-block {
   background: #edd2d2;
@@ -62,7 +65,13 @@ li.text {
   font-size: 50px;
 }
 
+.logo {
+  width: 50px;
+}
 .profile-link {
   text-decoration: none;
   color: black;
 }
+`
+
+export default Nav

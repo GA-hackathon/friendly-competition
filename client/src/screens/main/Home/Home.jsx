@@ -78,7 +78,6 @@ function Home() {
       <Layout>
         <Wrapper>
           <div className="row-1">
-            {currentUser && <>Welcome {currentUser?.first_name}</>}&nbsp;
           </div>
           {!loaded ? (
             <FunOrangeLoading />

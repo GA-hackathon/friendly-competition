@@ -2,23 +2,40 @@ import { useState } from "react";
 import styled from "styled-components";
 import QueriedContests from "../../components/ContestComponents/QueriedContests/QueriedContests";
 import Search from "../../components/Form/Search";
+import { useStateValue } from "../../providers/CurrentUserProvider";
+import { useLocation } from 'react-router-dom'
 
 let Div = styled.div`
   list-style-type: none;
   background: #e5e5e5;
   height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  .user-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px;
+    margin-left: 50px;
+ }
 
   .search-container {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding: 20px;
+    padding: 10px;
     margin-right: 50px;
   }
 `;
 
 function ExtendedNavBar({ allContests, allSubmissions }) {
   const [search, setSearch] = useState("");
+  const [{ currentUser }, dispatch] = useStateValue()
+
+  let location = useLocation()
 
   const getContests = () =>
     allContests.filter((contest) =>
@@ -31,6 +48,9 @@ function ExtendedNavBar({ allContests, allSubmissions }) {
 
   return (
     <Div>
+      <div className="user-container">
+        {currentUser && location.pathname === "/" && <> Welcome {currentUser?.first_name}</>}
+      </div>
       <div className="search-container">
         <Search
           search={search}
@@ -38,7 +58,7 @@ function ExtendedNavBar({ allContests, allSubmissions }) {
           searchedContests={searchedContests}
         />
       </div>
-    </Div>
+    </Div >
   );
 }
 

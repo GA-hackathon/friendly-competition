@@ -1,9 +1,11 @@
 import React from "react";
+import ScrollToTopOnMount from "../../Helpers/ScrollToTopOnMount";
 import StyledLoading from "./styledFunLoading";
 
 function FunOrangeLoading() {
   return (
     <StyledLoading>
+      <ScrollToTopOnMount />
       <div className="loading-wrapper">
         <div className="content-container">
           {/* <div className="logo-container">
