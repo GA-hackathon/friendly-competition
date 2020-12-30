@@ -5,6 +5,7 @@ import { useStateValue } from "../../providers/CurrentUserProvider";
 import { useHistory } from "react-router-dom";
 import { removeToken } from "../../services/auth";
 import Button from "@material-ui/core/Button";
+import logo from './logo.png';
 
 function Navbar() {
   const [{ currentUser }, dispatch] = useStateValue();
@@ -22,7 +23,7 @@ function Navbar() {
       <nav className="navbar">
         <ul className="links">
           <li className="nav-block">
-            <Link to="/">Home</Link>
+            <Link to="/"><img style={{  width: '4rem', height: '3rem'}} src={logo}/></Link>
           </li>
           <li className="nav-block">
             <Link to="/">Available Contest</Link>
