@@ -115,6 +115,7 @@ function ContestCreate() {
               style={{ visibility: "hidden" }}
               onChange={onImageSelected}
             />
+
           </label>
           <Button variant="contained" className="form-btn" type="submit">
             Get Started
