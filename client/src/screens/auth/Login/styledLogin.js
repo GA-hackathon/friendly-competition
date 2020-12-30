@@ -17,6 +17,7 @@ let Wrapper = styled.div`
     h1 {
       font-size: 2rem;
       font-size: clamp(1.5rem, 5.5vw, 2rem);
+      font-family: 'Roboto', sans-serif;
     }
   }
   
@@ -62,6 +63,7 @@ let Wrapper = styled.div`
     align-self: center;
     margin-bottom: 5px;
   }
+
   .button-container{
     padding: 20px;
   }

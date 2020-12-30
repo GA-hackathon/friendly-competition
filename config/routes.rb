@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
   resources :likes
-  get '/contests/oldest', to: 'contests#last_2'
-  get '/contests/newest', to: 'contests#first_2'
+  get '/contests/oldest', to: 'contests#last'
+  get '/contests/newest', to: 'contests#first'
+  get '/contests/users', to: 'contests#index_with_users'
+  get '/contests-user/:id', to: 'contests#show_with_user'
+
   resources :contests
   resources :submissions
+  get '/users/submissions', to: 'users#index_submissions'
+
+  get '/users/:id/submissions', to: 'users#get_submissions'
+
   resources :votes
   resources :users, :only => [:create, :index, :show, :update]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
