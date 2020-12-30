@@ -50,6 +50,7 @@ let Wrapper = styled.div`
   .attention {
     padding: 20px;
     font-size: clamp(19px, 7vw, 50px);
+    font-family: "roboto", sans-serif;
   }
 
   @media (min-width: 700px) {

@@ -1,18 +1,21 @@
 import React from "react";
+import ScrollToTopOnMount from "../../Helpers/ScrollToTopOnMount";
 import StyledLoading from "./styledFunLoading";
 
 function FunOrangeLoading() {
   return (
     <StyledLoading>
+      <ScrollToTopOnMount />
       <div className="loading-wrapper">
         <div className="content-container">
-          <div className="logo-container">
+          {/* <div className="logo-container">
             <img
               className="logo"
               src="https://i.imgur.com/YnBGN1P.png"
               alt="logo"
             />
-          </div>
+            Loading...
+          </div> */}
           <img
             className="loading"
             style={{ width: "50vw" }}

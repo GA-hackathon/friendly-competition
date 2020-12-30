@@ -50,5 +50,9 @@ let StyledLoading = styled.div`
     font-size: 2rem;
     margin-top: 20px;
   }
+
+  .loading { 
+    margin-top: 30%;
+  }
 `;
 export default StyledLoading;

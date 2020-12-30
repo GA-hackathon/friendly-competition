@@ -4,7 +4,7 @@ import { postSubmission } from "../../../services/submissions";
 import { Button, TextField } from "@material-ui/core";
 import Div from "./styledSubmissionCreate";
 
-function SubmissionCreate({ setSubmitted }) {
+function SubmissionCreate({ setSubmitted, currentUser, setAllSubmissions, contest }) {
   const [isCreated, setCreated] = useState(false);
 
   const handleChange = (e) => {
@@ -15,19 +15,23 @@ function SubmissionCreate({ setSubmitted }) {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const created = await postSubmission(formData);
-    setCreated({ created });
+  const handleCreate = async () => {
+    const newSubmission = await postSubmission(formData, {
+      user_id: currentUser.id,
+      contest_id: contest.id,
+    });
+    setAllSubmissions((prevState) => [...prevState, newSubmission]);
   };
+
+
 
   const [formData, setFormData] = useState({
     name: "",
     content: "",
     file: "",
   });
-
   const { name, content, file } = formData;
+
   if (isCreated) {
     setSubmitted(true);
     window.location.reload();
@@ -39,7 +43,7 @@ function SubmissionCreate({ setSubmitted }) {
     fileReader.addEventListener("load", () => {
       setFormData({
         ...formData,
-        image: fileReader.result,
+        file: fileReader.result,
       });
     });
     if (img) {
@@ -56,8 +60,23 @@ function SubmissionCreate({ setSubmitted }) {
       ...formData,
       file: "",
     });
-    document.getElementById("image-upload").value = "";
+    document.getElementById("file-upload").value = "";
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newSubmission = await postSubmission({
+      name: formData.name,
+      content: formData.content,
+      file: formData.file,
+      user_id: currentUser.id,
+      contest_id: contest.id,
+    });
+    setAllSubmissions((prevState) => [...prevState, newSubmission]);
+    // const created = await postSubmission(formData);
+    // setCreated({ created });
+  };
+
 
   return (
     <Div>
@@ -85,12 +104,12 @@ function SubmissionCreate({ setSubmitted }) {
             onChange={handleChange}
           />
         </div>
-        <Button>Upload File</Button>
-        <Button type="submit">Submit</Button>
+        <Button variant="contained" onClick={selectFile}>Upload File</Button>
+        <Button variant="contained" disabled={!currentUser} type="submit">{currentUser ? <>Enter Contest</> : <>Please Log-In</>}</Button>
       </form>
       <input
         type="file"
-        id="image-upload"
+        id="file-upload"
         style={{ visibility: "hidden" }}
         onChange={onFileSelected}
       />

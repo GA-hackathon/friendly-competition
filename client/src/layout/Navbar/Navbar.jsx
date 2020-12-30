@@ -1,8 +1,7 @@
 import "./Navbar.css";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../../providers/CurrentUserProvider";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { removeToken } from "../../services/auth";
 import Button from "@material-ui/core/Button";
 import logo from './logo.png';
@@ -18,15 +17,17 @@ function Navbar() {
     history.push("/");
   };
 
+  let location = useLocation()
+
   return (
-    <>
-      <nav className="navbar">
+    <nav className="navbar">
+      <div>
         <ul className="links">
           <li className="nav-block">
-            <Link className='logo' to="/"><img style={{  width: '4rem', height: '3rem'}} src={logo}/></Link>
+            <Link className='logo' to="/"><img style={{ width: '4rem', height: '3rem' }} src={logo} /></Link>
           </li>
           <li className="nav-block">
-            <Link to="/">Create Contest</Link>
+            <Link to="/create-contest">Create Contest</Link>
           </li>
           <li className="nav-block">
             <Link to="/">About</Link>
@@ -35,15 +36,14 @@ function Navbar() {
         <div className="user-column">
           <Link className="profile-link" to={`/users/${currentUser?.id}`}>
             {!currentUser?.image ? (
-              // <AccountCircleIcon className="icon" />
               ''
             ) : (
-              <img
-                className="user-image"
-                src={currentUser?.image}
-                alt={currentUser?.name}
-              />
-            )}
+                <img
+                  className="user-image"
+                  src={currentUser?.image}
+                  alt={currentUser?.name}
+                />
+              )}
           </Link>
           <div className="name">{currentUser?.first_name}</div>
           <div className="auth-buttons">
@@ -76,8 +76,8 @@ function Navbar() {
             )}
           </div>
         </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 }
 

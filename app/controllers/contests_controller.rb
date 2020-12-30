@@ -7,7 +7,6 @@ class ContestsController < ApplicationController
     @contests = Contest.newest_first
 
     render json: @contests, :include => {:submissions => {:include => :user}} 
-
   end
 
   def index_with_users

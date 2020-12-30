@@ -19,9 +19,9 @@ export default function UsersContainer() {
   return (
     <>
       <Switch>
-        <Route path="/users/:id">
+        {/* <Route path="/users/:id">
           <UserDetail getOneUser={getOneUser} />
-        </Route>
+        </Route> */}
         {/* <Route path="/users/">
           <Users loaded={loaded} allUsers={allUsers} />
         </Route> */}

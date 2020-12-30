@@ -32,9 +32,9 @@ function Error() {
 
   // user experience, /contests or /submissions not existing doesn't make sense
   const whiteList = /contests|submissions/;
-  if (location.pathname.replace("/", "").toLowerCase().match(whiteList)) {
-    return <Redirect to="/" />;
-  }
+  // if (location.pathname.replace("/", "").toLowerCase().match(whiteList)) {
+  //   return <Redirect to="/" />;
+  // }
 
   return (
     // <Layout>

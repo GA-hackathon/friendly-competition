@@ -24,7 +24,7 @@ function ContestCreate() {
     fileReader.addEventListener("load", () => {
       setFormData({
         ...formData,
-        picture: fileReader.result,
+        image: fileReader.result,
       });
     });
     if (img) {
@@ -64,31 +64,34 @@ function ContestCreate() {
 
   return (
     <>
-    <Navbar />
+      <Navbar />
       <div className="contest-form">
         <h3>Creating your own contest</h3>
         <h5>Tell us a little bit about what you'd like in the contest</h5>
         <form className="input-group" onSubmit={handleSubmit}>
           <label>
             Contest Name:
-            <Input fullWidth={true} onChange={handleChange} type="text" name="name" />
+            <Input required
+              fullWidth={true} onChange={handleChange} type="text" name="name" />
           </label>
           <label>
             Rules:
-            <Input fullWidth={true} onChange={handleChange} type="text" name="rules" />
+            <Input required
+              fullWidth={true} onChange={handleChange} type="text" name="rules" />
           </label>
 
           <label>
             Ending Date:
             <Input fullWidth={true}
               onChange={handleChange}
+              required
               type="datetime-local"
               name="ending_time"
             />
           </label>
           <label>
             Zip code:
-            <Input fullWidth={true} onChange={handleChange} type="text" name="zip_code" />
+            <Input fullWidth={true} type="text" name="zip_code" />
           </label>
           <label className="image-container">
             Upload picture:
@@ -99,8 +102,8 @@ function ContestCreate() {
                 alt={formData.name}
               />
             ) : (
-              <WallpaperIcon fontSize='large' onClick={selectImage} className="image-icon" />
-            )}
+                <WallpaperIcon fontSize='large' onClick={selectImage} className="image-icon" />
+              )}
             {formData.picture && (
               <IconButton
                 onMouseDown={(e) => e.preventDefault()}
@@ -113,12 +116,13 @@ function ContestCreate() {
             <input
               type="file"
               id="image-upload"
+              required
               style={{ visibility: "hidden" }}
               onChange={onImageSelected}
             />
 
           </label>
-          <Button variant="contained" style={{ background: '#00DB94'}} className="form-btn" type="submit">
+          <Button variant="contained" style={{ background: '#00DB94' }} className="form-btn" type="submit">
             Get Started
           </Button>
         </form>
@@ -126,5 +130,4 @@ function ContestCreate() {
     </>
   );
 }
-
 export default ContestCreate;

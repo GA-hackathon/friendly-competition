@@ -6,12 +6,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    # @submissions = Submission.all
-
-    for @user in @users do  
-      @user.submissions = @submissions.filter {|s| s == @submission }
-    end
-    
+        
     render json: @users, :include => {:contests => {:include => :submissions}} 
   end
 
@@ -26,7 +21,7 @@ class UsersController < ApplicationController
   end
 
   def get_submissions
-    render json: @user, include: :submissions
+    render json: @user, include: {:submissions => {:include => :contest}} 
   end
 
   # POST /users
