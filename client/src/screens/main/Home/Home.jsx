@@ -14,6 +14,7 @@ import {
 } from "../../../services/contests";
 import ContestCard from "../../../components/ContestComponents/ContestCard/ContestCard";
 import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
+import ScrollToTopOnMount from "../../../components/Helpers/ScrollToTopOnMount";
 
 function Home() {
   const [{ currentUser }] = useStateValue();
@@ -65,6 +66,7 @@ function Home() {
 
   return (
     <Layout>
+      <ScrollToTopOnMount />
       <Wrapper>
         <div className="row-1">
           {currentUser && <>Welcome {currentUser?.first_name}</>}&nbsp;
@@ -74,12 +76,10 @@ function Home() {
           <FunOrangeLoading />
         ) : (
           <div className="all-contests inner-column">
-            <h1> Ending Soon</h1>
-            <div className="contest-container oldest">{oldContestsJSX}</div>
-            <h1> NEW Contests</h1>
-            <div className="contests-container newest">
-              <div className="contests">{newContestsJSX}</div>
-            </div>
+            <h1 className="attention"> Contests Ending Soon</h1>
+            <div className="contest-list oldest">{oldContestsJSX}</div>
+            <h1 className="attention"> NEW Contests</h1>
+            <div className="contest-list newest">{newContestsJSX}</div>
           </div>
         )}
       </Wrapper>
