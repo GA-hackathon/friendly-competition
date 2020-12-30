@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-const triggerList =  /about|create-contest|^\/$/
 
 let Nav = styled.nav`
 

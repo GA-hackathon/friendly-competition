@@ -77,7 +77,7 @@ function ContestPage() {
 
           // this if condition is to avoid an error "Reduce of empty array with no initial value"
           // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/size
-          if (submissionVotes.size()) {
+          if (submissionVotes.size) {
             voteData.filter(v => activeSubmissions.map(ac => ac.id).includes(v?.submission_id)).map(vote => {
               if (submissionVotes.has(vote?.submission_id)) {
                 let existingCount = submissionVotes.get(vote.submission_id);
@@ -87,13 +87,11 @@ function ContestPage() {
                 submissionVotes.set(vote.submission_id, 1);
               }
             });
-            console.log(submissionVotes);
             // find the highest voted submission
             let highestVoted = [...submissionVotes.entries()]?.reduce((a, e) => e[1] > a[1] ? e : a);
             //highestvoted[0] = submissionid
             // highestVoted[1] = vote count for that submission
             const winner = activeSubmissions.find(sub => sub.id === highestVoted[0]);
-            console.log('winner', winner);
             setWinnerSubsmission(
               { ...winner, votes: highestVoted[1] });
           }
@@ -110,7 +108,6 @@ function ContestPage() {
     };
     contestDataForUser();
   }, []);
-
 
 
 
@@ -141,13 +138,15 @@ function ContestPage() {
       </header>
       <main>
         <section className="timer-container">
-          <h5>Contest Ends In:</h5>
-          <CountdownTimer contest={contest} />
-          <h5>Contest Rules</h5>
-          <div>{contest?.rules}</div>
-          <h5>Try</h5>
-          <span></span>
-          <p>Join the Discussion</p>
+          <>
+            {!contestEnded ?
+              <h5>Contest Ends In:</h5> : <><h5>Contest Ended</h5></>}
+            <CountdownTimer contest={contest} />
+            <h5>Contest Rules</h5>
+            <div>{contest?.rules}</div>
+            <h5>Try</h5>
+            <span></span>
+            <p>Join the Discussion</p></>
         </section>
 
         <div className="create-submission">
@@ -157,11 +156,7 @@ function ContestPage() {
             <h5>Ready to Enter?</h5>
             <SubmissionCreate isSubmited={isSubmitted} setAllSubmissions={setActiveSubmissions} contest={contest} currentUser={currentUser} />
           </section> : <div>
-              {/* FOR LEADERBOARD? (get top 3)*/}
-              {/* {allSubmissions.map(entry => ({ ...entry, votes: entry.user.votes ? entry.user.votes.length : 0 }))
-                .sort((sub1, sub2) => sub2.votes - sub1.votes).map(sub =>
-                  (<div>{sub.name} {sub.user.name} {sub.votes}</div>))
-              } */}
+
               <div>WINNER: Entry: {winnerSubmission?.name}  User: {winnerSubmission?.user.first_name}, {winnerSubmission?.votes} votes</div>
             </div>}
         </div>

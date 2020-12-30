@@ -15,11 +15,10 @@ function ContestCreate() {
     name: "",
     rules: "",
     category: "",
-    ending_time: "",
     picture: "",
   });
   const [isCreated, setCreated] = useState(false);
-  const { name, category, rules, ending_time, picture } = formData
+  const { name, category, rules, picture } = formData
   const [{ currentUser }] = useStateValue()
   const onImageSelected = (e) => {
     const img = e.target.files[0];
