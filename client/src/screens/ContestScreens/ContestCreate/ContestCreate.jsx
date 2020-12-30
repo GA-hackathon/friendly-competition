@@ -11,17 +11,16 @@ import { Redirect } from "react-router-dom";
 import { useStateValue } from "../../../providers/CurrentUserProvider";
 
 function ContestCreate() {
-
-  const [isCreated, setCreated] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     rules: "",
+    category: "",
     ending_time: "",
     picture: "",
   });
-  const { name, rules, ending_time, picture } = formData
+  const [isCreated, setCreated] = useState(false);
+  const { name, category, rules, ending_time, picture } = formData
   const [{ currentUser }] = useStateValue()
-
   const onImageSelected = (e) => {
     const img = e.target.files[0];
     const fileReader = new FileReader();
@@ -66,9 +65,11 @@ function ContestCreate() {
   }
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     const created = await postContest(formData);
     setCreated({ created });
+
   };
 
   return (
@@ -81,12 +82,17 @@ function ContestCreate() {
           <label>
             Contest Name:
             <Input required
-              fullWidth={true} onChange={handleChange} type="text" name="name" />
+              fullWidth={true} value={name} onChange={handleChange} type="text" name="name" />
+          </label>
+          <label>
+            Category:
+            <Input required
+              fullWidth={true} value={category} onChange={handleChange} type="text" name="category" />
           </label>
           <label>
             Rules:
             <Input required
-              fullWidth={true} onChange={handleChange} type="text" name="rules" />
+              fullWidth={true} value={rules} onChange={handleChange} type="text" name="rules" />
           </label>
 
           <label>
@@ -100,7 +106,7 @@ function ContestCreate() {
           </label>
           <label>
             Zip code:
-            <Input fullWidth={true} type="text" name="zip_code" />
+            <Input required fullWidth={true} type="text" name="zip_code" />
           </label>
           <label className="image-container">
             Upload picture:
@@ -125,13 +131,12 @@ function ContestCreate() {
             )}
 
           </label>
-          <Button disabled={!currentUser} variant="contained" style={{ background: '#00DB94' }} className="form-btn" type="submit">
+          <Button disabled={!currentUser || !picture} variant="contained" style={{ background: '#00DB94' }} className="form-btn" type="submit">
             {currentUser ? <> Get Started </> : <>Please Log In</>}
           </Button>
           <input
             type="file"
             id="image-upload"
-            required
             style={{ visibility: "hidden" }}
             onChange={onImageSelected}
           />
