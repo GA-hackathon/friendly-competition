@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get '/contests/oldest', to: 'contests#last'
   get '/contests/newest', to: 'contests#first'
   get '/contests/users', to: 'contests#index_with_users'
-  get '/contests-user/:id', to: 'contests#show_with_user'
+  get '/contest-user/:id', to: 'contests#show_with_user'
 
   resources :contests
   resources :submissions

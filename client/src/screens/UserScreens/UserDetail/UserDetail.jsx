@@ -9,32 +9,36 @@ import Wrapper from "./styledUserDetail";
 import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import IconButton from "@material-ui/core/IconButton";
-import { getAllSubmissions } from "../../../services/submissions";
-import { getAllUsers } from "../../../services/users";
+import { getUserWithSubmissions } from "../../../services/submissions";
+import { getOneUser } from "../../../services/users";
 
-export default function UserDetail({ getOneUser }) {
+export default function UserDetail() {
+
   const [user, setUser] = useState(null);
+  const [userWithSubmissions, setUserWithSubmissions] = useState(null);
+
   const [loaded, setLoaded] = useState(false);
   // const [allSubmissions, setAllSubmissions] = useState([]);
   // const [allUsers, setAllUsers] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
-    const getData = async () => {
+    const getContests = async () => {
       const getUser = await getOneUser(id);
       setUser(getUser);
-      setLoaded(true);
     };
-    getData();
+    getContests();
   }, [getOneUser, id]);
 
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     const userData = await getAllUsers();
-  //     setAllUsers(allUsers);
-  //   };
-  //   fetchUsers();
-  // }, [allUsers]);
+  useEffect(() => {
+    const getSubmissions = async () => {
+      const getUser = await getUserWithSubmissions(id);
+      setUserWithSubmissions(getUser);
+      setLoaded(true);
+    };
+    getSubmissions();
+  }, [getOneUser, id]);
+
 
   const contestsJSX = user?.contests?.map((contest) => (
     <Link
@@ -46,35 +50,16 @@ export default function UserDetail({ getOneUser }) {
     </Link>
   ));
 
-  // useEffect(() => {
-  //   const fetchSubmissions = async () => {
-  //     const submissionData = await getAllSubmissions();
-  //     setAllSubmissions(
-  //       submissionData?.filter((submission) => submission.user_id === user?.id)
-  //     );
-  //   };
-  //   fetchSubmissions();
-  // }, [user?.id]);
+  const submissionsJSX = userWithSubmissions?.submissions?.map((submission) => (
+    <Link
+      key={submission.id}
+      className="contests-link"
+      to={`./../contests/${submission.contest_id}`}
+    >
+      {submission?.name}
+    </Link>
+  ));
 
-  // const foundSubmissions = () => {
-  //   allSubmissions?.find((user) => user?.submission());
-  // };
-
-  // const foundSubmissions = () =>
-  //   allSubmissions?.find(
-  //     (submission) =>
-  //       submission?.user_id === user?.id && user?.id === submission?.user_id
-  //   );
-
-  // const submissionsJSX = foundSubmissions().map((submission) => (
-  //   <Link
-  //     key={submission.id}
-  //     className="contests-link"
-  //     to={`./submissions/${submission.id}`}
-  //   >
-  //     {submission?.name}
-  //   </Link>
-  // ));
 
   if (!loaded) {
     return <FunOrangeLoading />;
@@ -104,17 +89,13 @@ export default function UserDetail({ getOneUser }) {
         <div className="inner-column">
           <div className="check-contests">{checkContests(user)}</div>
           <div className="contests-container">{contestsJSX}</div>
-          {/* <div className="check-contests">{checkSubmissions(user)}</div> */}
-          {/* <div className="contests-container">{submissionsJSX}</div> */}
+          <div className="check-contests">{checkSubmissions(userWithSubmissions)}</div>
+          <div className="contests-container">{submissionsJSX}</div>
         </div>
         <br />
         <br />
         <hr className="bottom-hr" />
-        <div className="buttons">
-          <Button variant="contained" color="secondary" onClick={goBack}>
-            Go Back
-          </Button>
-        </div>
+
       </div>
     </Wrapper>
   );

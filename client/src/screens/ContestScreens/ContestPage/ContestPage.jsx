@@ -3,7 +3,7 @@ import Search from "../../../components/Form/Search";
 import { useStateValue } from "../../../providers/CurrentUserProvider";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useParams } from "react-router-dom";
-import { getOneContest } from "../../../services/contests";
+import { getOneContest, getOneContestWithUser } from "../../../services/contests";
 import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
 import "./ContestPage.css";
 import Button from "@material-ui/core/Button";
@@ -16,10 +16,12 @@ import "./ContestPage.css";
 import SubmissionCreate from "../../../components/Form/SubmissionCreate/SubmissionCreate";
 import { getAllSubmissions } from "../../../services/submissions";
 import SubmissionCard from "../../../components/SubmissionComponents/SubmissionCard";
+import { toTitleCase } from "../../../utils/toTitleCase";
 
 function ContestPage() {
   const [{ currentUser }] = useStateValue();
   const [contest, setContest] = useState(null);
+  const [contestUser, setContestUser] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [allSubmissions, setAllSubmissions] = useState([])
   const { id } = useParams();
@@ -48,22 +50,32 @@ function ContestPage() {
   // })
 
   useEffect(() => {
-    const getData = async () => {
+    const contestDataForUser = async () => {
+      const getContestUser = await getOneContestWithUser(id);
+      setContestUser(getContestUser);
+    };
+    contestDataForUser();
+  }, []);
+
+  useEffect(() => {
+    const contestData = async () => {
       const getContest = await getOneContest(id);
       setContest(getContest);
       setLoaded(true);
     };
-    getData();
-  }, [id]);
+    contestData();
+  }, []);
+
 
   if (!loaded) {
     return <FunOrangeLoading />;
   }
-  let usersName = contest.user?.first_name?.concat(
-    " ",
-    contest?.user?.last_name.charAt(0)
-  );
 
+  // get full first name, but only the first initial of the last name followed by a dot.
+  let usersName = contestUser?.user?.first_name?.concat(
+    " ",
+    contestUser?.user?.last_name?.charAt(0).concat(".")
+  );
   return (
     <Layout>
       <header>
@@ -81,8 +93,8 @@ function ContestPage() {
         </section>
 
         <div className="create-submission">
-          Contest Created by: <AccountCircleIcon className="icon-submission" />
-          <span>{usersName}</span>
+          Contest Created by: {!contestUser?.user?.image ? <AccountCircleIcon className="icon-submission" /> : <img src={contest?.user?.image} alt={contest?.user?.name} />}
+          <p>{toTitleCase(usersName)}</p>
           <section>
             <h5>Ready to Enter?</h5>
             {/* <form className="submissions-form"> */}

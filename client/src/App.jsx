@@ -12,6 +12,7 @@ import { verifyUser } from "./services/auth";
 import UsersContainer from "./containers/UsersContainer";
 import ContestsContainer from "./containers/ContestsContainer";
 import NotFound from "./screens/error/NotFound";
+import UserDetail from "./screens/UserScreens/UserDetail/UserDetail";
 
 function App() {
   const [, dispatch] = useStateValue();
@@ -32,13 +33,13 @@ function App() {
 
   return (
     <>
-      <UsersContainer />
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/create-contest" component={ContestCreate} />
         <Route path="/contests/:id" component={ContestPage} />
-        <Route exact path="/" component={Home} />
+        <Route path="/users/:id" component={UserDetail} />
+        <Route path="/" component={Home} />
         <Route component={NotFound} />
       </Switch>
     </>

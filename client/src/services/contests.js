@@ -26,7 +26,7 @@ export const getOneContest = async (id) => {
 };
 
 export const getOneContestWithUser = async (id) => {
-  const resp = await api.get(`/contests/${id}`);
+  const resp = await api.get(`/contest-user/${id}`);
   return resp.data;
 };
 

@@ -25,7 +25,7 @@ function Navbar() {
             <Link to="/">Home</Link>
           </li>
           <li className="nav-block">
-            <Link to="/">Available Contest</Link>
+            <Link to="/create-contest">Create Contest</Link>
           </li>
           <li className="nav-block">
             <Link to="/">My Contests</Link>
@@ -36,12 +36,12 @@ function Navbar() {
             {!currentUser?.image ? (
               <AccountCircleIcon className="icon" />
             ) : (
-              <img
-                className="user-image"
-                src={currentUser?.image}
-                alt={currentUser?.name}
-              />
-            )}
+                <img
+                  className="user-image"
+                  src={currentUser?.image}
+                  alt={currentUser?.name}
+                />
+              )}
           </Link>
           <div className="name">{currentUser?.first_name}</div>
           <div className="buttons">

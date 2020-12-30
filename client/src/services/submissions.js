@@ -15,6 +15,11 @@ export const postSubmission = async (submissionData) => {
   return resp.data;
 };
 
+export const getUserWithSubmissions = async (id) => {
+  const resp = await api.get(`/users/${id}/submissions`);
+  return resp.data;
+};
+
 export const putSubmission = async (id, submissionData) => {
   const resp = await api.put(`/submissions/${id}`, {
     submission: submissionData,
