@@ -70,7 +70,7 @@ function Home() {
       <Wrapper>
         <div className="row-1">
           {currentUser && <>Welcome {currentUser?.first_name}</>}&nbsp;
-          <Search search={search} setSearch={setSearch} />
+          {/* <Search search={search} setSearch={setSearch} /> */}
         </div>
         {!loaded ? (
           <FunOrangeLoading />

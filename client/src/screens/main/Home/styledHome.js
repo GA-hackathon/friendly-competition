@@ -12,12 +12,15 @@ let Wrapper = styled.div`
     flex-flow: row wrap;
     align-items: center;
   }
+
   div {
     margin: 5px;
   }
+
   a {
     padding: 5px;
   }
+
   .user-avatar-header {
     height: 100px;
     width: 100px;

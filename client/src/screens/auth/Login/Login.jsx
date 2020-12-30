@@ -57,7 +57,7 @@ function Login() {
 
       <div className="inner-column">
         <div className="title-container">
-          <h1>Login</h1>
+          <h1>LOGIN TO CHALLENGE.ME</h1>
         </div>
         <form
           onSubmit={(e) => {

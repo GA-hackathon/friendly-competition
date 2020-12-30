@@ -2,18 +2,38 @@ import React, { Fragment, useState, useRef, useEffect } from 'react';
 import Search from '../../../components/Form/Search';
 import { useStateValue } from "../../../providers/CurrentUserProvider";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { useParams } from 'react-router-dom';
+import { getOneContest } from '../../../services/contests'
+import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
+
 import './ContestPage.css'
 
 
 function ContestPage() {
-    const [{ currentUser }, dispatch] = useStateValue();
+  const [{ currentUser }, dispatch] = useStateValue();
+  const [contest, setContest] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+  
+  const { id } = useParams();
+  
+  useEffect(() => {
+    const getData = async () => {
+      const getContest = await getOneContest(id);
+      setContest(getContest);
+      setLoaded(true);
+    };
+    getData();
+  }, []);
+
     const [timerDays, setTimerDays] = useState('00');
     const [timerHours, setTimerHours] = useState('00');
     const [timerMinutes, setTimerMinutes] = useState('00');
     const [timerSeconds, setTimerSeconds] = useState('00');
-
+    
     let interval = useRef()
-
+  
+   
+  
     const startTimer = () => {
         const countdownDate = new Date('May 30, 2020 00:00:00').getTime();
 
@@ -45,10 +65,14 @@ function ContestPage() {
         }
     })
 
+    if (!loaded) {
+      return <FunOrangeLoading/>;
+    }
+  
     return (
         <Fragment>
         <header>
-          <div className='submission-name'>Best Pina Colada</div>
+          <div className='submission-name'>{contest.name}</div>
           <span>Search Submissions:</span>
           <Search />
         </header>
