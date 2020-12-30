@@ -16,10 +16,7 @@ export default function UserDetail() {
 
   const [user, setUser] = useState(null);
   const [userWithSubmissions, setUserWithSubmissions] = useState(null);
-
   const [loaded, setLoaded] = useState(false);
-  // const [allSubmissions, setAllSubmissions] = useState([]);
-  // const [allUsers, setAllUsers] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {

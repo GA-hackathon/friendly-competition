@@ -15,7 +15,7 @@ Submission.destroy_all
 Vote.destroy_all
 
 @admin = User.create!(first_name: 'admin', last_name: "blah", email: 'admin@email.com', password: '12345678',image: "https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2020-07/kitten-510651.jpg?h=f54c7448&itok=ZhplzyJ9")
-@daniel = User.create!(first_name: 'daniel', last_name: "michael", email: 'daniel@email.com', password: '12345678',image: "")
+@daniel = User.create!(first_name: 'daniel', last_name: "michael", email: 'daniel@email.com', password: '12345678',image: "https://pbs.twimg.com/profile_images/1338943478991114242/nfJdD1zT_400x400.jpg")
 @bob = User.create!(first_name: 'bob', last_name: "", email: 'bob@email.com', password: '12345678',image: "")
 
 puts "#{User.count} users created"

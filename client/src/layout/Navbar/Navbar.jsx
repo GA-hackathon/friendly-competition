@@ -17,14 +17,14 @@ function Navbar() {
     history.push("/");
   };
 
-  let location = useLocation()
+  // let location = useLocation()
 
   return (
     <Nav className="navbar">
       <div>
         <ul className="links">
           <li className="nav-block">
-            <Link className='logo' to="/"><img style={{ width: '4rem', height: '3rem' }} src={logo} /></Link>
+            <Link className='logo' to="/"><img style={{ width: '4rem', height: '3rem' }} src={logo} alt="logo" /></Link>
           </li>
           <li className="nav-block">
             <Link to="/create-contest">Create Contest</Link>

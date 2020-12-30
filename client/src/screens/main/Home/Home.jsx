@@ -1,15 +1,11 @@
-import { Link, Switch, Route } from "react-router-dom";
 import { useStateValue } from "../../../providers/CurrentUserProvider";
 import { useState, useEffect } from "react";
-import Search from "../../../components/Form/Search";
 import Wrapper from "./styledHome";
 import Layout from "../../../layout/Layout";
 import {
   destroyContest,
   getAllContests,
   postContest,
-  putContest,
-  getOneContest,
 } from "../../../services/contests";
 import ContestCard from "../../../components/ContestComponents/ContestCard/ContestCard";
 import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";

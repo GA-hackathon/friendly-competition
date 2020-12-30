@@ -32,12 +32,7 @@ function ContestPage() {
 
   const { id } = useParams();
 
-
-
-
-
   useEffect(() => {
-
     const fetchSubmissions = async () => {
       const fetchedContest = await getOneContest(id);
       const submissionData = await getAllSubmissions();
@@ -74,7 +69,7 @@ function ContestPage() {
           let submissionVotes = new Map();
           // filter votes which are only in this contest
 
-          //ctiveSubmissions.map(ac => ac.id).includes(v.submission_id)
+          //activeSubmissions.map(ac => ac.id).includes(v.submission_id)
           // create an array of submission ids
           //check if vote.submissionid is included in array of submission ids
           // so we get all the vots for the contest
@@ -152,7 +147,7 @@ function ContestPage() {
         </section>
 
         <div className="create-submission">
-          ``          Contest Created by: {!contestUser?.user?.image ? <AccountCircleIcon className="icon-submission" /> : <img src={contest?.user?.image} alt={contest?.user?.name} />}
+          Contest Created by: {!contestUser?.user?.image ? <AccountCircleIcon className="icon-submission" /> : <img className="user-image" src={contestUser?.user?.image} alt={contestUser?.user?.name} />}
           <p>{toTitleCase(usersName)}</p>
           {!contestEnded ? <section>
             <h5>Ready to Enter?</h5>
