@@ -5,6 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { removeToken } from "../../services/auth";
 import Button from "@material-ui/core/Button";
 import logo from './logo.png';
+import Nav from './styledNavbar'
 
 function Navbar() {
   const [{ currentUser }, dispatch] = useStateValue();
@@ -20,7 +21,7 @@ function Navbar() {
   let location = useLocation()
 
   return (
-    <nav className="navbar">
+    <Nav className="navbar">
       <div>
         <ul className="links">
           <li className="nav-block">
@@ -77,7 +78,7 @@ function Navbar() {
           </div>
         </div>
       </div>
-    </nav>
+    </Nav>
   );
 }
 

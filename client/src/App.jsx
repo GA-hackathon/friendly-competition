@@ -9,8 +9,6 @@ import { useStateValue } from "./providers/CurrentUserProvider";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { verifyUser } from "./services/auth";
-import UsersContainer from "./containers/UsersContainer";
-import ContestsContainer from "./containers/ContestsContainer";
 import NotFound from "./screens/error/NotFound";
 import UserDetail from "./screens/UserScreens/UserDetail/UserDetail";
 

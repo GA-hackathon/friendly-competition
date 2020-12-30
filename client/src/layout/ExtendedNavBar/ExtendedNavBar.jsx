@@ -8,11 +8,11 @@ import { useLocation } from 'react-router-dom'
 let Div = styled.div`
   list-style-type: none;
   background: #e5e5e5;
-  height: 100px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  height: 5rem;
 
   .user-container {
     display: flex;
@@ -21,7 +21,6 @@ let Div = styled.div`
     padding: 10px;
     margin-left: 50px;
  }
-  height: 5rem;
 
   .search-container {
     display: flex;

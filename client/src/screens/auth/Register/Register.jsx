@@ -39,7 +39,6 @@ function Register() {
   const [passwordHasNumber, setPasswordHasNumber] = useState(false);
   const [passwordHasLowerCase, setPasswordHasLowerCase] = useState(false);
   const [passwordHasUpperCase, setPasswordHasUpperCase] = useState(false);
-
   const [
     passwordHasSpecialCharacter,
     setPasswordHasSpecialCharacter,
@@ -167,8 +166,8 @@ function Register() {
           {image ? (
             <img className="big-user-image" src={image} alt={first_name} />
           ) : (
-            <AccountCircleIcon className="big-icon" />
-          )}
+              <AccountCircleIcon className="big-icon" />
+            )}
           <footer className="picture-buttons">
             {/* if we have an uploaded image show the image clear icon */}
             {image && (
@@ -189,8 +188,8 @@ function Register() {
               {image ? (
                 <CameraIcon className="big-camera-icon" />
               ) : (
-                <AddAPhotoIcon style={{color: '#000000'}} className="big-camera-icon" />
-              )}
+                  <AddAPhotoIcon style={{ color: '#000000' }} className="big-camera-icon" />
+                )}
             </IconButton>
           </footer>
         </div>
@@ -248,7 +247,6 @@ function Register() {
               </div>
             </>
           )}
-
           <div className="input-container">
             <FormControl>
               <InputLabel htmlFor="password">Password</InputLabel>
@@ -314,7 +312,12 @@ function Register() {
             style={{ visibility: "hidden" }}
             onChange={onImageSelected}
           />
-          <Button className='button-container' variant="contained" type="submit">
+          <Button disabled={password !== passwordConfirm ||
+            !passwordHasLowerCase ||
+            !passwordHasUpperCase ||
+            !passwordHasSpecialCharacter ||
+            !passwordHasNumber ||
+            !first_name} className='button-container' variant="contained" type="submit">
             Get Started
           </Button>
         </form>
@@ -322,5 +325,4 @@ function Register() {
     </>
   );
 }
-
 export default Register;

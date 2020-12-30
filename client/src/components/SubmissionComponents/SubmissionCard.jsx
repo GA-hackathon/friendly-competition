@@ -53,7 +53,7 @@ function SubmissionCard({ submission, contest, currentUser }) {
     <div>
       <h1>{submission.name}</h1>
       <p>{submission.content}</p>
-      <img src={submission.file} />
+      <img src={submission?.file} alt={submission.name} />
 
       {!voteDisabled && (!voted ? <Button onClick={handleVote}>Vote For Me</Button> : <></>)}}
     </div>

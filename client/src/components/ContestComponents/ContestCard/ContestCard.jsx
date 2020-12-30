@@ -1,11 +1,10 @@
 import React from "react";
-import { Link, Switch, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import "moment-timezone";
 import styled from "styled-components";
 import { compareDateWithCurrentTime } from "../../../utils/compareDateWithCurrentTime";
 import Button from "@material-ui/core/Button";
-import ContestPage from "../../../screens/ContestScreens/ContestPage/ContestPage";
 
 let Container = styled.div`
   display: block;

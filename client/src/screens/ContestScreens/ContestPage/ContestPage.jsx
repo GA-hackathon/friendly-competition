@@ -24,6 +24,7 @@ function ContestPage() {
   const [contestUser, setContestUser] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [allSubmissions, setAllSubmissions] = useState([])
+  const [isSubmitted, setSubmitted] = useState(false)
   const { id } = useParams();
 
 
@@ -67,15 +68,27 @@ function ContestPage() {
   }, []);
 
 
-  if (!loaded) {
-    return <FunOrangeLoading />;
-  }
 
   // get full first name, but only the first initial of the last name followed by a dot.
   let usersName = contestUser?.user?.first_name?.concat(
     " ",
     contestUser?.user?.last_name?.charAt(0).concat(".")
   );
+
+
+  // if a submission/entry is associated to the current user, do not allow him to resend another one.
+  useEffect(() => {
+    const entryFound = allSubmissions?.find(
+      (submission) =>
+        submission?.contest_id === contest?.id && currentUser?.id === submission?.user_id
+    );
+    entryFound ? setSubmitted(true) : setSubmitted(false);
+  }, [allSubmissions, currentUser?.id, contest?.id]);
+
+  if (!loaded) {
+    return <FunOrangeLoading />;
+  }
+
   return (
     <Layout>
       <header>
@@ -97,7 +110,7 @@ function ContestPage() {
           <p>{toTitleCase(usersName)}</p>
           <section>
             <h5>Ready to Enter?</h5>
-            <SubmissionCreate setAllSubmissions={setAllSubmissions} contest={contest} currentUser={currentUser} />
+            <SubmissionCreate isSubmited={isSubmitted} setAllSubmissions={setAllSubmissions} contest={contest} currentUser={currentUser} />
           </section>
         </div>
         <hr style={{ margin: "0rem 2rem" }} />

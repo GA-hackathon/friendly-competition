@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
 import { postSubmission } from "../../../services/submissions";
 import { Button, TextField } from "@material-ui/core";
 import Div from "./styledSubmissionCreate";
 
-function SubmissionCreate({ setSubmitted, currentUser, setAllSubmissions, contest }) {
+function SubmissionCreate({ currentUser, setAllSubmissions, contest, isSubmitted }) {
   const [isCreated, setCreated] = useState(false);
 
   const handleChange = (e) => {
@@ -32,10 +31,7 @@ function SubmissionCreate({ setSubmitted, currentUser, setAllSubmissions, contes
   });
   const { name, content, file } = formData;
 
-  if (isCreated) {
-    setSubmitted(true);
-    window.location.reload();
-  }
+
 
   const onFileSelected = (e) => {
     const img = e.target.files[0];
@@ -73,10 +69,12 @@ function SubmissionCreate({ setSubmitted, currentUser, setAllSubmissions, contes
       contest_id: contest.id,
     });
     setAllSubmissions((prevState) => [...prevState, newSubmission]);
-    // const created = await postSubmission(formData);
-    // setCreated({ created });
+    setCreated({ newSubmission });
   };
 
+  if (isCreated || isSubmitted) {
+    return (<Div>Cheers! <br /> Your Entry is in!</Div>)
+  }
 
   return (
     <Div>
@@ -104,7 +102,7 @@ function SubmissionCreate({ setSubmitted, currentUser, setAllSubmissions, contes
             onChange={handleChange}
           />
         </div>
-        <Button variant="contained" onClick={selectFile}>Upload File</Button>
+        <Button variant="contained" onClick={selectFile}>Upload Image</Button>
         <Button variant="contained" disabled={!currentUser} type="submit">{currentUser ? <>Enter Contest</> : <>Please Log-In</>}</Button>
       </form>
       <input

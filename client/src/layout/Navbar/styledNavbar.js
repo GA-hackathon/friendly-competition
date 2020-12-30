@@ -2,13 +2,14 @@ import styled from 'styled-components'
 
 let Nav = styled.nav`
 
-  list-style-type: none;
-  background: #c4c4c4;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  display: flex;
-  justify-content: space-between;
+list-style-type: none;
+background: #c4c4c4;
+margin: 0;
+padding: 0;
+overflow: hidden;
+display: flex;
+justify-content: space-between;
+
 
 li.nav-block {
   background:#36B7FF;
@@ -62,17 +63,12 @@ li.text {
 .user-column {
   display: flex;
   align-items: center;
-  margin-right: 50px;
-  padding: 20px;
 }
 
 .MuiSvgIcon-root.icon {
   font-size: 50px;
 }
 
-.logo {
-  width: 50px;
-}
 .profile-link {
   text-decoration: none;
   color: black;
