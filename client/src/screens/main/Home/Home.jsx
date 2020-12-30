@@ -13,7 +13,7 @@ import {
   getNewestContests,
   getOldestContests,
 } from "../../../services/contests";
-import ContestCard from "../../../components/ContestComponents/ContestCard";
+import ContestCard from "../../../components/ContestComponents/ContestCard/ContestCard";
 
 function Home() {
   const [{ currentUser }] = useStateValue();
