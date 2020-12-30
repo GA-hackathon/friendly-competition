@@ -1,10 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Switch, Route } from "react-router-dom";
 import Moment from "react-moment";
 import "moment-timezone";
 import styled from "styled-components";
 import { compareDateWithCurrentTime } from "../../../utils/compareDateWithCurrentTime";
 import Button from "@material-ui/core/Button";
+import ContestPage from "../../../screens/ContestScreens/ContestPage/ContestPage";
 
 let Container = styled.div`
   display: block;
@@ -102,62 +103,66 @@ let Container = styled.div`
   }
 `;
 
-function ContestCard({ contest }) {
+function ContestCard({ contest, allContests }) {
   let currentTime = new Date();
 
   return (
-    <Container>
-      <Link className="link-container" to={`contests/${contest.id}`}>
-        <picture>
-          {contest?.submissions.length >= 1 && (
-            <svg
-              width="117"
-              height="171"
-              viewBox="0 0 117 171"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1 170V1H116V170L59.869 131.298L1 170Z"
-                fill="#080808"
-                stroke="black"
-              />
-              {/*   <text x="20" y="35" class="small">My</text>
+    <>
+      <Container>
+
+        <Link className="link-container" to={`contests/${contest.id}`}>
+          <picture>
+            {contest?.submissions.length >= 1 && (
+              <svg
+                width="117"
+                height="171"
+                viewBox="0 0 117 171"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 170V1H116V170L59.869 131.298L1 170Z"
+                  fill="#080808"
+                  stroke="black"
+                />
+                {/*   <text x="20" y="35" class="small">My</text>
                */}
-              <text className="text length">
-                {contest?.submissions?.length}
-              </text>
-              <text className="text entries">Entries</text>
-            </svg>
-          )}
-          <img
-            className="contest-card thumbnail"
-            src={contest.picture}
-            alt={contest.name}
-          />
-        </picture>
-      </Link>
-      <h1 className="contest-card name">{contest.name}</h1>
-      <h2 className="contest-card date">
-        {/* compareDateWithCurrentTime is imported from src/utils */}
-        {/* if the current time has passed say "contest ended", else: say contest ends */}
-        {compareDateWithCurrentTime(contest?.ending_time) === 1 ? (
-          <>Contest ended&nbsp;</>
-        ) : (
-          <>Contest ends&nbsp;</>
-        )}
-        <Moment from={currentTime?.toISOString()}>{contest.ending_time}</Moment>
-      </h2>
-      <footer className="contest-card actions">
-        <Button
-          variant="contained"
-          component={Link}
-          to={`contests/${contest.id}`}
-        >
-          View Contest
+                <text className="text length">
+                  {contest?.submissions?.length}
+                </text>
+                <text className="text entries">Entries</text>
+              </svg>
+            )}
+            <img
+              className="contest-card thumbnail"
+              src={contest.picture}
+              alt={contest.name}
+            />
+          </picture>
+        </Link>
+        <h1 className="contest-card name">{contest.name}</h1>
+        <h2 className="contest-card date">
+          {/* compareDateWithCurrentTime is imported from src/utils */}
+          {/* if the current time has passed say "contest ended", else: say contest ends */}
+          {compareDateWithCurrentTime(contest?.ending_time) === 1 ? (
+            <>Contest ended&nbsp;</>
+          ) : (
+              <>Contest ends&nbsp;</>
+            )}
+          <Moment from={currentTime?.toISOString()}>{contest.ending_time}</Moment>
+        </h2>
+        <footer className="contest-card actions">
+          <Button
+            variant="contained"
+            component={Link}
+            to={`contests/${contest.id}`}
+          >
+            View Contest
         </Button>
-      </footer>
-    </Container>
+        </footer>
+
+      </Container>
+    </>
   );
 }
 

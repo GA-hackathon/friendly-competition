@@ -15,19 +15,14 @@ function SubmissionCreate({ setSubmitted, currentUser, setAllSubmissions, contes
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const handleCreate = async () => {
-      const newSubmission = await postSubmission({
-        user_id: currentUser.id,
-        contest_id: contest.id,
-      });
+  const handleCreate = async () => {
+    const newSubmission = await postSubmission(formData, {
+      user_id: currentUser.id,
+      contest_id: contest.id,
+    });
     setAllSubmissions((prevState) => [...prevState, newSubmission]);
-   };
-    // const created = await postSubmission(formData);
-    // setCreated({ created });
   };
+
 
 
   const [formData, setFormData] = useState({
@@ -68,6 +63,21 @@ function SubmissionCreate({ setSubmitted, currentUser, setAllSubmissions, contes
     document.getElementById("file-upload").value = "";
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newSubmission = await postSubmission({
+      name: formData.name,
+      content: formData.content,
+      file: formData.file,
+      user_id: currentUser.id,
+      contest_id: contest.id,
+    });
+    setAllSubmissions((prevState) => [...prevState, newSubmission]);
+    // const created = await postSubmission(formData);
+    // setCreated({ created });
+  };
+
+
   return (
     <Div>
       <form onSubmit={handleSubmit}>
@@ -94,8 +104,8 @@ function SubmissionCreate({ setSubmitted, currentUser, setAllSubmissions, contes
             onChange={handleChange}
           />
         </div>
-        <Button onClick={selectFile}>Upload File</Button>
-        <Button type="submit">Submit</Button>
+        <Button variant="contained" onClick={selectFile}>Upload File</Button>
+        <Button variant="contained" disabled={!currentUser} type="submit">{currentUser ? <>Submit</> : <>Please Log-In</>}</Button>
       </form>
       <input
         type="file"

@@ -15,6 +15,7 @@ import ContestChat from "../../../components/ContestComponents/ContestChat/Conte
 import "./ContestPage.css";
 import SubmissionCreate from "../../../components/Form/SubmissionCreate/SubmissionCreate";
 import { getAllSubmissions } from "../../../services/submissions";
+import SubmissionCard from "../../../components/SubmissionComponents/SubmissionCard";
 
 function ContestPage() {
   const [{ currentUser }] = useStateValue();
@@ -24,14 +25,27 @@ function ContestPage() {
   const { id } = useParams();
 
 
-useEffect(() => {
+  useEffect(() => {
     const fetchSubmissions = async () => {
       const submissionData = await getAllSubmissions();
-      setAllSubmissions(submissionData?.filter((submission) => submission?.contest_id === contest?.id));
+      setAllSubmissions(submissionData.filter((submission) => submission?.contest_id === contest?.id));
     };
     fetchSubmissions();
   }, [contest?.id]);
 
+  console.log(allSubmissions)
+
+  const SUBMISSIONS = allSubmissions.map((submission) => {
+    <React.Fragment key={submission.id}>
+      <SubmissionCard submission={submission} />
+    </React.Fragment>
+  })
+
+  // const SUBMISSIONS = allContests.submissions.map((submission) => {
+  //   <React.Fragment key={submission.id}>
+  //     <SubmissionCard submission={submission} />
+  //   </React.Fragment>
+  // })
 
   useEffect(() => {
     const getData = async () => {
@@ -91,11 +105,12 @@ useEffect(() => {
                 </label>
                 <Button className='enter-contest-btn' type='submit' variant="contained">Enter Contest</Button>
                 </form>  */}
-            <SubmissionCreate contest={contest} currentUser={currentUser} />
+            <SubmissionCreate setAllSubmissions={setAllSubmissions} contest={contest} currentUser={currentUser} />
           </section>
         </div>
         <hr style={{ margin: "0rem 2rem" }} />
         <ContestChat />
+        {SUBMISSIONS}
         <section>
           <div className="submission-name">View Contest Entries</div>
         </section>

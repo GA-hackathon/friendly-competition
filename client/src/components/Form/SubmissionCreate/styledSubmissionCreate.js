@@ -12,5 +12,8 @@ const Div = styled.div`
   div {
     margin: 5px;
   }
+  button{
+    margin: 10px;
+  }
 `;
 export default Div;

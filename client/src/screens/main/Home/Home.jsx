@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Switch, Route } from "react-router-dom";
 import { useStateValue } from "../../../providers/CurrentUserProvider";
 import { useState, useEffect } from "react";
 import Search from "../../../components/Form/Search";
@@ -14,6 +14,7 @@ import {
 import ContestCard from "../../../components/ContestComponents/ContestCard/ContestCard";
 import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
 import ScrollToTopOnMount from "../../../components/Helpers/ScrollToTopOnMount";
+import ContestPage from "../../ContestScreens/ContestPage/ContestPage";
 
 function Home() {
   const [{ currentUser }] = useStateValue();
@@ -59,7 +60,7 @@ function Home() {
   //only get the newest 6 contests,
   // if the ending time has passed, don't show them.
   const newContestsJSX = allContests.map((contest) => (
-    <ContestCard key={contest.id} contest={contest} />
+    <ContestCard allContests={allContests} key={contest.id} contest={contest} />
   ));
 
   // only get the 6 ending soon
@@ -69,7 +70,7 @@ function Home() {
     .sort((contest1, contest2) =>
       compareDates(contest1, contest2, "ending_time")
     )
-    .map((contest) => <ContestCard key={contest.id} contest={contest} />);
+    .map((contest) => <ContestCard allContests={allContests} key={contest.id} contest={contest} />);
 
   return (
     <>
@@ -82,15 +83,16 @@ function Home() {
           {!loaded ? (
             <FunOrangeLoading />
           ) : (
-            <div className="all-contests inner-column">
-              <h1 className="attention6"> Contests Ending Soon</h1>
-              <div className="contest-list oldest">{oldContestsJSX}</div>
-              <h1 className="attention"> NEW Contests</h1>
-              <div className="contest-list newest">{newContestsJSX}</div>
-            </div>
-          )}
+              <div className="all-contests inner-column">
+                <h1 className="attention6"> Contests Ending Soon</h1>
+                <div className="contest-list oldest">{oldContestsJSX}</div>
+                <h1 className="attention"> NEW Contests</h1>
+                <div className="contest-list newest">{newContestsJSX}</div>
+              </div>
+            )}
         </Wrapper>
       </Layout>
+
     </>
   );
 }
