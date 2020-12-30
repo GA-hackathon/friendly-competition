@@ -76,7 +76,7 @@ function Home() {
           <FunOrangeLoading />
         ) : (
           <div className="all-contests inner-column">
-            <h1 className="attention"> Contests Ending Soon</h1>
+            <h1 className="attention6"> Contests Ending Soon</h1>
             <div className="contest-list oldest">{oldContestsJSX}</div>
             <h1 className="attention"> NEW Contests</h1>
             <div className="contest-list newest">{newContestsJSX}</div>
