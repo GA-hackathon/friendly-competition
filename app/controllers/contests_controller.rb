@@ -24,7 +24,7 @@ class ContestsController < ApplicationController
   def first
     @contests = Contest.first(6)
 
-    render json: @contests, :include => {:user => {:include => :submissions}} 
+    render json: @contests, :include => {:submissions => {:include => :user}} 
   end
 
   # GET /contests/1

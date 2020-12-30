@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
-// import Search from "../../../components/Form/Search";
 import { useStateValue } from "../../../providers/CurrentUserProvider";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useParams } from "react-router-dom";
 import { getOneContest, getOneContestWithUser } from "../../../services/contests";
 import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
 import "./ContestPage.css";
-// import Button from "@material-ui/core/Button";
 import Layout from "../../../layout/Layout";
-// import TextField from "@material-ui/core/TextField";
-// import AddCircle from "@material-ui/icons/AddCircle";
 import CountdownTimer from "../../../components/ContestComponents/CountdownTimer/CountdownTimer";
 import ContestChat from "../../../components/ContestComponents/ContestChat/ContestChat";
 import "./ContestPage.css";
@@ -25,7 +21,6 @@ function ContestPage() {
   const [contestUser, setContestUser] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [activeSubmissions, setActiveSubmissions] = useState([])
-  // const [allSubmissions, setAllSubmissions] = useState([])
   const [isSubmitted, setSubmitted] = useState(false)
   const [contestEnded, setContestEnded] = useState(false);
   const [winnerSubmission, setWinnerSubmission] = useState(null);
@@ -144,21 +139,21 @@ function ContestPage() {
     <Layout>
       <section className='contest-info'>
         <div className="timer-container">
-        <h4 className="submission-name">{contest?.name}</h4>
-        {!contestEnded ?
-              <h5>Contest Ends In:</h5> : <><h5>Contest Ended</h5></>}
-          <CountdownTimer contest={contest} />
+          <h4 className="submission-name">{contest?.name}</h4>
+          {!contestEnded ?
+            <h5>Contest Ends In:</h5> : <><h5>Contest Ended</h5></>}
+          <CountdownTimer setContestEnded={setContestEnded} contest={contest} />
           <h5>Contest Rules</h5>
           <div>{contest?.rules}</div>
           <h5>Try</h5>
-          <div className='contest-pic'>{contest.picture && <img src={contest?.picture} />}</div>
+          <div className='contest-pic'>{contest.picture && <img src={contest?.picture} alt={contest?.name} />}</div>
         </div>
 
         <div className="create-submission">
           Contest Created by: {!contestUser?.user?.image ? <AccountCircleIcon className="icon-submission" /> : <img className="user-image" src={contestUser?.user?.image} alt={contestUser?.user?.name} />}
-          <p style={{ marginTop: '0'}}>{toTitleCase(usersName)}</p>
+          <p style={{ marginTop: '0' }}>{toTitleCase(usersName)}</p>
           {!contestEnded ? <section className='submission-form'>
-            <h5 style={{ textAlign: 'center'}}>Ready to Enter?</h5>
+            {!isSubmitted && <h5 style={{ textAlign: 'center' }}>Ready to Enter?</h5>}
             <SubmissionCreate isSubmited={isSubmitted} setAllSubmissions={setActiveSubmissions} contest={contest} currentUser={currentUser} />
           </section> : <div>
 
@@ -166,17 +161,17 @@ function ContestPage() {
             </div>}
         </div>
       </section>
-      <h5 style={{ margin: "2rem 2rem"}}>Join the Discussion</h5>
+      <h5 style={{ margin: "2rem 2rem" }}>Join the Discussion</h5>
       <hr style={{ margin: "0rem 2rem" }} />
-        <ContestChat />
-        <section>
-          <div className="submission-name">View Contest Entries</div>
-          <div className='contest-entries'>{activeSubmissions.map((submission) => {
-            return <React.Fragment key={submission.id}>
-              <SubmissionCard submission={submission} contest={contest} currentUser={currentUser} />
-            </React.Fragment>
-          })}</div>
-        </section>
+      <ContestChat />
+      <section>
+        <div className="submission-name">View Contest Entries</div>
+        <div className='contest-entries'>{activeSubmissions.map((submission) => {
+          return <React.Fragment key={submission.id}>
+            <SubmissionCard submission={submission} contest={contest} currentUser={currentUser} />
+          </React.Fragment>
+        })}</div>
+      </section>
     </Layout>
   );
 }

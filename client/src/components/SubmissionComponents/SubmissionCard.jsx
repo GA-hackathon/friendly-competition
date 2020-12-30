@@ -35,8 +35,8 @@ function SubmissionCard({ submission, currentUser }) {
     if (!voteDisabled) {
       setVoted(true);
       const newVote = await postVote({
-        user_id: currentUser.id,
-        submission_id: submission.id,
+        user_id: currentUser?.id,
+        submission_id: submission?.id,
       });
       setAllVotes((prevState) => [...prevState, newVote]);
     }
@@ -79,29 +79,30 @@ function SubmissionCard({ submission, currentUser }) {
       backgroundColor: red[500],
     },
   }));
-  
+
   const classes = useStyles();
 
   return (
-      <Card className={classes.root}>
-        <CardHeader
-          title={submission.name}
-        />
-        {submission?.file && <CardMedia 
-          className={classes.media}
-          image={submission?.file}
-          title={submission.name}
-        />}
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {submission.content}
-          </Typography>
-          <p>{allVotes.length === 1 ? <>{allVotes.length} vote</> : allVotes.length === 0 ? <>no votes</> : <>{allVotes.length} votes</>}</p>
-        {!voted ? <Button style={{ display: submission.user_id === currentUser.id && "none" }} disabled={voteDisabled} onClick={handleVote}>Vote For Me</Button> : <><Button onClick={handleUnvote}>Unvote</Button> </>}
-        {submission.user_id === currentUser.id && <Button variant="contained" disabled={submission.user_id === currentUser.id} color="secondary">Can't vote for own entry</Button>}
-        </CardContent>
-      </Card>
-    );
+    <Card className={classes.root}>
+      <CardHeader
+        title={submission.name}
+      />
+      {submission?.file && <CardMedia
+        className={classes.media}
+        image={submission?.file}
+        title={submission.name}
+      />}
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {submission.content}
+        </Typography>
+        <p>{allVotes.length === 1 ? <>{allVotes?.length} vote</> : allVotes?.length === 0 ? <>no votes</> : <>{allVotes?.length} votes</>}</p>
+        {currentUser && (!voted ? <Button style={{ display: submission?.user_id === currentUser?.id && "none" }} disabled={voteDisabled} onClick={handleVote}>Vote For Me</Button> : <><Button onClick={handleUnvote}>Unvote</Button> </>)}
+        {submission?.user_id === currentUser?.id && <Button variant="contained" disabled={submission?.user_id === currentUser?.id} color="secondary">Can't vote for own entry</Button>}
+        {!currentUser && <Button variant="contained" disabled={!currentUser} color="secondary">Please log in</Button>}
+      </CardContent>
+    </Card>
+  );
 }
 
 export default SubmissionCard

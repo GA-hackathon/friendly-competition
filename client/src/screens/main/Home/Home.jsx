@@ -7,7 +7,6 @@ import {
 import ContestCard from "../../../components/ContestComponents/ContestCard/ContestCard";
 import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
 import ScrollToTopOnMount from "../../../components/Helpers/ScrollToTopOnMount";
-import ContestPage from "../../ContestScreens/ContestPage/ContestPage";
 
 function Home() {
   const [allContests, setAllContests] = useState([]);
@@ -43,7 +42,6 @@ function Home() {
           // only show 6 contests
           .slice(0, 6)
       );
-
       setLoaded(true);
     };
     fetchContests();

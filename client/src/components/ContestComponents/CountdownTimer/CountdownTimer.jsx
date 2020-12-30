@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import './CountdownTimer.css'
 
 function CountdownTimer({ contest, setContestEnded }) {
+  const [isTimerStarted, setIsTimeStarted] = useState(false)
   const [timerDays, setTimerDays] = useState('00');
   const [timerHours, setTimerHours] = useState('00');
   const [timerMinutes, setTimerMinutes] = useState('00');
@@ -15,7 +16,7 @@ function CountdownTimer({ contest, setContestEnded }) {
     interval = setInterval(() => {
       const now = new Date().getTime();
       const difference = countdownDate - now;
-
+      setIsTimeStarted(true)
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference % (1000 * 60 * 60 * 24) / (1000 * 60 * 60)));
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
@@ -25,6 +26,7 @@ function CountdownTimer({ contest, setContestEnded }) {
         // stop timer
 
         clearInterval(interval)
+
       } else {
         setTimerDays(days);
         setTimerHours(hours);
@@ -38,16 +40,19 @@ function CountdownTimer({ contest, setContestEnded }) {
     startTimer();
     return () => {
       clearInterval(interval);
+
     }
   })
 
   useEffect(() => {
     if (
-      timerDays == "00" && timerHours == "00" && timerMinutes == "00" && timerSeconds == "00") {
+      isTimerStarted && timerDays == "00" && timerHours == "00" && timerMinutes == "00" && timerSeconds == "00") {
+  
       clearInterval(interval);
       setContestEnded(true)
+      setIsTimeStarted(false);
     }
-  }, [])
+  }, [timerSeconds])
   return (
     <Fragment>
       <div className='timer'>

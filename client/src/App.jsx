@@ -19,12 +19,7 @@ function App() {
     const handleVerify = async () => {
       const userData = await verifyUser();
       dispatch({ type: "SET_USER", currentUser: userData });
-      if (!userData) {
-        console.log("no user signed in at the moment");
-      } else {
-        console.log(` you are signed in!`);
-      }
-      // lines 18 to 22 will be deleted once we verify that the user auth works
+
     };
     handleVerify();
   }, [history, dispatch]);

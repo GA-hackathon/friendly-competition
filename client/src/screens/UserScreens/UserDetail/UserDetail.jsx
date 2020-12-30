@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { checkContests, checkSubmissions } from "../../../utils/contestUtils";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -34,7 +33,7 @@ export default function UserDetail() {
       setLoaded(true);
     };
     getSubmissions();
-  }, [getOneUser, id]);
+  }, [id]);
 
 
   const contestsJSX = user?.contests?.map((contest) => (
