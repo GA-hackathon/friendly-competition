@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-
-let homeRegexp = /^\/$/
+const triggerList =  /about|create-contest|^\/$/
 
 let Nav = styled.nav`
 
@@ -25,15 +24,15 @@ li.nav-block {
 }
 
 li.nav-block.home{
-  background: ${(props) => props.location.pathname.match(homeRegexp) ? "#FFB738" : "#36B7FF" }
+  background: ${(props) => props.location.pathname.match(/^\/$/) ?  "#FFB738" : "#36B7FF" }
 }
 
 li.nav-block.create{
-  background: ${(props) => props.location.pathname === "/create-contest" || "/create-contest/" ? "#FFB738" : "#36B7FF" }
+  background: ${(props) => props.location.pathname.match(/^\/create-contest/)  ? "#FFB738" : "#36B7FF" }
 }
 
 li.nav-block.about {
-  background: ${(props) => props.location.pathname === "/about" || "/about/" ? "#FFB738" : "#36B7FF" }
+  background: ${(props) => props.location.pathname.match(/^\/about/) ? "#FFB738" : "#36B7FF" }
 }
 
 ul.links{
