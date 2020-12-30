@@ -32,7 +32,7 @@ function App() {
         <Route path="/create-contest" component={ContestCreate} />
         <Route path="/contests/:id" component={ContestPage} />
         <Route path="/users/:id" component={UserDetail} />
-        <Route path="/" component={Home} />
+        <Route exact path="/" component={Home} />
         <Route component={NotFound} />
       </Switch>
     </>
