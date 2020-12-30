@@ -103,7 +103,9 @@ function ContestCard({ contest, allContests }) {
                 <text className="text length">
                   {contest?.submissions?.length}
                 </text>
-                <text className="text entries">Entries</text>
+                <text className="text entries">  {contest?.submissions?.length === 1 ? <>Entry</> :
+                  <>Entries</>
+                }</text>
               </svg>
             )}
             <img

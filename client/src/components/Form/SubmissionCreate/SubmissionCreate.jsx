@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { postSubmission } from "../../../services/submissions";
 import { Button, TextField } from "@material-ui/core";
 import Div from "./styledSubmissionCreate";
@@ -13,16 +13,6 @@ function SubmissionCreate({ currentUser, setAllSubmissions, contest, isSubmitted
       [name]: value,
     }));
   };
-
-  const handleCreate = async () => {
-    const newSubmission = await postSubmission(formData, {
-      user_id: currentUser.id,
-      contest_id: contest.id,
-    });
-    setAllSubmissions((prevState) => [...prevState, newSubmission]);
-  };
-
-
 
   const [formData, setFormData] = useState({
     name: "",
@@ -49,14 +39,6 @@ function SubmissionCreate({ currentUser, setAllSubmissions, contest, isSubmitted
 
   const selectFile = () => {
     document.getElementById("file-upload").click();
-  };
-
-  const handleFileClear = () => {
-    setFormData({
-      ...formData,
-      file: "",
-    });
-    document.getElementById("file-upload").value = "";
   };
 
   const handleSubmit = async (e) => {
@@ -103,7 +85,7 @@ function SubmissionCreate({ currentUser, setAllSubmissions, contest, isSubmitted
           />
         </div>
         <Button variant="contained" onClick={selectFile}>Upload Image</Button>
-        <Button variant="contained" disabled={!currentUser} type="submit">{currentUser ? <>Enter Contest</> : <>Please Log-In</>}</Button>
+        <Button variant="contained" disabled={!currentUser || !file} type="submit">{currentUser ? <>Enter Contest</> : <>Please Log-In</>}</Button>
       </form>
       <input
         type="file"

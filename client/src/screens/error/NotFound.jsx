@@ -30,14 +30,10 @@ function Error() {
   const listRegex = /daniel michael|kristina timkova|cristina sahoo|pheonix ehmann|kara conway/;
   const result = location.pathname.toLowerCase().trim().match(listRegex);
 
-  // user experience, /contests or /submissions not existing doesn't make sense
   const whiteList = /contests|submissions/;
-  // if (location.pathname.replace("/", "").toLowerCase().match(whiteList)) {
-  //   return <Redirect to="/" />;
-  // }
+ 
 
   return (
-    // <Layout>
     <StyledError>
       <div>
         <h1>ERROR 404</h1>
@@ -52,7 +48,6 @@ function Error() {
         <NavLink to="/"> Go Back </NavLink>
       </div>
     </StyledError>
-    // </Layout>
   );
 }
 export default Error;
