@@ -59,9 +59,9 @@ function Search({ search, setSearch, searchedContests }) {
       </FormControl>
       <div className="dropdown-container">
         <Dropdown>
-          {/* show first 5 results matching input with slice */}
+          {/* show first 10 results matching input with slice */}
           <div className="dropdown-items">
-            {search && searchedContests.slice(0, 5)}
+            {search && searchedContests.slice(0, 10)}
           </div>
         </Dropdown>
       </div>

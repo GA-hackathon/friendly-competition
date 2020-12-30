@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import "moment-timezone";
 import styled from "styled-components";
+import { compareDateWithCurrentTime } from "../../../utils/compareDateWithCurrentTime";
 
 let Container = styled.div`
   display: block;
@@ -38,10 +39,15 @@ let Container = styled.div`
   .contest-card.name {
     font-size: 1.5rem;
     margin-top: 10px;
-    padding: 10px;
+  }
+  .contest-card.date {
+    font-size: 1.3rem;
+    margin-top: 10px;
   }
 `;
 function ContestCard({ contest }) {
+  let currentTime = new Date();
+
   return (
     <Container>
       <Link to={`contests/${contest.id}`}>
@@ -54,6 +60,16 @@ function ContestCard({ contest }) {
         </picture>
       </Link>
       <h1 className="contest-card name">{contest.name}</h1>
+      <h2 className="contest-card date">
+        {/* compareDateWithCurrentTime is imported from src/utils */}
+        {/* if the current time has passed say "contest ended", else: say contest ends */}
+        {compareDateWithCurrentTime(contest?.ending_time) === 1 ? (
+          <>Contest ended&nbsp;</>
+        ) : (
+          <>Contest ends&nbsp;</>
+        )}
+        <Moment from={currentTime?.toISOString()}>{contest.ending_time}</Moment>
+      </h2>
     </Container>
   );
 }
