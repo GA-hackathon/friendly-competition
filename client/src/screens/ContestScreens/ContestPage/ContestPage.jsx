@@ -28,7 +28,7 @@ function ContestPage() {
   // const [allSubmissions, setAllSubmissions] = useState([])
   const [isSubmitted, setSubmitted] = useState(false)
   const [contestEnded, setContestEnded] = useState(false);
-  const [winnerSubmission, setWinnerSubsmission] = useState(null);
+  const [winnerSubmission, setWinnerSubmission] = useState(null);
 
   const { id } = useParams();
 
@@ -77,30 +77,38 @@ function ContestPage() {
 
           // this if condition is to avoid an error "Reduce of empty array with no initial value"
           // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/size
-          if (submissionVotes.size) {
-            voteData.filter(v => activeSubmissions.map(ac => ac.id).includes(v?.submission_id)).map(vote => {
-              if (submissionVotes.has(vote?.submission_id)) {
-                let existingCount = submissionVotes.get(vote.submission_id);
-                console.log(vote?.submission_id, existingCount);
-                submissionVotes.set(vote.submission_id, existingCount + 1);
-              } else {
-                submissionVotes.set(vote.submission_id, 1);
-              }
-            });
-            // find the highest voted submission
-            let highestVoted = [...submissionVotes.entries()]?.reduce((a, e) => e[1] > a[1] ? e : a);
-            //highestvoted[0] = submissionid
-            // highestVoted[1] = vote count for that submission
-            const winner = activeSubmissions.find(sub => sub.id === highestVoted[0]);
-            setWinnerSubsmission(
-              { ...winner, votes: highestVoted[1] });
+          // We want to loop through the votData and create an object with the keys as the submission id and the vote count as the number of votes
+          // 
+
+          voteData.filter(v => activeSubmissions.map(ac => ac.id).includes(v?.submission_id)).map(vote => {
+            if (submissionVotes.has(vote?.submission_id)) {
+              let existingCount = submissionVotes.get(vote.submission_id);
+              submissionVotes.set(vote.submission_id, existingCount + 1);
+            } else {
+              submissionVotes.set(vote.submission_id, 1);
+            }
+          });
+          // find the highest voted submission
+          // This handles the edge case where there are entries but there are no votes for the entires
+          if (submissionVotes.size === 0) {
+            // just pick the first submission
+            setWinnerSubmission(activeSubmissions[0])
+            return
           }
+          let highestVoted = [...submissionVotes.entries()]?.reduce((a, e) => e[1] > a[1] ? e : a, [null, 0]);
+          //highestvoted[0] = submissionid
+          // highestVoted[1] = vote count for that submission
+          const winner = activeSubmissions.find(sub => sub.id === highestVoted[0]);
+          setWinnerSubmission(
+            { ...winner, votes: highestVoted[1] });
+
         };
         fetchVotes();
       }
       setContestEnded(contestEnded);
     }
   }, [contest?.id])
+
   useEffect(() => {
     const contestDataForUser = async () => {
       const getContestUser = await getOneContestWithUser(id);
@@ -131,6 +139,7 @@ function ContestPage() {
     return <FunOrangeLoading />;
   }
 
+
   return (
     <Layout>
       <section className='contest-info'>
@@ -144,6 +153,7 @@ function ContestPage() {
           <h5>Try</h5>
           <div className='contest-pic'>{contest.picture && <img src={contest?.picture} />}</div>
         </div>
+
         <div className="create-submission">
           Contest Created by: {!contestUser?.user?.image ? <AccountCircleIcon className="icon-submission" /> : <img className="user-image" src={contestUser?.user?.image} alt={contestUser?.user?.name} />}
           <p style={{ marginTop: '0'}}>{toTitleCase(usersName)}</p>
@@ -152,7 +162,7 @@ function ContestPage() {
             <SubmissionCreate isSubmited={isSubmitted} setAllSubmissions={setActiveSubmissions} contest={contest} currentUser={currentUser} />
           </section> : <div>
 
-              <div>WINNER: Entry: {winnerSubmission?.name}  User: {winnerSubmission?.user.first_name}, {winnerSubmission?.votes} votes</div>
+              <div>WINNER: Entry: {winnerSubmission?.name}  User: {winnerSubmission?.user.first_name} {winnerSubmission?.votes ? <>, votes: {winnerSubmission?.votes}</> : <></>}</div>
             </div>}
         </div>
       </section>

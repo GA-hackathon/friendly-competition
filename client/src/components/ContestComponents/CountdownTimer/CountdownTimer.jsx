@@ -1,13 +1,13 @@
-import React, { Fragment, useState, useRef, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import './CountdownTimer.css'
 
-function CountdownTimer({ contest }) {
+function CountdownTimer({ contest, setContestEnded }) {
   const [timerDays, setTimerDays] = useState('00');
   const [timerHours, setTimerHours] = useState('00');
   const [timerMinutes, setTimerMinutes] = useState('00');
   const [timerSeconds, setTimerSeconds] = useState('00');
 
-  let interval = useRef()
+  let interval = null
 
   const startTimer = () => {
     const countdownDate = new Date(contest?.ending_time).getTime();
@@ -23,7 +23,8 @@ function CountdownTimer({ contest }) {
 
       if (difference < 0) {
         // stop timer
-        clearInterval(interval.current)
+
+        clearInterval(interval)
       } else {
         setTimerDays(days);
         setTimerHours(hours);
@@ -36,9 +37,17 @@ function CountdownTimer({ contest }) {
   useEffect(() => {
     startTimer();
     return () => {
-      clearInterval(interval.current);
+      clearInterval(interval);
     }
   })
+
+  useEffect(() => {
+    if (
+      timerDays == "00" && timerHours == "00" && timerMinutes == "00" && timerSeconds == "00") {
+      clearInterval(interval);
+      setContestEnded(true)
+    }
+  }, [])
   return (
     <Fragment>
       <div className='timer'>
