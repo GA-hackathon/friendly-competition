@@ -76,7 +76,7 @@ function ContestCreate() {
             <Input type="text" name="zip_code" />
           </label>
           <label className='image-container'>Contest picture:
-          {formData.picture ? (<img className='contest-image' src={formData.picture} alt='contest picture' />) : (<WallpaperIcon className='image-icon' />)}
+          {formData.picture ? (<img className='contest-image' src={formData.picture} alt='contest logo' />) : (<WallpaperIcon className='image-icon' />)}
           {formData.picture && (
             <IconButton
             onMouseDown={(e) => e.preventDefault()}
