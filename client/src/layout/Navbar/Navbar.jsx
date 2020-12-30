@@ -1,9 +1,11 @@
+import "./Navbar.css";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../../providers/CurrentUserProvider";
 import { useHistory, useLocation } from "react-router-dom";
 import { removeToken } from "../../services/auth";
 import Button from "@material-ui/core/Button";
+import logo from './logo.png';
 import Nav from './styledNavbar'
 
 function Navbar() {
