@@ -8,8 +8,10 @@ import Button from "@material-ui/core/Button";
 import WallpaperIcon from "@material-ui/icons/Wallpaper";
 import { postContest } from "../../../services/contests";
 import { Redirect } from "react-router-dom";
+import { useStateValue } from "../../../providers/CurrentUserProvider";
 
 function ContestCreate() {
+
   const [isCreated, setCreated] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -17,6 +19,8 @@ function ContestCreate() {
     ending_time: null,
     picture: "",
   });
+  const { name, rules, ending_time, picture } = formData
+  const [{ currentUser }] = useStateValue()
 
   const onImageSelected = (e) => {
     const img = e.target.files[0];
@@ -24,7 +28,7 @@ function ContestCreate() {
     fileReader.addEventListener("load", () => {
       setFormData({
         ...formData,
-        image: fileReader.result,
+        picture: fileReader.result,
       });
     });
     if (img) {
@@ -95,14 +99,15 @@ function ContestCreate() {
           </label>
           <label className="image-container">
             Upload picture:
-            {formData.picture ? (
+            {picture ? (
               <img
                 className="contest-image"
-                src={formData.picture}
-                alt={formData.name}
+                src={picture}
+                alt={name}
               />
             ) : (
-                <WallpaperIcon fontSize='large' onClick={selectImage} className="image-icon" />
+
+                <WallpaperIcon style={{ cursor: 'pointer' }} fontSize='large' onClick={selectImage} className="image-icon" />
               )}
             {formData.picture && (
               <IconButton
@@ -113,18 +118,18 @@ function ContestCreate() {
                 <ClearIcon className="big-camera-icon" />
               </IconButton>
             )}
-            <input
-              type="file"
-              id="image-upload"
-              required
-              style={{ visibility: "hidden" }}
-              onChange={onImageSelected}
-            />
 
           </label>
-          <Button variant="contained" style={{ background: '#00DB94' }} className="form-btn" type="submit">
-            Get Started
+          <Button disabled={!currentUser} variant="contained" style={{ background: '#00DB94' }} className="form-btn" type="submit">
+            {currentUser ? <> Get Started </> : <>Please Log In</>}
           </Button>
+          <input
+            type="file"
+            id="image-upload"
+            required
+            style={{ visibility: "hidden" }}
+            onChange={onImageSelected}
+          />
         </form>
       </div>
     </>
