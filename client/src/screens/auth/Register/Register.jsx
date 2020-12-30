@@ -16,14 +16,16 @@ import {
   checkEmailValidity,
   checkEmailUniqueness,
 } from "../../../utils/authUtils.js";
-import Wrapper from "./styledRegister";
+// import Wrapper from "./styledRegister";
 import CameraIcon from "@material-ui/icons/CameraAlt";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import ClearIcon from "@material-ui/icons/Clear";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { goBack } from "../../../utils/goBack";
 import ArrowBackOutlinedIcon from "@material-ui/icons/ArrowBackOutlined";
 import PasswordAlerts from "../../../components/Form/PasswordAlerts";
+import Navbar from '../../../layout/Navbar/Navbar'
+import './Register.css'
 
 function Register() {
   const [, dispatch] = useStateValue();
@@ -148,7 +150,8 @@ function Register() {
   };
 
   return (
-    <Wrapper>
+    <>
+      <Navbar />
       <FetchUsers setAllUsers={setAllUsers} />
       <div className="arrow-container">
         <IconButton className="arrow-icon" onClick={goBack}>
@@ -158,7 +161,7 @@ function Register() {
 
       <div className="inner-column">
         <div className="title-container">
-          <h1>Register</h1>
+          <h1>SIGN UP TO CHALLENGE.ME</h1>
         </div>
         <div className="user-image-container">
           {image ? (
@@ -186,7 +189,7 @@ function Register() {
               {image ? (
                 <CameraIcon className="big-camera-icon" />
               ) : (
-                <AddAPhotoIcon className="big-camera-icon" />
+                <AddAPhotoIcon style={{color: '#000000'}} className="big-camera-icon" />
               )}
             </IconButton>
           </footer>
@@ -311,12 +314,12 @@ function Register() {
             style={{ visibility: "hidden" }}
             onChange={onImageSelected}
           />
-          <Button color="primary" variant="contained" type="submit">
+          <Button className='button-container' variant="contained" type="submit">
             Get Started
           </Button>
         </form>
       </div>
-    </Wrapper>
+    </>
   );
 }
 

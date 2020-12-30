@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { useStateValue } from "../../../providers/CurrentUserProvider";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import FormControl from "@material-ui/core/FormControl";
+// import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -10,7 +10,8 @@ import IconButton from "@material-ui/core/IconButton";
 import { useHistory } from "react-router-dom";
 import { loginUser } from "../../../services/auth";
 import Button from "@material-ui/core/Button";
-import Wrapper from "./styledLogin";
+import Navbar from "../../../layout/Navbar/Navbar";
+import './Login.css';
 import { goBack } from "../../../utils/goBack";
 import ArrowBackOutlinedIcon from "@material-ui/icons/ArrowBackOutlined";
 
@@ -48,7 +49,8 @@ function Login() {
   };
 
   return (
-    <Wrapper>
+    <>
+    <Navbar />
       <div className="arrow-container">
         <IconButton className="arrow-icon" onClick={goBack}>
           <ArrowBackOutlinedIcon className="arrow-icon" />
@@ -57,15 +59,15 @@ function Login() {
 
       <div className="inner-column">
         <div className="title-container">
-          <h1>LOGIN TO CHALLENGE.ME</h1>
+          <h2 style={{ marginBottom: '0'}}>LOGIN TO CHALLENGE.ME</h2>
         </div>
-        <form
+        <form className='login-form'
           onSubmit={(e) => {
             e.preventDefault();
             handleLogin(formData);
           }}
         >
-          <FormControl>
+          <form className='login-form'>
             <InputLabel htmlFor="email">Email Address</InputLabel>
             <Input
               id="email"
@@ -74,8 +76,8 @@ function Login() {
               value={formData.email}
               onChange={handleChange}
             />
-          </FormControl>
-          <FormControl>
+          </form>
+          <form className='login-form'> 
             <InputLabel htmlFor="password">Password</InputLabel>
 
             <Input
@@ -96,15 +98,15 @@ function Login() {
                 </InputAdornment>
               }
             />
-          </FormControl>
+          </form>
           <div className="button-container">
-            <Button color="primary" variant="contained" type="submit">
+            <Button variant="contained" type="submit">
               Login
             </Button>
           </div>
         </form>
       </div>
-    </Wrapper>
+    </>
   );
 }
 

@@ -26,10 +26,10 @@ function Navbar() {
             <Link className='logo' to="/"><img style={{  width: '4rem', height: '3rem'}} src={logo}/></Link>
           </li>
           <li className="nav-block">
-            <Link to="/">Available Contest</Link>
+            <Link to="/">Create Contest</Link>
           </li>
           <li className="nav-block">
-            <Link to="/">My Contests</Link>
+            <Link to="/">About</Link>
           </li>
         </ul>
         <div className="user-column">
