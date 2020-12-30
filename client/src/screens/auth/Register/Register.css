@@ -1,0 +1,76 @@
+.arrow-icon {
+  font-size: clamp(30px, 10vw, 60px);
+  padding: 1px;
+}
+
+.inner-column {
+  padding: 20px;
+  display: block;
+  max-width: 1100px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.title-container h1 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.MuiFormControl-root {
+  width: 250px;
+  max-width: 250px;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.alert {
+  color: red;
+}
+
+.user-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.big-user-image {
+  height: 100px;
+  width: 100px;
+  align-self: center;
+  margin-bottom: 5px;
+  border: "1px solid black";
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.big-icon {
+  height: 5rem !important;
+  width: 5rem !important;
+  opacity: 0.6;
+}
+
+.inner-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container.MuiButton-contained {
+  background: #00db94;
+}
+
+.picture-buttons{
+    position: absolute;
+    bottom: -12px;
+    right: -17px;
+  }

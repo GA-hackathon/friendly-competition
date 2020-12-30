@@ -6,7 +6,7 @@ import Search from "../../components/Form/Search";
 let Div = styled.div`
   list-style-type: none;
   background: #e5e5e5;
-  height: 170px;
+  height: 5rem;
 
   .search-container {
     display: flex;

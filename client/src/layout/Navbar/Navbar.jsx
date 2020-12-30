@@ -5,6 +5,7 @@ import { useStateValue } from "../../providers/CurrentUserProvider";
 import { useHistory } from "react-router-dom";
 import { removeToken } from "../../services/auth";
 import Button from "@material-ui/core/Button";
+import logo from './logo.png';
 
 function Navbar() {
   const [{ currentUser }, dispatch] = useStateValue();
@@ -22,19 +23,20 @@ function Navbar() {
       <nav className="navbar">
         <ul className="links">
           <li className="nav-block">
-            <Link to="/">Home</Link>
+            <Link className='logo' to="/"><img style={{  width: '4rem', height: '3rem'}} src={logo}/></Link>
           </li>
           <li className="nav-block">
-            <Link to="/">Available Contest</Link>
+            <Link to="/">Create Contest</Link>
           </li>
           <li className="nav-block">
-            <Link to="/">My Contests</Link>
+            <Link to="/">About</Link>
           </li>
         </ul>
         <div className="user-column">
           <Link className="profile-link" to={`/users/${currentUser?.id}`}>
             {!currentUser?.image ? (
-              <AccountCircleIcon className="icon" />
+              // <AccountCircleIcon className="icon" />
+              ''
             ) : (
               <img
                 className="user-image"
@@ -44,7 +46,7 @@ function Navbar() {
             )}
           </Link>
           <div className="name">{currentUser?.first_name}</div>
-          <div className="buttons">
+          <div className="auth-buttons">
             {currentUser && (
               <Button
                 color="secondary"
@@ -56,7 +58,6 @@ function Navbar() {
             )}
             {!currentUser && (
               <Button
-                color="primary"
                 variant="contained"
                 component={Link}
                 to="/login"
@@ -66,7 +67,6 @@ function Navbar() {
             )}
             {!currentUser && (
               <Button
-                color="primary"
                 variant="contained"
                 component={Link}
                 to="/register"
