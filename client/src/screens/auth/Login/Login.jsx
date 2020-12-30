@@ -1,8 +1,7 @@
-import { useState, Fragment } from "react";
+import { useState } from "react";
 import { useStateValue } from "../../../providers/CurrentUserProvider";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-// import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -50,16 +49,16 @@ function Login() {
 
   return (
     <>
-    <Navbar />
+      <Navbar />
       <div className="arrow-container">
         <IconButton className="arrow-icon" onClick={goBack}>
           <ArrowBackOutlinedIcon className="arrow-icon" />
         </IconButton>
       </div>
 
-      <div className="inner-column">
+      <div className="inner-column-login">
         <div className="title-container">
-          <h2 style={{ marginBottom: '0'}}>LOGIN TO CHALLENGE.ME</h2>
+          <h2 style={{ marginBottom: '0' }}>LOGIN TO CHALLENGE.ME</h2>
         </div>
         <form className='login-form'
           onSubmit={(e) => {
@@ -77,7 +76,7 @@ function Login() {
               onChange={handleChange}
             />
           </form>
-          <form className='login-form'> 
+          <form className='login-form'>
             <InputLabel htmlFor="password">Password</InputLabel>
 
             <Input

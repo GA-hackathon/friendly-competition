@@ -65,11 +65,15 @@ form {
   opacity: 0.6;
 }
 
-.inner-column {
+.inner-column-register{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 1px solid black;
+  width: 60%;
+  padding: 10px;
+  margin: auto;
 }
 
 .button-container.MuiButton-contained {

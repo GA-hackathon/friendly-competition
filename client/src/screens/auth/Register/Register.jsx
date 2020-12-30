@@ -158,7 +158,7 @@ function Register() {
         </IconButton>
       </div>
 
-      <div className="inner-column">
+      <div className="inner-column-register">
         <div className="title-container">
           <h1>SIGN UP TO CHALLENGE.ME</h1>
         </div>
