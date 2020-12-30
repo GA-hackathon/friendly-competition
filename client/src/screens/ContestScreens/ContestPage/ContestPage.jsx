@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import Search from "../../../components/Form/Search";
+// import Search from "../../../components/Form/Search";
 import { useStateValue } from "../../../providers/CurrentUserProvider";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useParams } from "react-router-dom";
 import { getOneContest, getOneContestWithUser } from "../../../services/contests";
 import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
 import "./ContestPage.css";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Layout from "../../../layout/Layout";
-import TextField from "@material-ui/core/TextField";
-import AddCircle from "@material-ui/icons/AddCircle";
+// import TextField from "@material-ui/core/TextField";
+// import AddCircle from "@material-ui/icons/AddCircle";
 import CountdownTimer from "../../../components/ContestComponents/CountdownTimer/CountdownTimer";
 import ContestChat from "../../../components/ContestComponents/ContestChat/ContestChat";
 import "./ContestPage.css";
@@ -25,7 +25,7 @@ function ContestPage() {
   const [contestUser, setContestUser] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [activeSubmissions, setActiveSubmissions] = useState([])
-  const [allSubmissions, setAllSubmissions] = useState([])
+  // const [allSubmissions, setAllSubmissions] = useState([])
   const [isSubmitted, setSubmitted] = useState(false)
   const [contestEnded, setContestEnded] = useState(false);
   const [winnerSubmission, setWinnerSubsmission] = useState(null);
@@ -74,25 +74,29 @@ function ContestPage() {
           //check if vote.submissionid is included in array of submission ids
           // so we get all the vots for the contest
           // loop through them and create the map of submission id and  its vote count
-          voteData.filter(v => activeSubmissions.map(ac => ac.id).includes(v.submission_id)).map(vote => {
-            if (submissionVotes.has(vote.submission_id)) {
-              let existingCount = submissionVotes.get(vote.submission_id);
-              console.log(vote.submission_id, existingCount);
-              submissionVotes.set(vote.submission_id, existingCount + 1);
-            } else {
-              submissionVotes.set(vote.submission_id, 1);
-            }
-          });
-          console.log(submissionVotes);
-          // find the highest voted submission
-          let highestVoted = [...submissionVotes.entries()].reduce((a, e) => e[1] > a[1] ? e : a);
-          //highestvoted[0] = submissionid
-          // highestVoted[1] = vote count for that submission
-          const winner = activeSubmissions.find(sub => sub.id === highestVoted[0]);
-          console.log('winner', winner);
-          setWinnerSubsmission(
-            { ...winner, votes: highestVoted[1] });
-          // setVoteDisabled(false);
+
+          // this if condition is to avoid an error "Reduce of empty array with no initial value"
+          // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/size
+          if (submissionVotes.size()) {
+            voteData.filter(v => activeSubmissions.map(ac => ac.id).includes(v?.submission_id)).map(vote => {
+              if (submissionVotes.has(vote?.submission_id)) {
+                let existingCount = submissionVotes.get(vote.submission_id);
+                console.log(vote?.submission_id, existingCount);
+                submissionVotes.set(vote.submission_id, existingCount + 1);
+              } else {
+                submissionVotes.set(vote.submission_id, 1);
+              }
+            });
+            console.log(submissionVotes);
+            // find the highest voted submission
+            let highestVoted = [...submissionVotes.entries()]?.reduce((a, e) => e[1] > a[1] ? e : a);
+            //highestvoted[0] = submissionid
+            // highestVoted[1] = vote count for that submission
+            const winner = activeSubmissions.find(sub => sub.id === highestVoted[0]);
+            console.log('winner', winner);
+            setWinnerSubsmission(
+              { ...winner, votes: highestVoted[1] });
+          }
         };
         fetchVotes();
       }

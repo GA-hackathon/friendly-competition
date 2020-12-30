@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+let homeRegexp = /^\/$/
+
 let Nav = styled.nav`
 
 list-style-type: none;
@@ -20,6 +22,18 @@ li.nav-block {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+li.nav-block.home{
+  background: ${(props) => props.location.pathname.match(homeRegexp) ? "#FFB738" : "#36B7FF" }
+}
+
+li.nav-block.create{
+  background: ${(props) => props.location.pathname === "/create-contest" || "/create-contest/" ? "#FFB738" : "#36B7FF" }
+}
+
+li.nav-block.about {
+  background: ${(props) => props.location.pathname === "/about" || "/about/" ? "#FFB738" : "#36B7FF" }
 }
 
 ul.links{

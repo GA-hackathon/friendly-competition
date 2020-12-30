@@ -56,7 +56,7 @@ function SubmissionCard({ submission, currentUser }) {
       <p>{submission.content}</p>
       {submission?.file && <img src={submission?.file} alt={submission.name} />}
       <p>{allVotes.length === 1 ? <>{allVotes.length} vote</> : allVotes.length === 0 ? <>no votes</> : <>{allVotes.length} votes</>}</p>
-      {!voted ? <Button style={{ display: submission.user_id == currentUser.id && "none" }} disabled={voteDisabled} onClick={handleVote}>Vote For Me</Button> : <><Button onClick={handleUnvote}>Unvote</Button> </>}
+      {!voted ? <Button style={{ display: submission.user_id === currentUser.id && "none" }} disabled={voteDisabled} onClick={handleVote}>Vote For Me</Button> : <><Button onClick={handleUnvote}>Unvote</Button> </>}
       {submission.user_id === currentUser.id && <Button variant="contained" disabled={submission.user_id === currentUser.id} color="secondary">Can't vote for own entry</Button>}
     </div>
   )
