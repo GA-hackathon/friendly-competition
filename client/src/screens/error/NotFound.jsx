@@ -1,6 +1,6 @@
-import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 
 let StyledError = styled.div`
   display: flex;
@@ -29,17 +29,15 @@ function Error() {
   const listRegex = /daniel michael|kristina timkova|cristina sahoo|pheonix ehmann|kara conway/;
   const result = location.pathname.toLowerCase().trim().match(listRegex);
 
- 
-
   return (
     <StyledError>
       <div>
         <h1>ERROR 404</h1>
         {!result ? (
-          <p>Sorry,&nbsp;{location.pathname.replace("/", "")} doesn't exist!</p>
+          <p>Sorry,&nbsp;{location.pathname.replace('/', '')} doesn't exist!</p>
         ) : (
           <p>
-            {location.pathname.replace("/", "")} exists! unfortunately, it's not
+            {location.pathname.replace('/', '')} exists! unfortunately, it's not
             a page here
           </p>
         )}
