@@ -132,7 +132,10 @@ function ContestPage() {
   // get full first name, but only the first initial of the last name followed by a dot.
   let usersName = contestUser?.user?.first_name?.concat(
     ' ',
-    contestUser?.user?.last_name?.charAt(0).concat('.'),
+    // if the user has a last name, continue with the next line (guard operator), else, do not continue.
+    contestUser?.user.last_name &&
+      // keep the first character of the last name, and add a dot. Do not keep the other letters of the last name.
+      contestUser?.user?.last_name?.charAt(0).concat('.'),
   );
 
   // if a submission/entry is associated to the current user, do not allow him to resend another one.
