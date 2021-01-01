@@ -64,6 +64,8 @@ function ContestCreate() {
     let { name, value } = e.target
     // to make sure it gets selected time
     if (name === 'ending_time' && value) {
+      // the next set of lines is to handle the case where a person with a firefox browser is signed up
+      // firefox doesn't support datetime picker, but it does support separate date and time pickers.
       if (navigator?.userAgent?.indexOf('Firefox') !== -1) {
         // https://i.imgur.com/Hcocekf.png
         let result = value?.split(':')
@@ -182,9 +184,9 @@ function ContestCreate() {
             Ending Date:
             {navigator?.userAgent?.indexOf('Firefox') !== -1 ? (
               <>
+                {/*  firefox doesn't support datetime picker, but it does support separate date and time pickers. */}
                 <div className="firefox-datetime-picker">
                   <Input
-                    // fullWidth={true}
                     onChange={handleChange}
                     required
                     type="date"
@@ -192,7 +194,6 @@ function ContestCreate() {
                   />
                   &nbsp;
                   <Input
-                    // fullWidth={true}
                     onChange={handleChange}
                     required
                     type="time"
@@ -201,6 +202,7 @@ function ContestCreate() {
                 </div>
               </>
             ) : (
+              // if the browser isn't firefox, just show the default datetime picker.
               <Input
                 fullWidth={true}
                 onChange={handleChange}
