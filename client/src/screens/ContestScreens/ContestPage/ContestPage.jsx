@@ -1,71 +1,71 @@
-import React, { useState, useEffect } from 'react'
-import { useStateValue } from '../../../providers/CurrentUserProvider'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import { useParams } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useStateValue } from '../../../providers/CurrentUserProvider';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useParams } from 'react-router-dom';
 import {
   getOneContest,
   getOneContestWithUser,
-} from '../../../services/contests'
-import FunOrangeLoading from '../../../components/Loading/FunOrangeLoading/FunOrangeLoading'
-import './ContestPage.css'
-import Layout from '../../../layout/Layout'
-import CountdownTimer from '../../../components/ContestComponents/CountdownTimer/CountdownTimer'
-import ContestChat from '../../../components/ContestComponents/ContestChat/ContestChat'
-import './ContestPage.css'
-import SubmissionCreate from '../../../components/Form/SubmissionCreate/SubmissionCreate'
-import { getAllSubmissions } from '../../../services/submissions'
-import { getAllVotes } from '../../../services/votes'
-import SubmissionCard from '../../../components/SubmissionComponents/SubmissionCard'
-import { toTitleCase } from '../../../utils/toTitleCase'
+} from '../../../services/contests';
+import FunOrangeLoading from '../../../components/Loading/FunOrangeLoading/FunOrangeLoading';
+import './ContestPage.css';
+import Layout from '../../../layout/Layout';
+import CountdownTimer from '../../../components/ContestComponents/CountdownTimer/CountdownTimer';
+import ContestChat from '../../../components/ContestComponents/ContestChat/ContestChat';
+import './ContestPage.css';
+import SubmissionCreate from '../../../components/Form/SubmissionCreate/SubmissionCreate';
+import { getAllSubmissions } from '../../../services/submissions';
+import { getAllVotes } from '../../../services/votes';
+import SubmissionCard from '../../../components/SubmissionComponents/SubmissionCard';
+import { toTitleCase } from '../../../utils/toTitleCase';
 
 function ContestPage() {
-  const [{ currentUser }] = useStateValue()
-  const [contest, setContest] = useState(null)
-  const [contestUser, setContestUser] = useState(null)
-  const [isContestLoaded, setIsContestLoaded] = useState(false)
-  const [activeSubmissions, setActiveSubmissions] = useState([])
-  const [isSubmitted, setSubmitted] = useState(false)
-  const [contestEnded, setContestEnded] = useState(false)
-  const [winnerSubmission, setWinnerSubmission] = useState(null)
+  const [{ currentUser }] = useStateValue();
+  const [contest, setContest] = useState(null);
+  const [contestUser, setContestUser] = useState(null);
+  const [isContestLoaded, setIsContestLoaded] = useState(false);
+  const [activeSubmissions, setActiveSubmissions] = useState([]);
+  const [isSubmitted, setSubmitted] = useState(false);
+  const [contestEnded, setContestEnded] = useState(false);
+  const [winnerSubmission, setWinnerSubmission] = useState(null);
 
-  const { id } = useParams()
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchSubmissions = async () => {
-      const fetchedContest = await getOneContest(id)
-      const submissionData = await getAllSubmissions()
+      const fetchedContest = await getOneContest(id);
+      const submissionData = await getAllSubmissions();
       setActiveSubmissions(
         submissionData.filter(
           (submission) => submission?.contest_id === fetchedContest?.id,
         ),
-      )
-      setContest(fetchedContest)
-      setIsContestLoaded(true)
-    }
-    fetchSubmissions()
-  }, [id])
+      );
+      setContest(fetchedContest);
+      setIsContestLoaded(true);
+    };
+    fetchSubmissions();
+  }, [id]);
 
   const compareDates = (contest, property) => {
-    let currentTime = new Date().getTime()
-    let time2 = new Date(contest[property]).getTime()
+    let currentTime = new Date().getTime();
+    let time2 = new Date(contest[property]).getTime();
 
     if (currentTime < time2) {
-      return -1
+      return -1;
     } else if (currentTime > time2) {
-      return 1
+      return 1;
     } else {
-      return 0
+      return 0;
     }
-  }
+  };
 
   useEffect(() => {
     if (contest?.id) {
-      let contestEnded = compareDates(contest, 'ending_time') > 0
+      let contestEnded = compareDates(contest, 'ending_time') > 0;
       if (contestEnded) {
         const fetchVotes = async () => {
           // all the votes in the app
-          const voteData = await getAllVotes()
-          let submissionVotes = new Map()
+          const voteData = await getAllVotes();
+          let submissionVotes = new Map();
           // filter votes which are only in this contest
 
           //activeSubmissions.map(ac => ac.id).includes(v.submission_id)
@@ -86,20 +86,20 @@ function ContestPage() {
             )
             .map((vote) => {
               if (submissionVotes.has(vote?.submission_id)) {
-                let existingCount = submissionVotes.get(vote.submission_id)
-                submissionVotes.set(vote.submission_id, existingCount + 1)
+                let existingCount = submissionVotes.get(vote.submission_id);
+                submissionVotes.set(vote.submission_id, existingCount + 1);
               } else {
-                submissionVotes.set(vote.submission_id, 1)
+                submissionVotes.set(vote.submission_id, 1);
               }
-            })
+            });
           // re-enabling es-lint
           /*eslint-enable */
           // find the highest voted submission
           // This handles the edge case where there are entries but there are no votes for the entires
           if (submissionVotes.size === 0) {
             // just pick the first submission
-            setWinnerSubmission(activeSubmissions[0])
-            return
+            setWinnerSubmission(activeSubmissions[0]);
+            return;
           }
           let highestVoted = [...submissionVotes.entries()]?.reduce(
             // we are sorting it based on the valuew hich is the highest.
@@ -107,33 +107,33 @@ function ContestPage() {
               currentVote[1] > previousVote[1] ? currentVote : previousVote,
             //submissionid is null, no votes.
             [null, 0],
-          )
+          );
           //highestvoted[0] = submissionid
           // highestVoted[1] = vote count for that submission
           const winner = activeSubmissions.find(
             (sub) => sub.id === highestVoted[0],
-          )
-          setWinnerSubmission({ ...winner, votes: highestVoted[1] })
-        }
-        fetchVotes()
+          );
+          setWinnerSubmission({ ...winner, votes: highestVoted[1] });
+        };
+        fetchVotes();
       }
-      setContestEnded(contestEnded)
+      setContestEnded(contestEnded);
     }
-  }, [contest?.id, activeSubmissions, contest])
+  }, [contest?.id, activeSubmissions, contest]);
 
   useEffect(() => {
     const contestDataForUser = async () => {
-      const getContestUser = await getOneContestWithUser(id)
-      setContestUser(getContestUser)
-    }
-    contestDataForUser()
-  }, [id])
+      const getContestUser = await getOneContestWithUser(id);
+      setContestUser(getContestUser);
+    };
+    contestDataForUser();
+  }, [id]);
 
   // get full first name, but only the first initial of the last name followed by a dot.
   let usersName = contestUser?.user?.first_name?.concat(
     ' ',
     contestUser?.user?.last_name?.charAt(0).concat('.'),
-  )
+  );
 
   // if a submission/entry is associated to the current user, do not allow him to resend another one.
   useEffect(() => {
@@ -141,12 +141,12 @@ function ContestPage() {
       (submission) =>
         submission?.contest_id === contest?.id &&
         currentUser?.id === submission?.user_id,
-    )
-    entryFound ? setSubmitted(true) : setSubmitted(false)
-  }, [activeSubmissions, currentUser?.id, contest?.id])
+    );
+    entryFound ? setSubmitted(true) : setSubmitted(false);
+  }, [activeSubmissions, currentUser?.id, contest?.id]);
 
   if (!isContestLoaded) {
-    return <FunOrangeLoading />
+    return <FunOrangeLoading />;
   }
 
   return (
@@ -226,12 +226,12 @@ function ContestPage() {
                   currentUser={currentUser}
                 />
               </React.Fragment>
-            )
+            );
           })}
         </div>
       </section>
     </Layout>
-  )
+  );
 }
 
-export default ContestPage
+export default ContestPage;

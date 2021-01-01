@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react'
-import './ContestCreate.css'
-import Navbar from '../../../layout/Navbar/Navbar'
-import IconButton from '@material-ui/core/IconButton'
-import ClearIcon from '@material-ui/icons/Clear'
-import Input from '@material-ui/core/Input'
-import Button from '@material-ui/core/Button'
-import WallpaperIcon from '@material-ui/icons/Wallpaper'
-import { postContest } from '../../../services/contests'
-import { Redirect } from 'react-router-dom'
-import { useStateValue } from '../../../providers/CurrentUserProvider'
-import Moment from 'react-moment'
-import 'moment-timezone'
+import { useState, useEffect } from 'react';
+import './ContestCreate.css';
+import Navbar from '../../../layout/Navbar/Navbar';
+import IconButton from '@material-ui/core/IconButton';
+import ClearIcon from '@material-ui/icons/Clear';
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
+import WallpaperIcon from '@material-ui/icons/Wallpaper';
+import { postContest } from '../../../services/contests';
+import { Redirect } from 'react-router-dom';
+import { useStateValue } from '../../../providers/CurrentUserProvider';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 function ContestCreate() {
   const [formData, setFormData] = useState({
@@ -18,87 +18,87 @@ function ContestCreate() {
     rules: '',
     category: '',
     picture: '',
-  })
+  });
 
-  const [isCreated, setCreated] = useState(false)
-  const { name, category, rules, picture } = formData
-  const [{ currentUser }] = useStateValue()
-  const [currentTime, setCurrentTime] = useState(Date.now())
+  const [isCreated, setCreated] = useState(false);
+  const { name, category, rules, picture } = formData;
+  const [{ currentUser }] = useStateValue();
+  const [currentTime, setCurrentTime] = useState(Date.now());
 
   // no dependency array because we want that time to always change.
 
   useEffect(() => {
-    const interval = setInterval(() => setCurrentTime(Date.now()), 1000)
+    const interval = setInterval(() => setCurrentTime(Date.now()), 1000);
     return () => {
-      clearInterval(interval)
-    }
-  })
+      clearInterval(interval);
+    };
+  });
 
   const onImageSelected = (e) => {
-    const img = e.target.files[0]
-    const fileReader = new FileReader()
+    const img = e.target.files[0];
+    const fileReader = new FileReader();
     fileReader.addEventListener('load', () => {
       setFormData({
         ...formData,
         picture: fileReader.result,
-      })
-    })
+      });
+    });
     if (img) {
-      fileReader.readAsDataURL(img)
+      fileReader.readAsDataURL(img);
     }
-  }
+  };
 
   const selectImage = () => {
-    document.getElementById('image-upload').click()
-  }
+    document.getElementById('image-upload').click();
+  };
 
   const handleImageClear = () => {
     setFormData({
       ...formData,
       picture: '',
-    })
-    document.getElementById('image-upload').value = ''
-  }
+    });
+    document.getElementById('image-upload').value = '';
+  };
 
   const handleChange = (e) => {
-    let { name, value } = e.target
+    let { name, value } = e.target;
     // to make sure it gets selected time
     if (name === 'ending_time' && value) {
       // the next set of lines is to handle the case where a person with a firefox browser is signed up
       // firefox doesn't support datetime picker, but it does support separate date and time pickers.
       if (navigator?.userAgent?.indexOf('Firefox') !== -1) {
         // https://i.imgur.com/Hcocekf.png
-        let result = value?.split(':')
+        let result = value?.split(':');
 
-        let endingTime = formData['ending_date']
+        let endingTime = formData['ending_date'];
         // double questionmarks checks if value is undefined. it's called the Nullish coalescing operator.
         // https://www.google.com/search?client=firefox-b-1-d&q=double+question+mark+javascript
         // IF the date was not selected by user and the user jumps directly to the time field,
         // ending time would be undefined.
         // we're assuming the ending_date is the current date
-        endingTime = endingTime ?? new Date()
-        endingTime.setHours(result[0], result[1])
+        endingTime = endingTime ?? new Date();
+        endingTime.setHours(result[0], result[1]);
 
         setFormData((prevState) => ({
           ...prevState,
           ending_time: endingTime.toISOString(),
-        }))
+        }));
       } else {
-        let date = new Date(value)
-        value = date.toISOString()
+        let date = new Date(value);
+        value = date.toISOString();
       }
       // value isn't giving us the timezoneOffset, we'll take care of it in lines 81.
     } else if (name === 'ending_date' && value) {
-      let date = new Date(value)
+      let date = new Date(value);
       // we're setting minutes to 0, hours to 0 and milliseconds to 0
-      date.setMinutes(0, 0, 0)
+      date.setMinutes(0, 0, 0);
       // getTime() gives you the date's representation in milliseconds
       // we're using getTime and converting timezone offset to time, 1 minute has 60 seconds, to convert it to milliseconds you multiply it by a thousand
-      date = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000)
+      date = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
       setFormData((prevState) => ({
         ...prevState,
         ending_date: date,
-      }))
+      }));
     }
     if (
       // if we don't have firefox as browser or ending date as name
@@ -110,19 +110,19 @@ function ContestCreate() {
       setFormData((prevState) => ({
         ...prevState,
         [name]: value,
-      }))
+      }));
     }
-  }
+  };
 
   if (isCreated) {
-    return <Redirect to={'/'} />
+    return <Redirect to={'/'} />;
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const created = await postContest(formData)
-    setCreated({ created })
-  }
+    e.preventDefault();
+    const created = await postContest(formData);
+    setCreated({ created });
+  };
 
   if (!currentUser) {
     return (
@@ -132,7 +132,7 @@ function ContestCreate() {
           <h1>Sorry, please log in/register to create a contest</h1>
         </div>
       </>
-    )
+    );
   }
   return (
     <>
@@ -256,6 +256,6 @@ function ContestCreate() {
         </form>
       </div>
     </>
-  )
+  );
 }
-export default ContestCreate
+export default ContestCreate;
