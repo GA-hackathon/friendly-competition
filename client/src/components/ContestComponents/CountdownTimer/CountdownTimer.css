@@ -1,10 +1,17 @@
-.timer{
-    background: rgb(0,0,0, 0.9);
-    color: white;
-    font-size: 22px;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
-    border-radius: 3px;
-    padding: 0rem 1rem;
+.timer {
+  background: rgb(0, 0, 0, 0.9);
+  color: white;
+  font-size: 22px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  border-radius: 3px;
+  padding: 0rem 1rem;
+}
+
+.timer.loading {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100px;
 }

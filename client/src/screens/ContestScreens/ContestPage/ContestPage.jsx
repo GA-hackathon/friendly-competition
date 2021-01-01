@@ -22,7 +22,7 @@ function ContestPage() {
   const [{ currentUser }] = useStateValue()
   const [contest, setContest] = useState(null)
   const [contestUser, setContestUser] = useState(null)
-  const [loaded, setLoaded] = useState(false)
+  const [isContestLoaded, setIsContestLoaded] = useState(false)
   const [activeSubmissions, setActiveSubmissions] = useState([])
   const [isSubmitted, setSubmitted] = useState(false)
   const [contestEnded, setContestEnded] = useState(false)
@@ -40,7 +40,7 @@ function ContestPage() {
         ),
       )
       setContest(fetchedContest)
-      setLoaded(true)
+      setIsContestLoaded(true)
     }
     fetchSubmissions()
   }, [id])
@@ -145,7 +145,7 @@ function ContestPage() {
     entryFound ? setSubmitted(true) : setSubmitted(false)
   }, [activeSubmissions, currentUser?.id, contest?.id])
 
-  if (!loaded) {
+  if (!isContestLoaded) {
     return <FunOrangeLoading />
   }
 

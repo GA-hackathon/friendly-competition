@@ -1,8 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import './CountdownTimer.css'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 function CountdownTimer({ contest, setContestEnded }) {
-  const [isTimerStarted, setIsTimeStarted] = useState(false)
+  const [isTimerStarted, setIsTimerStarted] = useState(false)
   const [timerDays, setTimerDays] = useState('00')
   const [timerHours, setTimerHours] = useState('00')
   const [timerMinutes, setTimerMinutes] = useState('00')
@@ -16,7 +17,7 @@ function CountdownTimer({ contest, setContestEnded }) {
     interval = setInterval(() => {
       const now = new Date().getTime()
       const difference = countdownDate - now
-      setIsTimeStarted(true)
+      setIsTimerStarted(true)
       const days = Math.floor(difference / (1000 * 60 * 60 * 24))
       const hours = Math.floor(
         (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
@@ -43,8 +44,10 @@ function CountdownTimer({ contest, setContestEnded }) {
       clearInterval(interval)
     }
   })
+
   /* eslint eqeqeq: 0 */
   // disable == warning in react.
+
   useEffect(() => {
     if (
       isTimerStarted &&
@@ -55,17 +58,24 @@ function CountdownTimer({ contest, setContestEnded }) {
     ) {
       clearInterval(interval)
       setContestEnded(true)
-      setIsTimeStarted(false)
+      setIsTimerStarted(false)
     }
-  }, [
-    timerSeconds,
-    interval,
-    isTimerStarted,
-    setContestEnded,
-    timerDays,
-    timerHours,
-    timerMinutes,
-  ])
+    //disabling dependency array warning, can't add the other dependencies it's yelling at me to add without breaking the functionality.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timerSeconds])
+
+  if (!isTimerStarted) {
+    return (
+      <Fragment>
+        <div className="timer loading">
+          <section>
+            <p>Loading...</p>
+            <LinearProgress className="linear-progress" />
+          </section>
+        </div>
+      </Fragment>
+    )
+  }
 
   return (
     <Fragment>
