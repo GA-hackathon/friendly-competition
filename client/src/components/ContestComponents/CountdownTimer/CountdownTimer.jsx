@@ -1,49 +1,49 @@
-import React, { Fragment, useState, useEffect } from 'react'
-import './CountdownTimer.css'
-import LinearProgress from '@material-ui/core/LinearProgress'
+import React, { Fragment, useState, useEffect } from 'react';
+import './CountdownTimer.css';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 function CountdownTimer({ contest, setContestEnded }) {
-  const [isTimerStarted, setIsTimerStarted] = useState(false)
-  const [timerDays, setTimerDays] = useState('00')
-  const [timerHours, setTimerHours] = useState('00')
-  const [timerMinutes, setTimerMinutes] = useState('00')
-  const [timerSeconds, setTimerSeconds] = useState('00')
+  const [isTimerStarted, setIsTimerStarted] = useState(false);
+  const [timerDays, setTimerDays] = useState('00');
+  const [timerHours, setTimerHours] = useState('00');
+  const [timerMinutes, setTimerMinutes] = useState('00');
+  const [timerSeconds, setTimerSeconds] = useState('00');
 
-  let interval = null
+  let interval = null;
 
   const startTimer = () => {
-    const countdownDate = new Date(contest?.ending_time).getTime()
+    const countdownDate = new Date(contest?.ending_time).getTime();
 
     interval = setInterval(() => {
-      const now = new Date().getTime()
-      const difference = countdownDate - now
-      setIsTimerStarted(true)
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+      const now = new Date().getTime();
+      const difference = countdownDate - now;
+      setIsTimerStarted(true);
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
         (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-      )
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+      );
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
       if (difference < 0) {
         // stop timer
 
-        clearInterval(interval)
+        clearInterval(interval);
       } else {
-        setTimerDays(days)
-        setTimerHours(hours)
-        setTimerMinutes(minutes)
-        setTimerSeconds(seconds)
+        setTimerDays(days);
+        setTimerHours(hours);
+        setTimerMinutes(minutes);
+        setTimerSeconds(seconds);
       }
-    }, 1000)
-  }
+    }, 1000);
+  };
 
   useEffect(() => {
-    startTimer()
+    startTimer();
     return () => {
-      clearInterval(interval)
-    }
-  })
+      clearInterval(interval);
+    };
+  });
 
   /* eslint eqeqeq: 0 */
   // disable == warning in react.
@@ -56,13 +56,13 @@ function CountdownTimer({ contest, setContestEnded }) {
       timerMinutes == '00' &&
       timerSeconds == '00'
     ) {
-      clearInterval(interval)
-      setContestEnded(true)
-      setIsTimerStarted(false)
+      clearInterval(interval);
+      setContestEnded(true);
+      setIsTimerStarted(false);
     }
     //disabling dependency array warning, can't add the other dependencies it's yelling at me to add without breaking the functionality.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timerSeconds])
+  }, [timerSeconds]);
 
   if (!isTimerStarted) {
     return (
@@ -74,7 +74,7 @@ function CountdownTimer({ contest, setContestEnded }) {
           </section>
         </div>
       </Fragment>
-    )
+    );
   }
 
   return (
@@ -109,7 +109,7 @@ function CountdownTimer({ contest, setContestEnded }) {
         </section>
       </div>
     </Fragment>
-  )
+  );
 }
 
-export default CountdownTimer
+export default CountdownTimer;
