@@ -111,12 +111,11 @@ function ContestCreate() {
   if (!currentUser) {
     return (
       <>
-   <Navbar />
-      <div>
-        <h1>Sorry, please log in/register to create an account</h1>
-      </div>
+        <Navbar />
+        <div>
+          <h1>Sorry, please log in/register to create an account</h1>
+        </div>
       </>
-
     )
   }
   return (
