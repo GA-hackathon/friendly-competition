@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { useStateValue } from "../../../providers/CurrentUserProvider";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { useParams } from "react-router-dom";
-import { getOneContest, getOneContestWithUser } from "../../../services/contests";
-import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
-import "./ContestPage.css";
-import Layout from "../../../layout/Layout";
-import CountdownTimer from "../../../components/ContestComponents/CountdownTimer/CountdownTimer";
-import ContestChat from "../../../components/ContestComponents/ContestChat/ContestChat";
-import "./ContestPage.css";
-import SubmissionCreate from "../../../components/Form/SubmissionCreate/SubmissionCreate";
-import { getAllSubmissions } from "../../../services/submissions";
-import { getAllVotes } from "../../../services/votes";
-import SubmissionCard from "../../../components/SubmissionComponents/SubmissionCard";
-import { toTitleCase } from "../../../utils/toTitleCase";
+import React, { useState, useEffect } from 'react';
+import { useStateValue } from '../../../providers/CurrentUserProvider';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useParams } from 'react-router-dom';
+import {
+  getOneContest,
+  getOneContestWithUser,
+} from '../../../services/contests';
+import FunOrangeLoading from '../../../components/Loading/FunOrangeLoading/FunOrangeLoading';
+import './ContestPage.css';
+import Layout from '../../../layout/Layout';
+import CountdownTimer from '../../../components/ContestComponents/CountdownTimer/CountdownTimer';
+import ContestChat from '../../../components/ContestComponents/ContestChat/ContestChat';
+import './ContestPage.css';
+import SubmissionCreate from '../../../components/Form/SubmissionCreate/SubmissionCreate';
+import { getAllSubmissions } from '../../../services/submissions';
+import { getAllVotes } from '../../../services/votes';
+import SubmissionCard from '../../../components/SubmissionComponents/SubmissionCard';
+import { toTitleCase } from '../../../utils/toTitleCase';
 
 function ContestPage() {
   const [{ currentUser }] = useStateValue();
   const [contest, setContest] = useState(null);
   const [contestUser, setContestUser] = useState(null);
-  const [loaded, setLoaded] = useState(false);
-  const [activeSubmissions, setActiveSubmissions] = useState([])
-  const [isSubmitted, setSubmitted] = useState(false)
+  const [isContestLoaded, setIsContestLoaded] = useState(false);
+  const [activeSubmissions, setActiveSubmissions] = useState([]);
+  const [isSubmitted, setSubmitted] = useState(false);
   const [contestEnded, setContestEnded] = useState(false);
   const [winnerSubmission, setWinnerSubmission] = useState(null);
 
@@ -31,32 +34,33 @@ function ContestPage() {
     const fetchSubmissions = async () => {
       const fetchedContest = await getOneContest(id);
       const submissionData = await getAllSubmissions();
-      setActiveSubmissions(submissionData.filter((submission) => submission?.contest_id === fetchedContest?.id));
+      setActiveSubmissions(
+        submissionData.filter(
+          (submission) => submission?.contest_id === fetchedContest?.id,
+        ),
+      );
       setContest(fetchedContest);
-      setLoaded(true);
+      setIsContestLoaded(true);
     };
     fetchSubmissions();
-  }, []);
+  }, [id]);
 
-  const compareDates = (contest1, contest2, property) => {
-    let time1 = new Date(contest1[property]).getTime();
-    let time2 = new Date(contest2[property]).getTime();
+  const compareDates = (contest, property) => {
+    let currentTime = new Date().getTime();
+    let time2 = new Date(contest[property]).getTime();
 
-    if (time1 < time2) {
+    if (currentTime < time2) {
       return -1;
-    } else if (time1 > time2) {
+    } else if (currentTime > time2) {
       return 1;
     } else {
       return 0;
     }
   };
+
   useEffect(() => {
     if (contest?.id) {
-      let contestEnded =
-        compareDates({
-          ending_time: new Date().toISOString()
-
-        }, contest, "ending_time") > 0;
+      let contestEnded = compareDates(contest, 'ending_time') > 0;
       if (contestEnded) {
         const fetchVotes = async () => {
           // all the votes in the app
@@ -72,37 +76,50 @@ function ContestPage() {
 
           // this if condition is to avoid an error "Reduce of empty array with no initial value"
           // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/size
-          // We want to loop through the votData and create an object with the keys as the submission id and the vote count as the number of votes
-          // 
+          // We want to loop through the voteData and create an object with the keys as the submission id and the vote count as the number of votes
 
-          voteData.filter(v => activeSubmissions.map(ac => ac.id).includes(v?.submission_id)).map(vote => {
-            if (submissionVotes.has(vote?.submission_id)) {
-              let existingCount = submissionVotes.get(vote.submission_id);
-              submissionVotes.set(vote.submission_id, existingCount + 1);
-            } else {
-              submissionVotes.set(vote.submission_id, 1);
-            }
-          });
+          /*eslint-disable */
+          //disabling eslint for line 87 warning
+          voteData
+            .filter((v) =>
+              activeSubmissions.map((ac) => ac.id).includes(v?.submission_id),
+            )
+            .map((vote) => {
+              if (submissionVotes.has(vote?.submission_id)) {
+                let existingCount = submissionVotes.get(vote.submission_id);
+                submissionVotes.set(vote.submission_id, existingCount + 1);
+              } else {
+                submissionVotes.set(vote.submission_id, 1);
+              }
+            });
+          // re-enabling es-lint
+          /*eslint-enable */
           // find the highest voted submission
           // This handles the edge case where there are entries but there are no votes for the entires
           if (submissionVotes.size === 0) {
             // just pick the first submission
-            setWinnerSubmission(activeSubmissions[0])
-            return
+            setWinnerSubmission(activeSubmissions[0]);
+            return;
           }
-          let highestVoted = [...submissionVotes.entries()]?.reduce((a, e) => e[1] > a[1] ? e : a, [null, 0]);
+          let highestVoted = [...submissionVotes.entries()]?.reduce(
+            // we are sorting it based on the valuew hich is the highest.
+            (previousVote, currentVote) =>
+              currentVote[1] > previousVote[1] ? currentVote : previousVote,
+            //submissionid is null, no votes.
+            [null, 0],
+          );
           //highestvoted[0] = submissionid
           // highestVoted[1] = vote count for that submission
-          const winner = activeSubmissions.find(sub => sub.id === highestVoted[0]);
-          setWinnerSubmission(
-            { ...winner, votes: highestVoted[1] });
-
+          const winner = activeSubmissions.find(
+            (sub) => sub.id === highestVoted[0],
+          );
+          setWinnerSubmission({ ...winner, votes: highestVoted[1] });
         };
         fetchVotes();
       }
       setContestEnded(contestEnded);
     }
-  }, [contest?.id])
+  }, [contest?.id, activeSubmissions, contest]);
 
   useEffect(() => {
     const contestDataForUser = async () => {
@@ -110,67 +127,111 @@ function ContestPage() {
       setContestUser(getContestUser);
     };
     contestDataForUser();
-  }, []);
-
-
-
+  }, [id]);
 
   // get full first name, but only the first initial of the last name followed by a dot.
   let usersName = contestUser?.user?.first_name?.concat(
-    " ",
-    contestUser?.user?.last_name?.charAt(0).concat(".")
+    ' ',
+    // if the user has a last name, continue with the next line (guard operator), else, do not continue.
+    contestUser?.user.last_name &&
+      // keep the first character of the last name, and add a dot. Do not keep the other letters of the last name.
+      contestUser?.user?.last_name?.charAt(0).concat('.'),
   );
 
   // if a submission/entry is associated to the current user, do not allow him to resend another one.
   useEffect(() => {
     const entryFound = activeSubmissions?.find(
       (submission) =>
-        submission?.contest_id === contest?.id && currentUser?.id === submission?.user_id
+        submission?.contest_id === contest?.id &&
+        currentUser?.id === submission?.user_id,
     );
     entryFound ? setSubmitted(true) : setSubmitted(false);
   }, [activeSubmissions, currentUser?.id, contest?.id]);
 
-  if (!loaded) {
+  if (!isContestLoaded) {
     return <FunOrangeLoading />;
   }
 
-
   return (
     <Layout>
-      <section className='contest-info'>
+      <section className="contest-info">
         <div className="timer-container">
           <h4 className="submission-name">{contest?.name}</h4>
-          {!contestEnded ?
-            <h5>Contest Ends In:</h5> : <><h5>Contest Ended</h5></>}
+          {!contestEnded ? (
+            <h5>Contest Ends In:</h5>
+          ) : (
+            <>
+              <h5>Contest Ended</h5>
+            </>
+          )}
           <CountdownTimer setContestEnded={setContestEnded} contest={contest} />
           <h5>Contest Rules</h5>
           <div>{contest?.rules}</div>
           <h5>Try</h5>
-          <div className='contest-pic'>{contest.picture && <img src={contest?.picture} alt={contest?.name} />}</div>
+          <div className="contest-pic">
+            {contest.picture && (
+              <img src={contest?.picture} alt={contest?.name} />
+            )}
+          </div>
         </div>
 
         <div className="create-submission">
-          Contest Created by: {!contestUser?.user?.image ? <AccountCircleIcon className="icon-submission" /> : <img className="user-image" src={contestUser?.user?.image} alt={contestUser?.user?.name} />}
+          Contest Created by:{' '}
+          {!contestUser?.user?.image ? (
+            <AccountCircleIcon className="icon-submission" />
+          ) : (
+            <img
+              className="user-image"
+              src={contestUser?.user?.image}
+              alt={contestUser?.user?.name}
+            />
+          )}
           <p style={{ marginTop: '0' }}>{toTitleCase(usersName)}</p>
-          {!contestEnded ? <section className='submission-form'>
-            {!isSubmitted && <h5 style={{ textAlign: 'center' }}>Ready to Enter?</h5>}
-            <SubmissionCreate isSubmited={isSubmitted} setAllSubmissions={setActiveSubmissions} contest={contest} currentUser={currentUser} />
-          </section> : <div>
-
-              <div>WINNER: Entry: {winnerSubmission?.name}  User: {winnerSubmission?.user.first_name} {winnerSubmission?.votes ? <>, votes: {winnerSubmission?.votes}</> : <></>}</div>
-            </div>}
+          {!contestEnded ? (
+            <section className="submission-form">
+              {!isSubmitted && (
+                <h5 style={{ textAlign: 'center' }}>Ready to Enter?</h5>
+              )}
+              <SubmissionCreate
+                isSubmited={isSubmitted}
+                setAllSubmissions={setActiveSubmissions}
+                contest={contest}
+                currentUser={currentUser}
+              />
+            </section>
+          ) : (
+            <div>
+              <div>
+                WINNER: Entry: {winnerSubmission?.name} User:{' '}
+                {winnerSubmission?.user.first_name}{' '}
+                {winnerSubmission?.votes ? (
+                  <>, votes: {winnerSubmission?.votes}</>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </section>
-      <h5 style={{ margin: "2rem 2rem" }}>Join the Discussion</h5>
-      <hr style={{ margin: "0rem 2rem" }} />
+      <h5 style={{ margin: '2rem 2rem' }}>Join the Discussion</h5>
+      <hr style={{ margin: '0rem 2rem' }} />
       <ContestChat />
       <section>
         <div className="submission-name">View Contest Entries</div>
-        <div className='contest-entries'>{activeSubmissions.map((submission) => {
-          return <React.Fragment key={submission.id}>
-            <SubmissionCard submission={submission} contest={contest} currentUser={currentUser} />
-          </React.Fragment>
-        })}</div>
+        <div className="contest-entries">
+          {activeSubmissions.map((submission) => {
+            return (
+              <React.Fragment key={submission.id}>
+                <SubmissionCard
+                  submission={submission}
+                  contest={contest}
+                  currentUser={currentUser}
+                />
+              </React.Fragment>
+            );
+          })}
+        </div>
       </section>
     </Layout>
   );
