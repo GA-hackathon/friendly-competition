@@ -57,6 +57,7 @@ function ContestPage() {
       return 0
     }
   }
+
   useEffect(() => {
     if (contest?.id) {
       let contestEnded = compareDates(contest, 'ending_time') > 0
@@ -75,9 +76,10 @@ function ContestPage() {
 
           // this if condition is to avoid an error "Reduce of empty array with no initial value"
           // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/size
-          // We want to loop through the votData and create an object with the keys as the submission id and the vote count as the number of votes
-          //
+          // We want to loop through the voteData and create an object with the keys as the submission id and the vote count as the number of votes
 
+          /*eslint-disable */
+          //disabling eslint for line 87 warning
           voteData
             .filter((v) =>
               activeSubmissions.map((ac) => ac.id).includes(v?.submission_id),
@@ -90,6 +92,8 @@ function ContestPage() {
                 submissionVotes.set(vote.submission_id, 1)
               }
             })
+          // re-enabling es-lint
+          /*eslint-enable */
           // find the highest voted submission
           // This handles the edge case where there are entries but there are no votes for the entires
           if (submissionVotes.size === 0) {
@@ -123,7 +127,7 @@ function ContestPage() {
       setContestUser(getContestUser)
     }
     contestDataForUser()
-  }, [])
+  }, [id])
 
   // get full first name, but only the first initial of the last name followed by a dot.
   let usersName = contestUser?.user?.first_name?.concat(

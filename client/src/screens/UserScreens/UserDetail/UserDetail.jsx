@@ -1,40 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
-import { checkContests, checkSubmissions } from "../../../utils/contestUtils";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { goBack } from "../../../utils/goBack";
-import Wrapper from "./styledUserDetail";
-import FunOrangeLoading from "../../../components/Loading/FunOrangeLoading/FunOrangeLoading";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import IconButton from "@material-ui/core/IconButton";
-import { getUserWithSubmissions } from "../../../services/submissions";
-import { getOneUser } from "../../../services/users";
+import React, { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import Typography from '@material-ui/core/Typography'
+import { checkContests, checkSubmissions } from '../../../utils/contestUtils'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import { goBack } from '../../../utils/goBack'
+import Wrapper from './styledUserDetail'
+import FunOrangeLoading from '../../../components/Loading/FunOrangeLoading/FunOrangeLoading'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import IconButton from '@material-ui/core/IconButton'
+import { getUserWithSubmissions } from '../../../services/submissions'
+import { getOneUser } from '../../../services/users'
 
 export default function UserDetail() {
-
-  const [user, setUser] = useState(null);
-  const [userWithSubmissions, setUserWithSubmissions] = useState(null);
-  const [loaded, setLoaded] = useState(false);
-  const { id } = useParams();
+  const [user, setUser] = useState(null)
+  const [userWithSubmissions, setUserWithSubmissions] = useState(null)
+  const [loaded, setLoaded] = useState(false)
+  const { id } = useParams()
 
   useEffect(() => {
     const getContests = async () => {
-      const getUser = await getOneUser(id);
-      setUser(getUser);
-    };
-    getContests();
-  }, [getOneUser, id]);
+      const getUser = await getOneUser(id)
+      setUser(getUser)
+    }
+    getContests()
+  }, [id])
 
   useEffect(() => {
     const getSubmissions = async () => {
-      const getUser = await getUserWithSubmissions(id);
-      setUserWithSubmissions(getUser);
-      setLoaded(true);
-    };
-    getSubmissions();
-  }, [id]);
-
+      const getUser = await getUserWithSubmissions(id)
+      setUserWithSubmissions(getUser)
+      setLoaded(true)
+    }
+    getSubmissions()
+  }, [id])
 
   const contestsJSX = user?.contests?.map((contest) => (
     <Link
@@ -44,7 +42,7 @@ export default function UserDetail() {
     >
       {contest?.name}
     </Link>
-  ));
+  ))
 
   const submissionsJSX = userWithSubmissions?.submissions?.map((submission) => (
     <Link
@@ -54,15 +52,14 @@ export default function UserDetail() {
     >
       {submission?.name}
     </Link>
-  ));
-
+  ))
 
   if (!loaded) {
-    return <FunOrangeLoading />;
+    return <FunOrangeLoading />
   }
 
   // https://stackoverflow.com/questions/49528336/how-to-make-space-between-strings-using-concat-method-in-javascript/49528547
-  let fullName = user?.first_name?.concat(" ", user?.last_name);
+  let fullName = user?.first_name?.concat(' ', user?.last_name)
 
   return (
     <Wrapper>
@@ -85,14 +82,15 @@ export default function UserDetail() {
         <div className="inner-column">
           <div className="check-contests">{checkContests(user)}</div>
           <div className="contests-container">{contestsJSX}</div>
-          <div className="check-contests">{checkSubmissions(userWithSubmissions)}</div>
+          <div className="check-contests">
+            {checkSubmissions(userWithSubmissions)}
+          </div>
           <div className="contests-container">{submissionsJSX}</div>
         </div>
         <br />
         <br />
         <hr className="bottom-hr" />
-
       </div>
     </Wrapper>
-  );
+  )
 }

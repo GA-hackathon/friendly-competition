@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './ContestCreate.css'
 import Navbar from '../../../layout/Navbar/Navbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -9,6 +9,8 @@ import WallpaperIcon from '@material-ui/icons/Wallpaper'
 import { postContest } from '../../../services/contests'
 import { Redirect } from 'react-router-dom'
 import { useStateValue } from '../../../providers/CurrentUserProvider'
+import Moment from 'react-moment'
+import 'moment-timezone'
 
 function ContestCreate() {
   const [formData, setFormData] = useState({
@@ -17,9 +19,21 @@ function ContestCreate() {
     category: '',
     picture: '',
   })
+
   const [isCreated, setCreated] = useState(false)
   const { name, category, rules, picture } = formData
   const [{ currentUser }] = useStateValue()
+  const [currentTime, setCurrentTime] = useState(Date.now())
+
+  // no dependency array because we want that time to always change.
+
+  useEffect(() => {
+    const interval = setInterval(() => setCurrentTime(Date.now()), 1000)
+    return () => {
+      clearInterval(interval)
+    }
+  })
+
   const onImageSelected = (e) => {
     const img = e.target.files[0]
     const fileReader = new FileReader()
@@ -112,8 +126,8 @@ function ContestCreate() {
     return (
       <>
         <Navbar />
-        <div>
-          <h1>Sorry, please log in/register to create an account</h1>
+        <div style={{ padding: '50px' }}>
+          <h1>Sorry, please log in/register to create a contest</h1>
         </div>
       </>
     )
@@ -158,25 +172,33 @@ function ContestCreate() {
               name="rules"
             />
           </label>
-
+          <label className="starting-date">
+            Starting Date: <br />
+            <Moment className="time" format="dddd, MMMM Do yyyy: hh:mm A">
+              {currentTime}
+            </Moment>
+          </label>
           <label>
             Ending Date:
             {navigator?.userAgent?.indexOf('Firefox') !== -1 ? (
               <>
-                <Input
-                  fullWidth={true}
-                  onChange={handleChange}
-                  required
-                  type="date"
-                  name="ending_date"
-                />
-                <Input
-                  fullWidth={true}
-                  onChange={handleChange}
-                  required
-                  type="time"
-                  name="ending_time"
-                />
+                <div className="firefox-datetime-picker">
+                  <Input
+                    // fullWidth={true}
+                    onChange={handleChange}
+                    required
+                    type="date"
+                    name="ending_date"
+                  />
+                  &nbsp;
+                  <Input
+                    // fullWidth={true}
+                    onChange={handleChange}
+                    required
+                    type="time"
+                    name="ending_time"
+                  />
+                </div>
               </>
             ) : (
               <Input
