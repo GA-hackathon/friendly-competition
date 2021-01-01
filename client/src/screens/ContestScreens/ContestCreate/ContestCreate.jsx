@@ -108,6 +108,17 @@ function ContestCreate() {
     setCreated({ created })
   }
 
+  if (!currentUser) {
+    return (
+      <>
+   <Navbar />
+      <div>
+        <h1>Sorry, please log in/register to create an account</h1>
+      </div>
+      </>
+
+    )
+  }
   return (
     <>
       <Navbar />
