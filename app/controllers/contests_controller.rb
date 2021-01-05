@@ -24,7 +24,7 @@ class ContestsController < ApplicationController
 
   # GET /contests/1
   def show
-    render json: @contest.attributes.except('user_id', 'updated_at').merge({submissions: @contest.submissions, user: @contest.user.attributes.except('created_at', 'updated_at', 'email', 'passsword_digest'), comments: @contest.comments})
+    render json: @contest.attributes.except('user_id', 'updated_at').merge({submissions: @contest.submissions.order('created_at DESC').map {|submission| submission.attributes.merge({votes: submission.votes, user: submission.user.attributes.except('updated_at','created_at')})}, user: @contest.user.attributes.except('created_at', 'updated_at', 'email', 'passsword_digest'), comments: @contest.comments})
   end
   
   # POST /contests

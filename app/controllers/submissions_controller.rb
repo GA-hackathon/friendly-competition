@@ -12,12 +12,13 @@ class SubmissionsController < ApplicationController
       @submission.votes = @votes.filter {|v| v.submission_id == @submission.id }
     end
 
-    render json: @submissions, :include => {:user => {:include => :votes}} 
+    render json: @submissions.map {|submission| merge_votes_and_user(submission)}
   end
+
 
   # GET /submissions/1
   def show
-    render json: @submission, :include => {:user => {:include => :votes}} 
+    render json: merge_votes_and_user(@submission)
   end
 
   # POST /submissions
@@ -48,6 +49,13 @@ class SubmissionsController < ApplicationController
   end
 
   private
+
+
+  def merge_votes_and_user(submission)
+     submission.attributes.merge({user: submission.user, votes: submission.votes})
+  end
+
+
     # Use callbacks to share common setup or constraints between actions.
     def set_submission
       @submission = Submission.find(params[:id])

@@ -7,10 +7,9 @@ function SubmissionCreate({
   currentUser,
   setAllSubmissions,
   contest,
-  isSubmitted,
+  onNewEntryCreated,
+  canSubmitEntry,
 }) {
-  const [isCreated, setCreated] = useState(false);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -54,10 +53,10 @@ function SubmissionCreate({
       contest_id: contest.id,
     });
     setAllSubmissions((prevState) => [newSubmission, ...prevState]);
-    setCreated({ newSubmission });
+    onNewEntryCreated(newSubmission);
   };
 
-  if (isSubmitted || isCreated) {
+  if (!canSubmitEntry) {
     return (
       <Div>
         Cheers! <br /> Your Entry is in!

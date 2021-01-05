@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useStateValue } from '../../../providers/CurrentUserProvider';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useParams } from 'react-router-dom';
@@ -10,7 +10,6 @@ import CountdownTimer from '../../../components/ContestComponents/CountdownTimer
 import ContestChat from '../../../components/ContestComponents/ContestChat/ContestChat';
 import './ContestPage.css';
 import SubmissionCreate from '../../../components/Form/SubmissionCreate/SubmissionCreate';
-import { getAllSubmissions } from '../../../services/submissions';
 import { getAllVotes } from '../../../services/votes';
 import SubmissionCard from '../../../components/SubmissionComponents/SubmissionCard';
 import { toTitleCase } from '../../../utils/toTitleCase';
@@ -21,26 +20,27 @@ function ContestPage() {
   const [contest, setContest] = useState(null);
   const [isContestLoaded, setIsContestLoaded] = useState(false);
   const [activeSubmissions, setActiveSubmissions] = useState([]);
-  const [isSubmitted, setSubmitted] = useState(false);
   const [contestEnded, setContestEnded] = useState(false);
   const [winnerSubmission, setWinnerSubmission] = useState(null);
+  const [reload, setReload] = useState();
+  let canSubmitEntry = useRef(true);
 
   const { id } = useParams();
 
   useEffect(() => {
     const fetchSubmissions = async () => {
       const fetchedContest = await getOneContest(id);
-      const submissionData = await getAllSubmissions();
-      setActiveSubmissions(
-        submissionData.filter(
-          (submission) => submission?.contest_id === fetchedContest?.id,
-        ),
+
+      setActiveSubmissions(fetchedContest.submissions);
+      const entryExists = fetchedContest?.submissions?.find(
+        (sub) => sub.user.id === currentUser?.id,
       );
+      canSubmitEntry.current = entryExists ? false : true;
       setContest(fetchedContest);
       setIsContestLoaded(true);
     };
     fetchSubmissions();
-  }, [id]);
+  }, [id, reload, currentUser?.id]);
 
   const compareDates = (contest, property) => {
     let currentTime = new Date().getTime();
@@ -127,15 +127,9 @@ function ContestPage() {
       contest?.user?.last_name?.charAt(0).concat('.'),
   );
 
-  // if a submission/entry is associated to the current user, do not allow him to resend another one.
-  useEffect(() => {
-    const entryFound = activeSubmissions?.find(
-      (submission) =>
-        submission?.contest_id === contest?.id &&
-        currentUser?.id === submission?.user_id,
-    );
-    entryFound ? setSubmitted(true) : setSubmitted(false);
-  }, [activeSubmissions, currentUser?.id, contest?.id]);
+  const onNewEntryCreated = (newEntry) => {
+    setReload(newEntry.id);
+  };
 
   if (!isContestLoaded) {
     return <FunOrangeLoading />;
@@ -180,13 +174,14 @@ function ContestPage() {
           <p style={{ marginTop: '0' }}>{toTitleCase(usersName)}</p>
           {!contestEnded ? (
             <section className="submission-form">
-              {!isSubmitted && (
+              {canSubmitEntry.current && (
                 <h5 style={{ textAlign: 'center' }}>Ready to Enter?</h5>
               )}
               <SubmissionCreate
-                isSubmited={isSubmitted}
+                canSubmitEntry={canSubmitEntry.current}
                 setAllSubmissions={setActiveSubmissions}
                 contest={contest}
+                onNewEntryCreated={onNewEntryCreated}
                 currentUser={currentUser}
               />
             </section>

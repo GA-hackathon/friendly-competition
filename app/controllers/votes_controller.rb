@@ -2,6 +2,7 @@ class VotesController < ApplicationController
   before_action :set_vote, only: [:destroy]
   before_action :set_votes, only: [:show]
   before_action :authorize_request, only: [:create, :destroy] 
+  before_action :can_vote?, only: [:create] 
 
   # GET /votes
   def index
@@ -17,12 +18,14 @@ class VotesController < ApplicationController
 
   # POST /votes
   def create
+    if can_vote?
     @vote = Vote.new(vote_params)
     
     if @vote.save
       render json: @vote, status: :created, location: @vote
     else
       render json: @vote.errors, status: :unprocessable_entity
+    end
     end
   end
 
@@ -44,6 +47,16 @@ class VotesController < ApplicationController
   end
 
   private
+
+  def can_vote?
+   @vote = Vote.find_by(user_id: params[:user_id], submission_id: params[:submission_id])
+   if @vote
+     false
+   else 
+    true
+   end
+  end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_vote
       @vote = Vote.find_by(user_id: params[:user_id], submission_id: params[:submission_id])
