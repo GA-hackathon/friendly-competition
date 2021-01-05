@@ -14,6 +14,7 @@ import { getAllSubmissions } from '../../../services/submissions';
 import { getAllVotes } from '../../../services/votes';
 import SubmissionCard from '../../../components/SubmissionComponents/SubmissionCard';
 import { toTitleCase } from '../../../utils/toTitleCase';
+import { Link } from 'react-router-dom';
 
 function ContestPage() {
   const [{ currentUser }] = useStateValue();
@@ -164,15 +165,17 @@ function ContestPage() {
         </div>
 
         <div className="create-submission">
-          Contest Created by:{' '}
+          Contest Created by:
           {!contest?.user?.image ? (
             <AccountCircleIcon className="icon-submission" />
           ) : (
-            <img
-              className="user-image"
-              src={contest?.user?.image}
-              alt={contest?.user?.name}
-            />
+            <Link to={`../users/${contest.user_id}`}>
+              <img
+                className="user-image"
+                src={contest?.user?.image}
+                alt={contest?.user?.name}
+              />
+            </Link>
           )}
           <p style={{ marginTop: '0' }}>{toTitleCase(usersName)}</p>
           {!contestEnded ? (
@@ -190,8 +193,8 @@ function ContestPage() {
           ) : (
             <div>
               <div>
-                WINNER: Entry: {winnerSubmission?.name} User:{' '}
-                {winnerSubmission?.user.first_name}{' '}
+                WINNER: Entry: {winnerSubmission?.name} User:
+                {winnerSubmission?.user.first_name}
                 {winnerSubmission?.votes ? (
                   <>, votes: {winnerSubmission?.votes}</>
                 ) : (

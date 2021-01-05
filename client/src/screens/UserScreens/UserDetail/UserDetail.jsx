@@ -19,8 +19,8 @@ export default function UserDetail() {
     const getContests = async () => {
       const getUser = await getOneUser(id);
       setUser(getUser);
+      setLoaded(true);
     };
-    setLoaded(true);
     getContests();
   }, [id]);
 
