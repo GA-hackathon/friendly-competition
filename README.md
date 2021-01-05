@@ -1,6 +1,6 @@
 # Challenge.me
 
-live deploy: https://challenge-me.netlify.app/
+live deploy: https://challengeme-io.netlify.app/
 
 Challenge.me is a competition based website to help people up skill and connect with others.
 
