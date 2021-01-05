@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useStateValue } from '../../../providers/CurrentUserProvider';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useParams } from 'react-router-dom';
-import {
-  getOneContest,
-  getOneContestWithUser,
-} from '../../../services/contests';
+import { getOneContest } from '../../../services/contests';
 import FunOrangeLoading from '../../../components/Loading/FunOrangeLoading/FunOrangeLoading';
 import './ContestPage.css';
 import Layout from '../../../layout/Layout';
@@ -21,7 +18,6 @@ import { toTitleCase } from '../../../utils/toTitleCase';
 function ContestPage() {
   const [{ currentUser }] = useStateValue();
   const [contest, setContest] = useState(null);
-  const [contestUser, setContestUser] = useState(null);
   const [isContestLoaded, setIsContestLoaded] = useState(false);
   const [activeSubmissions, setActiveSubmissions] = useState([]);
   const [isSubmitted, setSubmitted] = useState(false);
@@ -121,21 +117,13 @@ function ContestPage() {
     }
   }, [contest?.id, activeSubmissions, contest]);
 
-  useEffect(() => {
-    const contestDataForUser = async () => {
-      const getContestUser = await getOneContestWithUser(id);
-      setContestUser(getContestUser);
-    };
-    contestDataForUser();
-  }, [id]);
-
   // get full first name, but only the first initial of the last name followed by a dot.
-  let usersName = contestUser?.user?.first_name?.concat(
+  let usersName = contest?.user?.first_name?.concat(
     ' ',
     // if the user has a last name, continue with the next line (guard operator), else, do not continue.
-    contestUser?.user.last_name &&
+    contest?.user.last_name &&
       // keep the first character of the last name, and add a dot. Do not keep the other letters of the last name.
-      contestUser?.user?.last_name?.charAt(0).concat('.'),
+      contest?.user?.last_name?.charAt(0).concat('.'),
   );
 
   // if a submission/entry is associated to the current user, do not allow him to resend another one.
@@ -177,13 +165,13 @@ function ContestPage() {
 
         <div className="create-submission">
           Contest Created by:{' '}
-          {!contestUser?.user?.image ? (
+          {!contest?.user?.image ? (
             <AccountCircleIcon className="icon-submission" />
           ) : (
             <img
               className="user-image"
-              src={contestUser?.user?.image}
-              alt={contestUser?.user?.name}
+              src={contest?.user?.image}
+              alt={contest?.user?.name}
             />
           )}
           <p style={{ marginTop: '0' }}>{toTitleCase(usersName)}</p>
