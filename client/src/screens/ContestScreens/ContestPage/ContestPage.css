@@ -25,6 +25,7 @@ header {
   vertical-align: middle;
   font-size: 5rem !important;
   cursor: pointer;
+  color: black;
 }
 
 .submissions-form {
