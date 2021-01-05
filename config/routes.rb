@@ -2,8 +2,6 @@ Rails.application.routes.draw do
   resources :likes
   get '/contests/oldest', to: 'contests#last'
   get '/contests/newest', to: 'contests#first'
-  get '/contests/users', to: 'contests#index_with_users'
-  get '/contest-user/:id', to: 'contests#show_with_user'
 
   resources :contests
   resources :submissions

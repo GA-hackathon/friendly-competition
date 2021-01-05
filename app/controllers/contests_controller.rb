@@ -6,7 +6,7 @@ class ContestsController < ApplicationController
   def index
     @contests = Contest.newest_first
 
-    render json: @contests, :include => {:submissions => {:include => :user}} 
+    render json: @contests.map {|contest| contest.attributes.except('user_id').merge({user: contest.user.attributes }, {submissions: contest.submissions})}
   end
 
   def index_with_users
@@ -29,13 +29,9 @@ class ContestsController < ApplicationController
 
   # GET /contests/1
   def show
-    render json: @contest, :include => {:submissions => {:include => :user}} 
+    render json: @contest.attributes.merge({submissions: @contest.submissions, user: @contest.user})
   end
   
-  def show_with_user
-    render json: @contest, :include => {:user => {:include => :submissions}} 
-  end
-
   # POST /contests
   def create
     @contest = Contest.new(contest_params)
