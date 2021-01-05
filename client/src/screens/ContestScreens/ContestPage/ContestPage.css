@@ -24,6 +24,7 @@ header {
 .MuiSvgIcon-root.icon-submission {
   vertical-align: middle;
   font-size: 5rem !important;
+  cursor: pointer;
 }
 
 .submissions-form {
