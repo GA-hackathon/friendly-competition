@@ -1,9 +1,14 @@
-import { useState } from "react";
-import { postSubmission } from "../../../services/submissions";
-import { Button, TextField } from "@material-ui/core";
-import Div from "./styledSubmissionCreate";
+import { useState } from 'react';
+import { postSubmission } from '../../../services/submissions';
+import { Button, TextField } from '@material-ui/core';
+import Div from './styledSubmissionCreate';
 
-function SubmissionCreate({ currentUser, setAllSubmissions, contest, isSubmitted }) {
+function SubmissionCreate({
+  currentUser,
+  setAllSubmissions,
+  contest,
+  isSubmitted,
+}) {
   const [isCreated, setCreated] = useState(false);
 
   const handleChange = (e) => {
@@ -15,18 +20,16 @@ function SubmissionCreate({ currentUser, setAllSubmissions, contest, isSubmitted
   };
 
   const [formData, setFormData] = useState({
-    name: "",
-    content: "",
-    file: "",
+    name: '',
+    content: '',
+    file: '',
   });
   const { name, content, file } = formData;
-
-
 
   const onFileSelected = (e) => {
     const img = e.target.files[0];
     const fileReader = new FileReader();
-    fileReader.addEventListener("load", () => {
+    fileReader.addEventListener('load', () => {
       setFormData({
         ...formData,
         file: fileReader.result,
@@ -38,7 +41,7 @@ function SubmissionCreate({ currentUser, setAllSubmissions, contest, isSubmitted
   };
 
   const selectFile = () => {
-    document.getElementById("file-upload").click();
+    document.getElementById('file-upload').click();
   };
 
   const handleSubmit = async (e) => {
@@ -54,8 +57,12 @@ function SubmissionCreate({ currentUser, setAllSubmissions, contest, isSubmitted
     setCreated({ newSubmission });
   };
 
-  if (isCreated || isSubmitted) {
-    return (<Div>Cheers! <br /> Your Entry is in!</Div>)
+  if (isSubmitted || isCreated) {
+    return (
+      <Div>
+        Cheers! <br /> Your Entry is in!
+      </Div>
+    );
   }
 
   return (
@@ -84,13 +91,21 @@ function SubmissionCreate({ currentUser, setAllSubmissions, contest, isSubmitted
             onChange={handleChange}
           />
         </div>
-        <Button variant="contained" onClick={selectFile}>Upload Image</Button>
-        <Button variant="contained" disabled={!currentUser || !file} type="submit">{currentUser ? <>Enter Contest</> : <>Please Log-In</>}</Button>
+        <Button variant="contained" onClick={selectFile}>
+          Upload Image
+        </Button>
+        <Button
+          variant="contained"
+          disabled={!currentUser || !file}
+          type="submit"
+        >
+          {currentUser ? <>Enter Contest</> : <>Please Log-In</>}
+        </Button>
       </form>
       <input
         type="file"
         id="file-upload"
-        style={{ visibility: "hidden" }}
+        style={{ visibility: 'hidden' }}
         onChange={onFileSelected}
       />
     </Div>

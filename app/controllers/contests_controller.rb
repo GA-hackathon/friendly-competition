@@ -6,14 +6,9 @@ class ContestsController < ApplicationController
   def index
     @contests = Contest.newest_first
 
-    render json: @contests.map {|contest| contest.attributes.except('user_id').merge({user: contest.user.attributes }, {submissions: contest.submissions}, {comments: contest.comments})}
+    render json: @contests.map {|contest| contest.attributes.except('user_id').merge({user: contest.user.attributes }, {entry_count: contest.submissions.count})}
   end
 
-  def index_with_users
-    @contests = Contest.all
-
-    render json: @contests, :include => {:user => {:include => :submissions}} 
-  end
 
   def last
     @contests = Contest.last(6)

@@ -1,10 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Moment from "react-moment";
-import "moment-timezone";
-import styled from "styled-components";
-import { compareDateWithCurrentTime } from "../../../utils/compareDateWithCurrentTime";
-import Button from "@material-ui/core/Button";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
+import 'moment-timezone';
+import styled from 'styled-components';
+import { compareDateWithCurrentTime } from '../../../utils/compareDateWithCurrentTime';
+import Button from '@material-ui/core/Button';
 
 let Container = styled.div`
   display: block;
@@ -36,7 +36,6 @@ let Container = styled.div`
     margin: 0 auto;
   }
 
-
   .contest-card.name {
     font-size: 1.3rem;
     margin-top: 10px;
@@ -56,7 +55,7 @@ let Container = styled.div`
   }
 
   .text.entries {
-    font-family: "roboto", sans-serif;
+    font-family: 'roboto', sans-serif;
     fill: #fff;
     transform: translate(28px, 74px);
     font-size: 1.3rem;
@@ -64,7 +63,7 @@ let Container = styled.div`
   }
 
   .text.length {
-    font-family: "roboto", sans-serif;
+    font-family: 'roboto', sans-serif;
     fill: #fff;
     transform: translate(48px, 40px);
     font-size: 1.8rem;
@@ -76,16 +75,15 @@ let Container = styled.div`
   }
 `;
 
-function ContestCard({ contest, allContests }) {
+function ContestCard({ contest }) {
   let currentTime = new Date();
 
   return (
     <>
       <Container>
-
         <Link className="link-container" to={`contests/${contest.id}`}>
           <picture>
-            {contest?.submissions.length >= 1 && (
+            {contest?.entry_count >= 1 && (
               <svg
                 width="117"
                 height="171"
@@ -98,14 +96,10 @@ function ContestCard({ contest, allContests }) {
                   fill="#080808"
                   stroke="black"
                 />
-                {/*   <text x="20" y="35" class="small">My</text>
-               */}
-                <text className="text length">
-                  {contest?.submissions?.length}
+                <text className="text length">{contest?.entry_count}</text>
+                <text className="text entries">
+                  {contest?.entry_count === 1 ? <>Entry</> : <>Entries</>}
                 </text>
-                <text className="text entries">  {contest?.submissions?.length === 1 ? <>Entry</> :
-                  <>Entries</>
-                }</text>
               </svg>
             )}
             <img
@@ -122,9 +116,11 @@ function ContestCard({ contest, allContests }) {
           {compareDateWithCurrentTime(contest?.ending_time) === 1 ? (
             <>Contest ended&nbsp;</>
           ) : (
-              <>Contest ends&nbsp;</>
-            )}
-          <Moment from={currentTime?.toISOString()}>{contest.ending_time}</Moment>
+            <>Contest ends&nbsp;</>
+          )}
+          <Moment from={currentTime?.toISOString()}>
+            {contest.ending_time}
+          </Moment>
         </h2>
         <footer className="contest-card actions">
           <Button
@@ -133,9 +129,8 @@ function ContestCard({ contest, allContests }) {
             to={`contests/${contest.id}`}
           >
             View Contest
-        </Button>
+          </Button>
         </footer>
-
       </Container>
     </>
   );
