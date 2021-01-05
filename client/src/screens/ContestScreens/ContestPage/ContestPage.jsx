@@ -163,7 +163,7 @@ function ContestPage() {
           {!contest?.user?.image ? (
             <AccountCircleIcon className="icon-submission" />
           ) : (
-            <Link to={`../users/${contest.user_id}`}>
+            <Link to={`../users/${contest.user.id}`}>
               <img
                 className="user-image"
                 src={contest?.user?.image}
