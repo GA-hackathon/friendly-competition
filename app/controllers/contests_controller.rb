@@ -6,7 +6,7 @@ class ContestsController < ApplicationController
   def index
     @contests = Contest.newest_first
 
-    render json: @contests.map {|contest| contest.attributes.except('user_id').merge({user: contest.user.attributes }, {entry_count: contest.submissions.count})}
+    render json: @contests.map {|contest| contest.attributes.except('user_id, updated_at').merge({user: contest.user.attributes.except('created_at', 'updated_at', 'email', 'passsword_digest') }, {entry_count: contest.submissions.count})}
   end
 
 
@@ -24,7 +24,7 @@ class ContestsController < ApplicationController
 
   # GET /contests/1
   def show
-    render json: @contest.attributes.merge({submissions: @contest.submissions, user: @contest.user})
+    render json: @contest.attributes.except('user_id', 'updated_at').merge({submissions: @contest.submissions, user: @contest.user.attributes.except('created_at', 'updated_at', 'email', 'passsword_digest'), comments: @contest.comments})
   end
   
   # POST /contests

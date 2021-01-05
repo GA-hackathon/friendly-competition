@@ -7,11 +7,11 @@ class UsersController < ApplicationController
   def index
     @users = User.all
         
-    render json: @users, :include => {:contests => {:include => :submissions}} 
+    render json: @users.map {|user| user.attributes.except('password_digest', 'updated_at').merge({:contests => user.contests, :submissions => user.submissions})}
   end
 
   def show
-    render json: @user.attributes.merge({contests: @user.contests, submissions: @user.submissions})
+    render json: @user.attributes.except('password_digest','updated_at').merge({contests: @user.contests, submissions: @user.submissions})
   end
 
   # POST /users
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     if @user.save
       @token = encode({id: @user.id})
       render json: {
-        user: @user.attributes.except("password_digest"),
+        user: @user.attributes.except('password_digest'),
         token: @token
         }, status: :created
     else

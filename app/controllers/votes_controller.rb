@@ -18,7 +18,7 @@ class VotesController < ApplicationController
   # POST /votes
   def create
     @vote = Vote.new(vote_params)
-
+    
     if @vote.save
       render json: @vote, status: :created, location: @vote
     else

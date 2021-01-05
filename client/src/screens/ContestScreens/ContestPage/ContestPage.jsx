@@ -207,7 +207,7 @@ function ContestPage() {
       </section>
       <h5 style={{ margin: '2rem 2rem' }}>Join the Discussion</h5>
       <hr style={{ margin: '0rem 2rem' }} />
-      <ContestChat />
+      <ContestChat contest={contest} />
       <section>
         <div className="submission-name">View Contest Entries</div>
         <div className="contest-entries">
