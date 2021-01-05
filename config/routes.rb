@@ -5,9 +5,6 @@ Rails.application.routes.draw do
 
   resources :contests
   resources :submissions
-  get '/users/submissions', to: 'users#index_submissions'
-
-  get '/users/:id/submissions', to: 'users#get_submissions'
 
   resources :votes
   resources :users, :only => [:create, :index, :show, :update]

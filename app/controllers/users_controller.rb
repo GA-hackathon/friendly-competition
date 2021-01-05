@@ -11,17 +11,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    render json: @user, :include => {:contests => {:include => :submissions}} 
-  end
-
-  def index_submissions
-    @users = User.all
-
-    render json: @users, include: :submissions
-  end
-
-  def get_submissions
-    render json: @user, include: {:submissions => {:include => :contest}} 
+    render json: @user.attributes.merge({contests: @user.contests, submissions: @user.submissions})
   end
 
   # POST /users
