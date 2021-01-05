@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :comments
   resources :likes
   get '/contests/oldest', to: 'contests#last'
   get '/contests/newest', to: 'contests#first'
