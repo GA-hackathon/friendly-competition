@@ -6,14 +6,9 @@ class ContestsController < ApplicationController
   def index
     @contests = Contest.newest_first
 
-    render json: @contests, :include => {:submissions => {:include => :user}} 
+    render json: @contests.map {|contest| contest.attributes.except('user_id, updated_at').merge({user: contest.user.attributes.except('created_at', 'updated_at', 'email', 'passsword_digest') }, {entry_count: contest.submissions.count})}
   end
 
-  def index_with_users
-    @contests = Contest.all
-
-    render json: @contests, :include => {:user => {:include => :submissions}} 
-  end
 
   def last
     @contests = Contest.last(6)
@@ -29,13 +24,9 @@ class ContestsController < ApplicationController
 
   # GET /contests/1
   def show
-    render json: @contest, :include => {:submissions => {:include => :user}} 
+    render json: @contest.attributes.except('user_id', 'updated_at').merge({submissions: @contest.submissions.order('created_at DESC').map {|submission| submission.attributes.merge({votes: submission.votes, user: submission.user.attributes.except('updated_at','created_at')})}, user: @contest.user.attributes.except('created_at', 'updated_at', 'email', 'passsword_digest'), comments: @contest.comments})
   end
   
-  def show_with_user
-    render json: @contest, :include => {:user => {:include => :submissions}} 
-  end
-
   # POST /contests
   def create
     @contest = Contest.new(contest_params)

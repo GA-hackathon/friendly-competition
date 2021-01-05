@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
-import { getAllVotes, destroyVote, postVote } from '../../services/votes';
+import { destroyVote, postVote } from '../../services/votes';
 
 function SubmissionCard({ submission, currentUser }) {
   const [allVotes, setAllVotes] = useState([]);
@@ -15,15 +15,9 @@ function SubmissionCard({ submission, currentUser }) {
   const [voteDisabled, setVoteDisabled] = useState(true);
 
   useEffect(() => {
-    const fetchVotes = async () => {
-      const voteData = await getAllVotes();
-      setAllVotes(
-        voteData?.filter((vote) => vote?.submission_id === submission?.id),
-      );
-      setVoteDisabled(false);
-    };
-    fetchVotes();
-  }, [submission?.id]);
+    setAllVotes(submission.votes);
+    setVoteDisabled(false);
+  }, [submission.votes]);
 
   useEffect(() => {
     const voteFound = allVotes?.find(
@@ -37,26 +31,30 @@ function SubmissionCard({ submission, currentUser }) {
   const handleVote = async () => {
     if (!voteDisabled) {
       setVoted(true);
+      setVoteDisabled(true);
       const newVote = await postVote({
         user_id: currentUser?.id,
         submission_id: submission?.id,
       });
       setAllVotes((prevState) => [...prevState, newVote]);
+      setVoteDisabled(false);
     }
   };
 
   const handleUnvote = async () => {
     if (!voteDisabled) {
       setVoted(false);
+      setVoteDisabled(true);
       const voteToDelete = allVotes?.find(
         (vote) =>
           vote?.submission_id === submission?.id &&
           currentUser?.id === vote?.user_id,
       );
-      await destroyVote(voteToDelete.id);
+      await destroyVote(voteToDelete?.id);
       setAllVotes((prevState) =>
         prevState.filter((vote) => vote.id !== voteToDelete?.id),
       );
+      setVoteDisabled(false);
     }
   };
 
@@ -88,15 +86,20 @@ function SubmissionCard({ submission, currentUser }) {
 
   // keep the first character of the last name, and add a dot. Do not keep the other letters of the last name.
   // if we have a last name (guard operator), continue with the line that gets only the first initial of the last name followed by a dot.
-  let usersName = submission?.user?.first_name?.concat(
-    ' ',
-    submission?.user.last_name &&
-      submission?.user?.last_name?.charAt(0).concat('.'),
-  );
+  const getUsername = (user) => {
+    if (user) {
+      return `${user.first_name} ${
+        user.last_name ? user.last_name.charAt(0) + '.' : ''
+      }`;
+    }
+    return '';
+  };
 
   return (
     <Card className={classes.root}>
-      <CardHeader title={`${submission?.name}, by: ${usersName}`} />
+      <CardHeader
+        title={`${submission?.name}, by: ${getUsername(submission.user)}`}
+      />
       {submission?.file && (
         <CardMedia
           className={classes.media}
@@ -109,7 +112,7 @@ function SubmissionCard({ submission, currentUser }) {
           {submission?.content}
         </Typography>
         <p>
-          {allVotes.length === 1 ? (
+          {allVotes?.length === 1 ? (
             <>{allVotes?.length} vote</>
           ) : allVotes?.length === 0 ? (
             <>no votes</>
