@@ -3,19 +3,16 @@ import styled from 'styled-components'
 let Nav = styled.nav`
 
 list-style-type: none;
-background: #c4c4c4;
+background: white;
 margin: 0;
 padding: 0;
-overflow: hidden;
 display: flex;
 justify-content: space-between;
 
 
 li.nav-block {
-  background:#36B7FF;
-  width: 12rem;
-  height: 6rem;
-  margin: 0.5rem 0 1rem 1rem;
+  min-width: 12rem;
+  min-height: 6rem;
   float: left;
   display: flex;
   justify-content: center;
@@ -23,26 +20,32 @@ li.nav-block {
 }
 
 li.nav-block.home{
-  background: ${(props) => props.location.pathname.match(/^\/$/) ?  "#FFB738" : "#36B7FF" }
+  border: 3px solid ${(props) => props.location.pathname.match(/^\/$/) ?  "#007467" : "rgba(0, 0, 0, 0)" };
+  border-radius: 5%;
 }
 
 li.nav-block.create{
-  background: ${(props) => props.location.pathname.match(/^\/create-contest/)  ? "#FFB738" : "#36B7FF" }
+  border: 3px solid ${(props) => props.location.pathname.match(/^\/create-contest/)  ? "#007467" : "rgba(0, 0, 0, 0)" };
+  border-radius: 5%;
 }
 
 li.nav-block.about {
-  background: ${(props) => props.location.pathname.match(/^\/about/) ? "#FFB738" : "#36B7FF" }
+  border: 3px solid ${(props) => props.location.pathname.match(/^\/about/) ? "#007467" : "rgba(0, 0, 0, 0)" };
+  border-radius: 5%;
 }
 
 ul.links{
+  display: flex;
+  width: 80%;
+  justify-content: space-around;
   padding: 0;
 }
 
 li a {
   text-decoration: none;
-  display: block;
   text-align: center;
   color: black;
+  font-weight: 500;
 }
 
 .navbar-img {
@@ -53,15 +56,19 @@ li a {
   margin: 0.5rem 1rem 0 0;
 }
 
-li.img {
-  background: #eee7e7;
-  border-radius: 50%;
-  width: 4rem;
-  height: 4rem;
-}
+// li.img {
+//   background: #eee7e7;
+//   border-radius: 50%;
+//   width: 4rem;
+//   height: 4rem;
+// }
 
 li.text {
   text-align: center;
+}
+
+.logo img {
+  filter: invert(25%) sepia(31%) saturate(4621%) hue-rotate(154deg) brightness(96%) contrast(101%);
 }
 
 .user-info{
@@ -88,9 +95,12 @@ li.text {
   object-fit: cover;
 }
 .user-column {
+  margin: 1rem;
+  border-left: 3px solid;
   display: flex;
+  width: 20%;
+  justify-content: space-evenly;
   align-items: center;
-  margin-right: 1rem;
 }
 
 .MuiSvgIcon-root.icon {
@@ -111,6 +121,20 @@ li.text {
   background: white;
   border: 1px solid black;
   cursor: pointer;
+}
+
+.sign-out-btn,
+.sign-out-btn:hover,
+.sign-out-btn:active {
+  border: none;
+  background: transparent;
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sign-out-btn:focus {
+  outline: 0;
 }
 `
 

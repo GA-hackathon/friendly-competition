@@ -27,10 +27,10 @@ function Navbar() {
             <Link className='logo' to="/"><img style={{ width: '4rem', height: '3rem' }} src={logo} alt="logo" /></Link>
           </li>
           <li className="nav-block create">
-            <Link to="/create-contest">Create Contest</Link>
+            <Link to="/create-contest"><span>CREATE CONTEST</span></Link>
           </li>
           <li className="nav-block about">
-            <Link to="/">About</Link>
+            <Link to="/"><span>ABOUT CHALLENGE.ME</span></Link>
           </li>
         </ul>
         <div className="user-column">
@@ -50,13 +50,9 @@ function Navbar() {
           </div>
           <div className="auth-buttons">
             {currentUser && (
-            <Button
-              color="secondary"
-              variant="contained"
-              onClick={handleLogout}
-            >
-            Log Out
-            </Button>
+            <input className='sign-out-btn' type='Submit' value='Sign Out' 
+              onChange={handleLogout}
+            />
             )}
             {!currentUser && (
               <Button

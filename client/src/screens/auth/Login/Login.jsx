@@ -66,7 +66,7 @@ function Login() {
             handleLogin(formData);
           }}
         >
-          <form className='login-form'>
+          <div className='login-form'>
             <InputLabel htmlFor="email">Email Address</InputLabel>
             <Input
               id="email"
@@ -75,8 +75,8 @@ function Login() {
               value={formData.email}
               onChange={handleChange}
             />
-          </form>
-          <form className='login-form'>
+          </div>
+          <div className='login-form'>
             <InputLabel htmlFor="password">Password</InputLabel>
 
             <Input
@@ -97,7 +97,7 @@ function Login() {
                 </InputAdornment>
               }
             />
-          </form>
+          </div>
           <div className="button-container">
             <Button variant="contained" type="submit">
               Login

@@ -49,7 +49,7 @@ function ExtendedNavBar({ allContests, allSubmissions }) {
   return (
     <Div>
       <div className="user-container">
-        {currentUser && location.pathname === "/" && <> Welcome {currentUser?.first_name}</>}
+        {currentUser && location.pathname === "/" && <> WELCOME {currentUser?.first_name}</>}
       </div>
       <div className="search-container">
         <Search
