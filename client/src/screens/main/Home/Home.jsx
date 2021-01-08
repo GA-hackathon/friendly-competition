@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import Wrapper from './styledHome'
 import Layout from '../../../layout/Layout'
 import { getAllContests } from '../../../services/contests'
 import ContestCard from '../../../components/ContestComponents/ContestCard/ContestCard'
 import FunOrangeLoading from '../../../components/Loading/FunOrangeLoading/FunOrangeLoading'
 import ScrollToTopOnMount from '../../../components/Helpers/ScrollToTopOnMount'
+import Button from '@material-ui/core/Button';
 
 function Home() {
   const [allContests, setAllContests] = useState([])
@@ -74,6 +76,13 @@ function Home() {
       />
     ))
 
+    const history = useHistory()
+
+    const routeChange = () => {
+      let path = '/create-contest'
+      history.push(path)
+    }
+
   return (
     <>
       <ScrollToTopOnMount />
@@ -83,12 +92,20 @@ function Home() {
           {!loaded ? (
             <FunOrangeLoading />
           ) : (
+            <>
+            <div style={{ fontSize: '2rem', margin: '1rem' }}>Ready to create a Contest?</div>
+            <Button variant='contained' style={{ fontSize: '1.5rem', padding: '0.5rem 2.5rem' }} onClick={routeChange}>Create Challenge.ME</Button>
+            <Link to='/' style={{ margin: '1rem'}}>What is Challenge.ME?</Link>
+            <div className='leader-board'>
+              <h5>Challenge.ME Leaderboard</h5>
+            </div>
             <div className="all-contests inner-column">
               <h1 className="attention6"> Contests Ending Soon</h1>
               <div className="contest-list oldest">{oldContestsJSX}</div>
-              <h1 className="attention"> NEW Contests</h1>
+              <h1 className="attention">NEW Contests</h1>
               <div className="contest-list newest">{newContestsJSX}</div>
             </div>
+            </>
           )}
         </Wrapper>
       </Layout>
