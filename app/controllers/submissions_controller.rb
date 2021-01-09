@@ -52,7 +52,7 @@ class SubmissionsController < ApplicationController
 
 
   def merge_votes_and_user(submission)
-     submission.attributes.merge({user: submission.user, votes: submission.votes})
+     submission.attributes.merge({user: submission.user.attributes.except('email', 'password_digest'), votes: submission.votes})
   end
 
 
