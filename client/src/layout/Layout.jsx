@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import Navbar from "./Navbar/Navbar";
 import ExtendedNavBar from "./ExtendedNavBar/ExtendedNavBar";
 import { getAllContests } from "../services/contests";
-import { getAllSubmissions } from "../services/submissions";
+import { getAllSubmissions } from "../services/submissions"; 
+import './Layout.css';
 
 function Layout({ children }) {
   const [allContests, setAllContests] = useState([]);
