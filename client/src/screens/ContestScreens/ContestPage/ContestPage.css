@@ -1,49 +1,50 @@
-section.contest-info{
-    display: flex;
-    
+section.contest-info {
+  display: flex;
 }
 
-header{
-    background: #E5E5E5; 
-    display: flex;
-    justify-content: space-between;
-    padding: 0 1rem;
+header {
+  background: #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
 }
 
-.submission-name{
-    font-size: 2rem;
-    font-weight: 500;
-    display: flex;
-    justify-content: center;
+.submission-name {
+  font-size: 2rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
 }
 
-.search{
-    display: flex;
-    align-items: center;
+.search {
+  display: flex;
+  align-items: center;
 }
 
-.MuiSvgIcon-root.icon-submission{
-    vertical-align: middle;
-    font-size: 5rem !important;
+.MuiSvgIcon-root.icon-submission {
+  vertical-align: middle;
+  font-size: 5rem !important;
+  cursor: pointer;
+  color: black;
 }
 
-.submissions-form{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+.submissions-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.add-circle-icon{
-    background: #e8e8e8;
-    width: 15rem;
-    height: 5rem;
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.add-circle-icon {
+  background: #e8e8e8;
+  width: 15rem;
+  height: 5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.user-image{
+.user-image {
   object-fit: cover;
   max-width: 100px;
   max-height: 100px;
@@ -52,40 +53,40 @@ header{
   border-radius: 50%;
 }
 
-.MuiButton-contained.enter-contest-btn{
-    background: rgba(0, 0, 0, 0.78);
-    color: white;
+.MuiButton-contained.enter-contest-btn {
+  background: rgba(0, 0, 0, 0.78);
+  color: white;
 }
 
-.timer-container{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin: 0 1rem;
-    width: 50%;
-    margin: 1rem;
+.timer-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 1rem;
+  width: 50%;
+  margin: 1rem;
 }
 
-.create-submission{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 50%;
-    margin: 1rem;
+.create-submission {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  margin: 1rem;
 }
 
-.contest-pic img{
-    width: 100%;
-    border-radius: 10px;
+.contest-pic img {
+  width: 100%;
+  border-radius: 10px;
 }
 
-.contest-pic{
-    margin: auto;
-    width: 40%;
+.contest-pic {
+  margin: auto;
+  width: 40%;
 }
 
-.contest-entries{
-    display: flex;
-    margin: 1rem;
+.contest-entries {
+  display: flex;
+  margin: 1rem;
 }

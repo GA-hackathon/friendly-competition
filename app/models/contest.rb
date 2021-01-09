@@ -3,5 +3,6 @@ class Contest < ApplicationRecord
   
   belongs_to :user
   has_many :submissions, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
 end

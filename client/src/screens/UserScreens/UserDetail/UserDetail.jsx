@@ -8,12 +8,10 @@ import Wrapper from './styledUserDetail';
 import FunOrangeLoading from '../../../components/Loading/FunOrangeLoading/FunOrangeLoading';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
-import { getUserWithSubmissions } from '../../../services/submissions';
 import { getOneUser } from '../../../services/users';
 
 export default function UserDetail() {
   const [user, setUser] = useState(null);
-  const [userWithSubmissions, setUserWithSubmissions] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const { id } = useParams();
 
@@ -21,17 +19,9 @@ export default function UserDetail() {
     const getContests = async () => {
       const getUser = await getOneUser(id);
       setUser(getUser);
-    };
-    getContests();
-  }, [id]);
-
-  useEffect(() => {
-    const getSubmissions = async () => {
-      const getUser = await getUserWithSubmissions(id);
-      setUserWithSubmissions(getUser);
       setLoaded(true);
     };
-    getSubmissions();
+    getContests();
   }, [id]);
 
   const contestsJSX = user?.contests?.map((contest) => (
@@ -44,7 +34,7 @@ export default function UserDetail() {
     </Link>
   ));
 
-  const submissionsJSX = userWithSubmissions?.submissions?.map((submission) => (
+  const submissionsJSX = user?.submissions?.map((submission) => (
     <Link
       key={submission.id}
       className="contests-link"
@@ -82,9 +72,7 @@ export default function UserDetail() {
         <div className="inner-column">
           <div className="check-contests">{checkContests(user)}</div>
           <div className="contests-container">{contestsJSX}</div>
-          <div className="check-contests">
-            {checkSubmissions(userWithSubmissions)}
-          </div>
+          <div className="check-contests">{checkSubmissions(user)}</div>
           <div className="contests-container">{submissionsJSX}</div>
         </div>
         <br />

@@ -1,22 +1,22 @@
-import api from "./apiConfig";
+import api from './apiConfig';
 
 export const getAllContests = async () => {
-  const resp = await api.get("/contests");
+  const resp = await api.get('/contests');
   return resp.data;
 };
 
 export const getAllContestsWithUsers = async () => {
-  const resp = await api.get("/contests/users");
+  const resp = await api.get('/contests/users');
   return resp.data;
 };
 
 export const getNewestContests = async () => {
-  const resp = await api.get("/contests/newest");
+  const resp = await api.get('/contests/newest');
   return resp.data;
 };
 
 export const getOldestContests = async () => {
-  const resp = await api.get("/contests/oldest");
+  const resp = await api.get('/contests/oldest');
   return resp.data;
 };
 
@@ -25,13 +25,8 @@ export const getOneContest = async (id) => {
   return resp.data;
 };
 
-export const getOneContestWithUser = async (id) => {
-  const resp = await api.get(`/contest-user/${id}`);
-  return resp.data;
-};
-
 export const postContest = async (contestData) => {
-  const resp = await api.post("/contests", { contest: contestData });
+  const resp = await api.post('/contests', { contest: contestData });
   return resp.data;
 };
 
