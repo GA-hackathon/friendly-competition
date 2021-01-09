@@ -11,6 +11,7 @@ function Navbar() {
   const [{ currentUser }, dispatch] = useStateValue();
 
   const history = useHistory();
+
   const handleLogout = () => {
     dispatch({ type: "REMOVE_USER" });
     localStorage.removeItem("authToken");
@@ -50,9 +51,7 @@ function Navbar() {
           </div>
           <div className="auth-buttons">
             {currentUser && (
-            <input className='sign-out-btn' type='Submit' value='Sign Out' 
-              onChange={handleLogout}
-            />
+            <button className='sign-out-btn' onClick={handleLogout}>Sign Out</button>
             )}
             {!currentUser && (
               <Button
