@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { postSubmission } from '../../../services/submissions';
 import { Button, TextField } from '@material-ui/core';
+import LocalBarIcon from '@material-ui/icons/LocalBar';
 import Div from './styledSubmissionCreate';
 
 function SubmissionCreate({
@@ -59,7 +60,13 @@ function SubmissionCreate({
   if (!canSubmitEntry) {
     return (
       <Div>
-        Cheers! <br /> Your Entry is in!
+        <div className='cheers'>
+        <h5><LocalBarIcon style={{ transform: 'rotate(20deg)' }} />
+            <LocalBarIcon style={{ transform: 'rotate(-20deg)', marginRight: '0.5rem' }} />
+            CHEERS!
+        </h5>
+        <h5>YOUR ENTRY IS IN!</h5>
+        </div>
       </Div>
     );
   }

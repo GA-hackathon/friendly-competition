@@ -60,30 +60,37 @@ header {
 
 .timer-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
-  margin: 0 1rem;
+  margin: 3rem;
   width: 50%;
+}
+
+.timer-container > h5{
   margin: 1rem;
 }
 
 .create-submission {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   width: 50%;
-  margin: 1rem;
-}
-
-.contest-pic img {
-  width: 100%;
-  border-radius: 10px;
+  margin: 3rem 1rem;
 }
 
 .contest-pic {
-  margin: auto;
-  width: 40%;
+  display: flex;
+  align-items: center;
+}
+
+.contest-pic img{
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  object-fit: contain;
+  border: 1px solid black;
+  margin: 1rem 2rem;
 }
 
 .contest-entries {

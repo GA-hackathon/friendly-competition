@@ -139,7 +139,7 @@ function ContestPage() {
     <Layout>
       <section className="contest-info">
         <div className="timer-container">
-          <h4 className="submission-name">{contest?.name}</h4>
+          <h5 className="submission-name">{contest?.name}</h5>
           {!contestEnded ? (
             <h5>Contest Ends In:</h5>
           ) : (
@@ -150,15 +150,14 @@ function ContestPage() {
           <CountdownTimer setContestEnded={setContestEnded} contest={contest} />
           <h5>Contest Rules</h5>
           <div>{contest?.rules}</div>
-          <h5>Try</h5>
-          <div className="contest-pic">
+          <div className="contest-pic"><h5>TRY</h5>
             {contest.picture && (
               <img src={contest?.picture} alt={contest?.name} />
             )}
-          </div>
+            </div>
         </div>
-
         <div className="create-submission">
+          <div>
           Contest Created by:
           {!contest?.user?.image ? (
             <Link to={`../users/${contest.user.id}`}>
@@ -173,7 +172,8 @@ function ContestPage() {
               />
             </Link>
           )}
-          <p style={{ marginTop: '0' }}>{toTitleCase(usersName)}</p>
+          <span style={{ marginTop: '0' }}>{toTitleCase(usersName)}</span>
+          </div>
           {!contestEnded ? (
             <section className="submission-form">
               {canSubmitEntry.current && (

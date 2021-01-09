@@ -4,6 +4,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
 import Button from '@material-ui/core/Button';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import './Leaderboard.css'
 
 library.add(faCrown)
@@ -26,9 +27,24 @@ function Leaderboard() {
             </div>
             <div className='leader-board'>
               <h4>Challenge.ME Leaderboard</h4>
-              <FontAwesomeIcon icon='crown' />
-              <FontAwesomeIcon icon='crown' />
-              <FontAwesomeIcon icon='crown' />
+              <ul className='leaders'>
+                  <li><FontAwesomeIcon icon='crown' className='champion' /></li>
+                  <li><AccountCircleIcon style={{ fontSize: '3rem'}} /></li>
+                  <li>User name</li>
+                  <li>1544</li>
+                </ul>
+              <ul className='leaders'>
+                  <li><FontAwesomeIcon icon='crown' className='runner-up' /></li>
+                  <li><AccountCircleIcon style={{ fontSize: '3rem'}} /></li>
+                  <li>User name</li>
+                  <li>956</li>
+              </ul>
+              <ul className='leaders'>
+                  <li><FontAwesomeIcon icon='crown' className='third-place' /></li>
+                  <li><AccountCircleIcon style={{ fontSize: '3rem'}} /></li>
+                  <li>User name</li>
+                  <li>450</li>
+                </ul>
             </div>
         </div>
     )

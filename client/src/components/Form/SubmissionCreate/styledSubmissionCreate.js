@@ -1,8 +1,5 @@
 import styled from "styled-components";
 const Div = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   form {
     display: flex;
     flex-direction: column;
@@ -13,6 +10,9 @@ const Div = styled.div`
   }
   button{
     margin: 10px;
+  }
+  .cheers{
+    text-align: center;
   }
 `;
 export default Div;
