@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import './ContestChat.css';
 
-function ContestChat({}) {
+function ContestChat() {
   return (
     <Fragment>
       <div className="container">

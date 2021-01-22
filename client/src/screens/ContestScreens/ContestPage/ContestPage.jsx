@@ -161,8 +161,8 @@ function ContestPage() {
         <div className="create-submission">
           Contest Created by:
           {!contest?.user?.image ? (
-          <Link to={`../users/${contest.user.id}`} >
-            <AccountCircleIcon className="icon-submission" />
+            <Link to={`../users/${contest.user.id}`}>
+              <AccountCircleIcon className="icon-submission" />
             </Link>
           ) : (
             <Link to={`../users/${contest.user.id}`}>
